@@ -1,0 +1,2 @@
+28.10.	1t	Aloitusluento
+31.10.	1t	Alkutoimenpiteet: Projektin repositorion luonti githubiin, Netbeans projektin luonti, tunnuksen luonti labtooliin ja palautus

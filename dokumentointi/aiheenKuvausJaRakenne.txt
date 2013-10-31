@@ -1,0 +1,9 @@
+Aihe: Tetris takaisinkelauksella
+Toteutetaan Tetris pelin klooni jossa on mahdollisuus siirtojen takaisinkelaukseen tietyin myöhemmin määriteltävin rajotuksin.
+
+Käyttäjät: Pelaaja
+
+Kaikkien käyttäjien toiminnot:
+-Pelin pelaaminen
+-Pelin jälkeen tulostiedon tallentaminen 
+-Tulosten selaaminen
