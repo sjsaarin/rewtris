@@ -44,13 +44,13 @@ public class PalikkaTest {
     @Test
     public void konstruktoriLuoPalikan(){
         Palikka uusiPalikka = new Palikka(6);
-        assertEquals("[[1, 0], [1, 1], [2, 0], [2, 1]]", Arrays.deepToString(uusiPalikka.getKoordinaatit()));
+        assertEquals("[[-1, 0], [-1, -1], [0, 0], [0, -1]]", Arrays.deepToString(uusiPalikka.getKoordinaatit()));
     }
     
     @Test
     public void palikanKaantoToimii(){
         Palikka kaannetty = palikkaI.kaanna();
-        assertEquals("[[0, 2], [1, 2], [2, 2], [3, 2]]", Arrays.deepToString(kaannetty.getKoordinaatit()));
+        assertEquals("[[0, 1], [0, 0], [0, -1], [0, -2]]", Arrays.deepToString(kaannetty.getKoordinaatit()));
     }
     
     @Test
@@ -59,7 +59,7 @@ public class PalikkaTest {
         kaannettyNeljasti = kaannettyNeljasti.kaanna();
         kaannettyNeljasti = kaannettyNeljasti.kaanna();
         kaannettyNeljasti = kaannettyNeljasti.kaanna();
-        assertEquals("[[0, 1], [1, 0], [1, 1], [2, 1]]", Arrays.deepToString(kaannettyNeljasti.getKoordinaatit()));
+        assertEquals("[[-1, 0], [0, 1], [0, 0], [1, 0]]", Arrays.deepToString(kaannettyNeljasti.getKoordinaatit()));
     }
     
     @Test
@@ -75,6 +75,6 @@ public class PalikkaTest {
     @Test
     public void nelioPalikanKaantoEiMuutaKoordinaatteja(){
         Palikka kaannettyNelio = palikkaO.kaanna();
-        assertEquals("[[1, 0], [1, 1], [2, 0], [2, 1]]", Arrays.deepToString(kaannettyNelio.getKoordinaatit()));
+        assertEquals("[[-1, 0], [-1, -1], [0, 0], [0, -1]]", Arrays.deepToString(kaannettyNelio.getKoordinaatit()));
     }
 }
