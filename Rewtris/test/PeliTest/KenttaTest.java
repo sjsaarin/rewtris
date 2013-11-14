@@ -20,17 +20,13 @@ import static org.junit.Assert.*;
  */
 public class KenttaTest {
     
-    Kentta parametritonKentta, kentta;
+    Kentta kentta;
     
     @Before
     public void setUp() {
-        parametritonKentta = new Kentta();
-        kentta = new Kentta(30, 5);
+        kentta = new Kentta();
     }
     
-    @After
-    public void tearDown() {
-    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
@@ -38,23 +34,104 @@ public class KenttaTest {
     // @Test
     // public void hello() {}
     @Test
-    public void parametritonKonstruktoriAntaaOikeanKorkeuden(){
-         assertEquals(20, parametritonKentta.getKorkeus());
+    public void getKorkeusAntaaOikeanKorkeuden(){
+         assertEquals(20, kentta.getKorkeus());
     }
     
     @Test
-    public void parametritonKonstruktoriAntaaOikeanLeveyden(){
-         assertEquals(10, parametritonKentta.getLeveys());
+    public void getLeveysAntaaOikeanLeveyden(){
+         assertEquals(10, kentta.getLeveys());
+    }
+    
+    @Test
+    public void getRiviTaydellaKentallaAntaaRivinJaRivinKokoOnOikea(){
+        kentta.tayta();
+        boolean[] rivi = kentta.getRivi(0);
+        boolean rivitOikein = true;
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (!rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        assertEquals(true, rivitOikein);
+    }
+    
+    @Test
+    public void getRiviTyhjallaKentallaAntaaRivinJaRivinKokoOnOikea(){
+        kentta.tyhjenna();
+        boolean[] rivi = kentta.getRivi(0);
+        boolean rivitOikein = true;
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        assertEquals(true, rivitOikein);
     }
     
     @Test 
-    public void parametrillinenKonstruktoriAsettaaKorkeuden(){
-        assertEquals(30, kentta.getKorkeus());
+    public void kentanTyhjennysToimii(){
+        
+        kentta.tyhjenna();
+        boolean rivitOikein = true;
+        
+        boolean[] rivi = kentta.getRivi(10);
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        
+        rivi = kentta.getRivi(5);
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        
+        assertEquals(true, rivitOikein);
+        
     }
     
-    @Test 
-    public void parametrillinenKonstruktoriAsettaaLeveyden(){
-        assertEquals(5, kentta.getLeveys());
+    @Test
+    public void kentanTayttoToimii(){
+        
+        kentta.tayta();
+        boolean rivitOikein = true;
+        
+        boolean[] rivi = kentta.getRivi(10);
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (!rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        
+        rivi = kentta.getRivi(5);
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (!rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        
+        assertEquals(true, rivitOikein);
+        
+        
+    }
+    
+    @Test
+    public void rivinTyhjennysToimii(){
+        kentta.tayta();
+        kentta.tyhjennaRivi(5);
+        
+        boolean[] rivi = kentta.getRivi(19);
+        boolean rivitOikein = true;
+        for (int i = 0; i < kentta.getLeveys(); i++){
+            if (rivi[i] == true){
+                rivitOikein = false;
+            }
+        }
+        assertEquals(true, rivitOikein);
+        
     }
     
     

@@ -2,3 +2,6 @@
 31.10.	1t	Alkutoimenpiteet: Projektin repositorion luonti githubiin, Netbeans projektin luonti, tunnuksen luonti labtooliin ja palautus
 6.11.	3t	Suunnittelua, koodausta
 7.11.	3t	Koodausta
+12.11.  3t      Suunnittelua, Palikka luokan refaktorointi
+13.11.	2t	Suunnittelua, Kentta ja logiikka luokan koodausta
+14.11.	7t	Suunnittelua. Kentta ja logiikka luokan koodausta. Tarkennetun luokkakavaion teko

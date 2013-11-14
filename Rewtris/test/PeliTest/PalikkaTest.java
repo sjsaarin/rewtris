@@ -7,6 +7,8 @@
 package PeliTest;
 
 import Peli.Palikka;
+import Peli.PalikkaIf;
+import Peli.PalikkaO;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,19 +21,26 @@ import static org.junit.Assert.*;
  *
  * @author sjsaarin
  */
-public class PalikkaTest {
+public class PalikkaTest{
     
-    Palikka palikkaI, palikkaL, palikkaJ, palikkaS, palikkaZ, palikkaT, palikkaO;
+    Palikka palikkaO;
+    Palikka palikkaI;
+    Palikka palikkaJ;
+    Palikka palikkaL;
+    Palikka palikkaT;
+    Palikka palikkaS;
+    Palikka palikkaZ; 
     
     @Before
     public void setUp() {
-        palikkaI = new Palikka(0);
-        palikkaL = new Palikka(1);
-        palikkaJ = new Palikka(2);
-        palikkaS = new Palikka(3);
-        palikkaZ = new Palikka(4);
-        palikkaT = new Palikka(5);
-        palikkaO = new Palikka(6);
+        palikkaO = new PalikkaO();
+        palikkaI = new PalikkaO();
+        palikkaJ = new PalikkaO();
+        palikkaL = new PalikkaO();
+        palikkaT = new PalikkaO();
+        palikkaS = new PalikkaO();
+        palikkaZ = new PalikkaO();
+        
     }
     
 
@@ -42,39 +51,57 @@ public class PalikkaTest {
     // public void hello() {}
     
     @Test
-    public void konstruktoriLuoPalikan(){
-        Palikka uusiPalikka = new Palikka(6);
-        assertEquals("[[-1, 0], [-1, -1], [0, 0], [0, -1]]", Arrays.deepToString(uusiPalikka.getKoordinaatit()));
+    public void xKoordinaatinAsetusToimii(){
+        palikkaO.setX(10);
+        assertEquals(10, palikkaO.getX());
     }
     
     @Test
-    public void palikanKaantoToimii(){
-        Palikka kaannetty = palikkaI.kaanna();
-        assertEquals("[[0, 1], [0, 0], [0, -1], [0, -2]]", Arrays.deepToString(kaannetty.getKoordinaatit()));
+    public void yKoordinaatinAsetusToimii(){
+        palikkaO.setY(10);
+        assertEquals(10, palikkaO.getY());
+    }
+    
+    public void getKokoAntaaKoonOikein(){
+        assertEquals(2, palikkaO.getKoko());
     }
     
     @Test
-    public void palikanKaantoNeljaKertaaPalauttaaAlkuperaisessaAsennossaOlevanPalikan(){
-        Palikka kaannettyNeljasti = palikkaT.kaanna();
-        kaannettyNeljasti = kaannettyNeljasti.kaanna();
-        kaannettyNeljasti = kaannettyNeljasti.kaanna();
-        kaannettyNeljasti = kaannettyNeljasti.kaanna();
-        assertEquals("[[-1, 0], [0, 1], [0, 0], [1, 0]]", Arrays.deepToString(kaannettyNeljasti.getKoordinaatit()));
+    public void getSolutToimii(){
+        boolean solut[][] = palikkaO.getSolut();
+        boolean onOikein = true;
+        for (int i = 0; i<palikkaO.getKoko(); i++){
+            for (int j = 0; j<palikkaO.getKoko(); j++){
+                if (solut[i][j] == false){
+                    onOikein = false;
+                }
+            }
+        }
+        assertEquals(true, onOikein);
     }
     
     @Test
-    public void viidestiKaannettySamassaAsennossaKuinKerranKaannetty(){
-        Palikka kerranKaannetty = palikkaZ.kaanna();
-        Palikka viidestiKaannetty = kerranKaannetty.kaanna();
-        viidestiKaannetty = viidestiKaannetty.kaanna();
-        viidestiKaannetty = viidestiKaannetty.kaanna();
-        viidestiKaannetty = viidestiKaannetty.kaanna();
-        assertEquals(Arrays.deepToString(kerranKaannetty.getKoordinaatit()), Arrays.deepToString(viidestiKaannetty.getKoordinaatit()));
-    }
+    public void palikoideKaantoToimii(){
+        
+        palikkaO.kaannaPalikkaa();
+        palikkaI.kaannaPalikkaa();
+        palikkaJ.kaannaPalikkaa();
+        palikkaL.kaannaPalikkaa();
+        palikkaS.kaannaPalikkaa();
+        palikkaZ.kaannaPalikkaa();
+        palikkaT.kaannaPalikkaa();
+        
+        boolean solut[][] = palikkaO.getSolut();
+        boolean onOikein = true;
+        for (int i = 0; i<palikkaO.getKoko(); i++){
+            for (int j = 0; j<palikkaO.getKoko(); j++){
+                if (solut[i][j] == false){
+                    onOikein = false;
+                }
+            }
+        }
+        assertEquals(true, onOikein);
+        
+    }      
     
-    @Test
-    public void nelioPalikanKaantoEiMuutaKoordinaatteja(){
-        Palikka kaannettyNelio = palikkaO.kaanna();
-        assertEquals("[[-1, 0], [-1, -1], [0, 0], [0, -1]]", Arrays.deepToString(kaannettyNelio.getKoordinaatit()));
-    }
 }
