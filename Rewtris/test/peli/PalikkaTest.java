@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 
-package PeliTest;
+package peli;
 
-import Peli.Palikka;
-import Peli.PalikkaIf;
-import Peli.PalikkaO;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;

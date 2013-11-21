@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
-package Peli;
+package peli;
 
 /**
- *
+ * Luokka mallintaa pelin palikkaa, Luokassa on tieto palikan muodosta ja sijainnista.
+ * 
  * @author sjsaarin
  */
 public abstract class Palikka implements PalikkaIf {
@@ -28,11 +29,22 @@ public abstract class Palikka implements PalikkaIf {
          return koko;
     }
     
+    /**
+     * Paluttaa boolean[palikan koko][palikan koko] taulukon jossa tieto palikan muodosta.
+     * Taulukon alkion arvona 'true' mikäli palikassa kyseisessä solussa on jotain 
+     * muuten 'false'
+     * 
+     * @return palikan muoto kaksiulotteisena boolean taulukkona 
+     * 
+     */
     @Override
     public boolean[][] getSolut() {
         return this.asennot[asento];
     }
-
+    
+    /**
+     * Kääntää palikkaa myötäpäivään
+     */
     @Override
     public void kaannaPalikkaa() {
         if (asento < 3){

@@ -4,28 +4,27 @@
  * and open the template in the editor.
  */
 
-package Peli;
+package peli;
 
 /**
- *
+ * Luokka mallintaa pelin palikkaa, Luokassa on tieto palikan muodosta eri asennoissa.
+ * 
  * @author sjsaarin
  */
 public class PalikkaI extends Palikka {
     
-    private final int koko = 4;
+    private int korkeus;
+    private int leveys;
     
     private final boolean asennot[][][] = {
         {
-            { false, false, false, false },
-            { true, true, true, true },
-            { false, false, false, false },
-            { false, false, false, false }       
+            { true, true, true, true }       
         },
         {
-            { false, false, true, false },
-            { false, false, true, false },
-            { false, false, true, false },
-            { false, false, true, false }
+            { true },
+            { true },
+            { true },
+            { true }
         },
         {
             { false, false, false, false },
@@ -39,6 +38,10 @@ public class PalikkaI extends Palikka {
             { false, true, false, false },
             { false, true, false, false }
         }
+    };
+    
+    private final int asentojenKoot[][] = {
+        {1,4}
     };
     
     public PalikkaI(){

@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package PeliTest;
+package peli;
 
-import Peli.Kentta;
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,11 +44,16 @@ public class KenttaTest {
     }
     
     @Test
+    public void getMarginaaliAntaaOikeanArvon(){
+        assertEquals(4, kentta.getMarginaali());
+    }
+    
+    @Test
     public void getRiviTaydellaKentallaAntaaRivinJaRivinKokoOnOikea(){
         kentta.tayta();
         boolean[] rivi = kentta.getRivi(0);
         boolean rivitOikein = true;
-        for (int i = 0; i < kentta.getLeveys(); i++){
+        for (int i = kentta.getMarginaali(); i < kentta.getLeveys(); i++){
             if (!rivi[i] == true){
                 rivitOikein = false;
             }
@@ -59,9 +64,9 @@ public class KenttaTest {
     @Test
     public void getRiviTyhjallaKentallaAntaaRivinJaRivinKokoOnOikea(){
         kentta.tyhjenna();
-        boolean[] rivi = kentta.getRivi(0);
+        boolean[] rivi = kentta.getRivi(10);
         boolean rivitOikein = true;
-        for (int i = 0; i < kentta.getLeveys(); i++){
+        for (int i = kentta.getMarginaali(); i < kentta.getLeveys(); i++){
             if (rivi[i] == true){
                 rivitOikein = false;
             }
@@ -76,14 +81,14 @@ public class KenttaTest {
         boolean rivitOikein = true;
         
         boolean[] rivi = kentta.getRivi(10);
-        for (int i = 0; i < kentta.getLeveys(); i++){
+        for (int i = kentta.getMarginaali(); i < kentta.getLeveys(); i++){
             if (rivi[i] == true){
                 rivitOikein = false;
             }
         }
         
         rivi = kentta.getRivi(5);
-        for (int i = 0; i < kentta.getLeveys(); i++){
+        for (int i = kentta.getMarginaali(); i < kentta.getLeveys(); i++){
             if (rivi[i] == true){
                 rivitOikein = false;
             }
@@ -122,10 +127,11 @@ public class KenttaTest {
     public void rivinTyhjennysToimii(){
         kentta.tayta();
         kentta.tyhjennaRivi(5);
+        kentta.tyhjennaRivi(5);
         
-        boolean[] rivi = kentta.getRivi(19);
+        boolean[] rivi = kentta.getRivi(kentta.getKorkeus()+kentta.getMarginaali()-1);
         boolean rivitOikein = true;
-        for (int i = 0; i < kentta.getLeveys(); i++){
+        for (int i = kentta.getMarginaali(); i < kentta.getLeveys(); i++){
             if (rivi[i] == true){
                 rivitOikein = false;
             }
@@ -134,5 +140,29 @@ public class KenttaTest {
         
     }
     
+    @Test
+    public void getSolutAntaaKentanSolutOikein(){
+        kentta.tayta();
+        boolean[][] kentanSolut = kentta.getSolut();
+        
+    }
+    
+    /*
+    @Test
+    public void setSolutToimiiOikein(){
+        boolean[][] kentanSolut = new boolean[20][10];
+        boolean[] rivi0 = { true, true, true, true, true, true, true, true, true, true };
+        boolean[] rivi1 = { true, false, true, true, true, false, true, true, true, true };
+        for (int i = 2; i<20; i++){
+            for(int j = 0; j<10; j++){
+                kentanSolut[i][j] = false;
+            }
+        }
+        kentanSolut[0] = rivi0;
+        kentanSolut[1] = rivi1;
+        kentta.asetaSolut(kentanSolut);
+        assertEquals(Arrays.toString());
+    }
+    */
     
 }

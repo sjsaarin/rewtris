@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package PeliTest;
+package peli;
 
-import Peli.Logiikka;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,5 +50,39 @@ public class LogiikkaTest {
     public void palikanTiputusTaydessaKentassaEiOnnistu(){
         peliLogiikka.taytaKentta();
         assertEquals(false, peliLogiikka.pudotaPalikkaa());
+    }
+    
+    @Test
+    public void palikanSiirtoTyhjassaKentassaOikealleOnnistuu(){
+        peliLogiikka.tyhjennaKentta();
+        assertEquals(true, peliLogiikka.palikkaOikealle());
+    }
+    
+    @Test
+    public void palikanSiirtoTaydessaKentassaVasemmalleEiOnnistu(){
+        peliLogiikka.taytaKentta();
+        assertEquals(false, peliLogiikka.palikkaVasemmalle());
+    }
+    
+    @Test
+    public void palikanSiirtoTyhjassaKentassaVasemmalleOnnistuu(){
+        assertEquals(true, peliLogiikka.palikkaVasemmalle());
+    }
+    
+    @Test
+    public void palikanSiirtoTaydessaKentassaOikealleEiOnnistu(){
+        peliLogiikka.taytaKentta();
+        assertEquals(false, peliLogiikka.palikkaOikealle());
+    }
+    
+    
+    @Test
+    public void palikanSiirtoReunanYliVasemmalleEiOnnistu(){
+        
+    }
+    
+    @Test
+    public void palikanSiirtoReunanYliOikealleEiOnnistu(){
+        
     }
 }

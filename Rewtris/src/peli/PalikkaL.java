@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 
-package Peli;
+package peli;
 
 /**
- *
+ * Luokka mallintaa pelin L-palikkaa, Luokassa on tieto palikan muodosta eri asennoissa.
+ * 
  * @author sjsaarin
  */
-public class palikkaL extends Palikka {
+public class PalikkaL extends Palikka {
     
     private final int koko = 3;     
     private final boolean asennot[][][] = {
@@ -36,7 +37,7 @@ public class palikkaL extends Palikka {
         }
     };
     
-    public palikkaL(){
+    public PalikkaL(){
         super.asento = 0;
         super.asennot = this.asennot;
         super.koko = this.koko;

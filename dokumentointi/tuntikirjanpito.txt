@@ -5,3 +5,6 @@
 12.11.  3t      Suunnittelua, Palikka luokan refaktorointi
 13.11.	2t	Suunnittelua, Kentta ja logiikka luokan koodausta
 14.11.	7t	Suunnittelua. Kentta ja logiikka luokan koodausta. Tarkennetun luokkakavaion teko
+19.11.  6t	Logiikan koodausta
+20.11.	4t	Logiikan ja graafisen näkymän koodausta
+21.11.	4t	koodausta, sekvennsikaavion ja päivitetyn luokkakaavion teko

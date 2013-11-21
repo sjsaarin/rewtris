@@ -1,0 +1,4 @@
+nuolinäppäin vasemmalle	- palikan siirto vasemmalle
+nuolinäppäin oikealle	- palikan siirto oikealle
+nuolinäppäin alas	- palikan siirto alas
+välilyönti		- palikan tiputus alas

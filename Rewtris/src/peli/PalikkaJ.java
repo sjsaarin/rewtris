@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
-package Peli;
+package peli;
 
 /**
- *
+ * Luokka mallintaa pelin J-palikkaa, Luokassa on tieto palikan muodosta eri asennoissa.
+ * 
  * @author sjsaarin
  */
 public class PalikkaJ extends Palikka {

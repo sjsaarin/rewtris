@@ -4,42 +4,41 @@
  * and open the template in the editor.
  */
 
-package Peli;
+package peli;
 
 /**
- *
+ * Luokka mallintaa pelin T-palikkaa, Luokassa on tieto palikan muodosta eri asennoissa.
+ * 
  * @author sjsaarin
  */
-public class PalikkaZ extends Palikka {
-    
-    private final int koko = 3;
+public class PalikkaT extends Palikka {
+    private final int koko = 3;     
     private final boolean asennot[][][] = {
         {
-            { true, true, false },
-            { false, true, true },
+            { false, true, false },
+            { true, true, true },
             { false, false, false }       
         },
         {
-            { false, false, true },
+            { false, true, false },
             { false, true, true },
-            { false, true, false }
+            { false, true, false },
         },
         {
             { false, false, false },
-            { true, true, false },
-            { false, true, true }
+            { true, true, true },
+            { true, true, false }
         },
         {
             { false, true, false },
             { true, true, false },
-            { true, false, false }
+            { false, true, false }
         }
     };
     
-    public PalikkaZ(){
-        this.asento = 0;
-        super.koko = this.koko;
+    public PalikkaT(){
+        super.asento = 0;
         super.asennot = this.asennot;
+        super.koko = this.koko;
     }
-
 }

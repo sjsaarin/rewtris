@@ -4,29 +4,67 @@
  * and open the template in the editor.
  */
 
-package Kayttoliittyma;
+package kayttoliittyma;
 
-import Peli.Kentta;
-import Peli.Palikka;
+import peli.Kentta;
+import peli.Palikka;
+import java.awt.Color;
+import javax.swing.JFrame;
+
 
 /**
- *
+ * Luokka vastaa pelin 
+ * 
  * @author sjsaarin
  */
-public class Nakyma {
+public class Nakyma extends JFrame {
     
     Palikka palikka;
     Kentta kentta;
+    PeliNakyma peliNakyma;
+       
+    public Nakyma(Palikka palikka, Kentta kentta){
+        this.palikka = palikka;
+        this.kentta = kentta;
+        setSize(400, 700);
+        setTitle("Rewtris");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+        
+    }
     
+    public void paivita(Palikka palikka, Kentta kentta){
+        this.palikka = palikka;
+        this.kentta = kentta;
+        peliNakyma = new PeliNakyma(kentta, palikka);
+        //peliNakyma.setLocation(20, 20);
+        peliNakyma.setSize(300, 600);
+        //peliNakyma.setBackground(Color.yellow);
+        getContentPane().add(peliNakyma);
+        peliNakyma.repaint();
+    }
+    
+    
+        
+    
+    
+    /*
     public Nakyma(Kentta kentta, Palikka palikka){
         this.palikka = palikka;
         this.kentta = kentta;
+        nakyma = new Frame(kentta, palikka);
+        nakyma.setLocationRelativeTo(null);
+        nakyma.setVisible(true);
     }
     
-    /*
+    public void paivita(Kentta kentta, Palikka palikka){
+        nakyma.paivita(palikka, kentta);
+    }
+    
+    /
     / Toistaiseksi tilanteen piirto konsoliin, korvataan myöhemmin graafisella nakymällä
     / !! ei tomi vielä !!
-    */
+    
     public void piirra(){
         boolean[] kentanRivi;
         boolean[][] palikanSolut = palikka.getSolut();
@@ -57,5 +95,5 @@ public class Nakyma {
             System.out.println();
         }
     }
-    
+    */
 }

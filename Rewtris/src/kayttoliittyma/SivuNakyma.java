@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package Kayttoliittyma;
+package kayttoliittyma;
 
 /**
- *
+ * Luokka vastaa pistetilanteen ja muun tiedon piirtämisestä näkymään
+ * 
  * @author sjsaarin
  */
-public class Ohjaus {
+public class SivuNakyma {
     
 }
