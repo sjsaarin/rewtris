@@ -14,6 +14,6 @@ public interface PalikkaIf {
     
     int getKoko();
     boolean[][] getSolut();
-    void kaannaPalikkaa();
+    void kaanna();
            
 }

@@ -28,7 +28,7 @@ public class PalikkaO extends Palikka {
     } 
     
     @Override
-    public void kaannaPalikkaa(){
+    public void kaanna(){
         
     }
     

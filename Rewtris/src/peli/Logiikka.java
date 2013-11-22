@@ -9,7 +9,6 @@ package peli;
 import java.util.Random;
 import kayttoliittyma.Nakyma;
 import java.util.Timer;
-import kayttoliittyma.DebugNakyma;
 import kayttoliittyma.Ohjaus;
 
 
@@ -48,7 +47,7 @@ public class Logiikka {
    public void uusiPalikka(){
        
        lisaaPalikka(arvoPalikanNumero());
-       palikka.setX((kentanLeveys-1)/2);
+       palikka.setX((kentanLeveys)/2);
        palikka.setY(kentanKorkeus-1);
        piirraTilanne();
    }
@@ -195,35 +194,67 @@ public class Logiikka {
      * @return 'true' jos palikan kääntö onnsitui, muuten 'false' 
      */
     public boolean kaannaPalikka(){
-        //ei toteutettu vielä
+        palikka.kaanna();
+        boolean[] kentanRivi;
+        boolean[][] palikanSolut = palikka.getSolut();
+        int palikanKoko = palikka.getKoko();
+        int palikanY = palikka.getY();
+        int palikanX = palikka.getX();
+        for (int i=0; i < palikanKoko; i++){
+            kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali);
+            for (int j=0; j < palikanKoko; j++){
+                //tarkistetaan mahtuiko kääntämään
+                if (palikanSolut[i][j] && kentanRivi[palikanX+j+kentanMarginaali]){
+                    //ei mahtunut, käännetään takaisin
+                    palikka.kaanna();
+                    palikka.kaanna();
+                    palikka.kaanna();
+                    return false;
+                }
+            }
+        }
         piirraTilanne();
-        return false;
+        return true;
     }
     
     /**
     * Metodi päivittää kentän solut taulukkoon palikan sijainnin, tarkoitus kutsua aina kun palikkaa on pudotettu niin alas kuin mahdollista
     */
     public void paivitaKentta(){
-        boolean[] kentanRivi;
-        boolean[][] palikanSolut = palikka.getSolut();
-        int palikanKoko=palikka.getKoko();
-        for (int i=0; i<palikanKoko; i++){
+        boolean[] kentanrivi;
+        boolean[][] palikansolut = palikka.getSolut();
+        int palikankoko=palikka.getKoko();
+        for (int i=0; i<palikankoko; i++){
             int rivi = palikka.getY()+kentanMarginaali-i;
-            kentanRivi = kentta.getRivi(rivi);
-            for (int j=0; j<palikanKoko; j++){
-                if (palikanSolut[i][j]){
-                    kentanRivi[palikka.getX()+j+kentanMarginaali] = true;
+            kentanrivi = kentta.getRivi(rivi);
+            for (int j=0; j<palikankoko; j++){
+                if (palikansolut[i][j]){
+                    kentanrivi[palikka.getX()+j+kentanMarginaali] = true;
                 }
             }
-            kentta.setRivi(palikka.getY()-i, kentanRivi);
+            kentta.setRivi(palikka.getY()-i, kentanrivi);
         }
-        uusiPalikka();
         piirraTilanne();
+        poistaTaydetRivit();
+        uusiPalikka();
     }
     
     //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä?)
-    public void poistaRivit(){
-        //ei toteutettu vielä
+    private void poistaTaydetRivit(){
+        int rivitaynna;
+        boolean[][] kentansolut = kentta.getSolut();
+        for (int i = 0; i < kentanKorkeus; i++){
+            rivitaynna = 0;
+            for (int j = 0; j < kentanLeveys; j++){
+               if(kentansolut[i][j]){
+                   rivitaynna++;
+               }
+            }
+            if(rivitaynna == kentanLeveys){
+                kentta.poistaRivi(i);
+            }
+            piirraTilanne();
+        }
     }
     
     /**

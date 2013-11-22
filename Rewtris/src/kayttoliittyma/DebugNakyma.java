@@ -42,8 +42,9 @@ public class DebugNakyma extends JPanel {
         g.drawString("Palikan koko: "+palikka.getKoko(), 10, 100);
         g.drawString("Kentän leveys: "+kentta.getLeveys(), 10, 150);
         g.drawString("Kentän korkeus: "+kentta.getKorkeus(), 10, 170);
-        g.drawString("Nuoli oikealle/vasemmalle: palikka oikealle/vasemmalle", 10, 400);
-        g.drawString("Nuoli ylös: palikan kääntö (ei toteutettu vielä)", 10, 420);
+        g.drawString("Nuoli oikealle: oikealle", 10, 380);
+        g.drawString("Nuoli vasemmalle: vasemmalle", 10, 400);
+        g.drawString("Nuoli ylös: palikan kääntö", 10, 420);
         g.drawString("Nuoli alas: palikka alas", 10, 440);
         g.drawString("Välilyönti: palikan tiputus + uusi palikka", 10, 460);
 

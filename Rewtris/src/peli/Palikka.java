@@ -46,7 +46,7 @@ public abstract class Palikka implements PalikkaIf {
      * Kääntää palikkaa myötäpäivään
      */
     @Override
-    public void kaannaPalikkaa() {
+    public void kaanna() {
         if (asento < 3){
             asento++;
         } else {

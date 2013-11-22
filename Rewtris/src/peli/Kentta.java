@@ -108,11 +108,11 @@ public class Kentta {
     }
     
     /**
-    *  Metodi tyhjentää parametrina annetun rivin ja tipauttaa rivin yläpuolella olevia riveja yhden alaspäin.
+    *  Poistaa parametrina annetun rivin ja tipauttaa rivin yläpuolella olevia riveja yhden alaspäin.
     * 
-    *  @param rivi rivin numero
+    *  @param rivi rivin numero ilma marginaalia
     */
-    public void tyhjennaRivi(int rivi){
+    public void poistaRivi(int rivi){
         for (int i=rivi+marginaali; i<todellinenKorkeus; i++){
             for (int j=marginaali; j<LEVEYS+marginaali; j++){
                 if (i==todellinenKorkeus-1){
