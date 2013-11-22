@@ -85,4 +85,49 @@ public class LogiikkaTest {
     public void palikanSiirtoReunanYliOikealleEiOnnistu(){
         
     }
+    
+    @Test
+    public void palikanArvontaArpooLuvutOikein(){
+        //int[] luvut = new int[100];
+        boolean onYksi = false;
+        boolean onKaksi = false;
+        boolean onKolme = false;
+        boolean onNelja = false;
+        boolean onViisi = false;
+        boolean onKuusi = false;
+        boolean onSeitseman = false;
+        boolean onSallittuLuku = true;
+        
+        
+        
+        for (int i = 0; i<100; i++){
+            int luku = peliLogiikka.arvoPalikanNumero();
+            if (luku == 1) {
+                onYksi = true;
+            }
+            if (luku == 2) {
+                onKaksi = true;
+            }
+            if (luku == 3) {
+                onKolme = true;
+            }
+            if (luku == 4) {
+                onNelja = true;
+            }
+            if (luku == 5) {
+                onViisi = true;
+            }
+            if (luku == 6) {
+                onKuusi = true;
+            }
+            if (luku == 7) {
+                onSeitseman = true;
+            }
+            if (luku < 1 || luku > 7){
+                onSallittuLuku = false;
+            }
+        }
+        assertTrue(onYksi && onKaksi && onKolme && onNelja && onViisi && onKuusi && onSeitseman && onSallittuLuku);
+        
+    }
 }

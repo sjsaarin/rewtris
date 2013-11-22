@@ -82,17 +82,17 @@ public class Kentta {
     }
     
     /**
-    * Metodin asettaa kenttään uuden rivin. 
+    * Metodin asettaa kenttään annetun rivin.
     * Kirjoittaa yli olemassaolevan rivin.
     * 
-    * @param rivi rivin numero
+    * @param rivi rivin numero laskettuna ilman marginaalia
     *
-    * @param uusirivi uusi rivi
+    * @param uusirivi uusi rivi marginaaleineen
     *
     */
     public void setRivi(int rivi, boolean[] uusirivi){
-        for (int i = 0; i < LEVEYS; i++){
-            solut[rivi+marginaali][i+marginaali] = uusirivi[i];
+        for (int i = 0; i < todellinenLeveys; i++){
+            solut[rivi+marginaali][i] = uusirivi[i];
         }
     }
     

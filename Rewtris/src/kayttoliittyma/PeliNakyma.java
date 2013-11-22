@@ -23,6 +23,8 @@ public class PeliNakyma extends JPanel {
     private Kentta kentta;
     private final int width = 30;
     private final int height = 30;
+    private int x;
+    private int y;
     
     public PeliNakyma(Kentta kentta, Palikka palikka){
         this.palikka = palikka;
@@ -35,8 +37,13 @@ public class PeliNakyma extends JPanel {
         g.setColor(Color.BLACK);
         //g.drawRect(50, 50, width, height);
         //g.drawRect(55, 50, width, height);
-        int x = palikka.getX()*width;
-        int y = 600 - (palikka.getY()*height) + height;
+        piirraPalikka(g);
+        piirraKentta(g);
+    }
+        
+    private void piirraPalikka(Graphics g){
+        x = palikka.getX()*width;
+        y = (kentta.getKorkeus()-1-palikka.getY())*height;
         //palikka.kaannaPalikkaa();
         boolean[][] koordinaatit = palikka.getSolut();
         for (int i = 0; i < palikka.getKoko(); i++){
@@ -47,11 +54,14 @@ public class PeliNakyma extends JPanel {
                 x += width;
             }
             x = palikka.getX()*width;
-            y -= height;
+            y += height;
         }
-        y = 0; 
+    }
+    
+    private void piirraKentta(Graphics g){
+        x = 0; 
         //(kentta.getKorkeus())* height;
-        x = 0;
+        y = 0;
         boolean[][] kentanSolut = kentta.getSolut();
         for (int i = kentta.getKorkeus()-1; i >= 0; i--){
             for (int j = 0; j < kentta.getLeveys(); j++){

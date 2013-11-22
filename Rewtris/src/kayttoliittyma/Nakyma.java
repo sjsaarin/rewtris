@@ -6,6 +6,7 @@
 
 package kayttoliittyma;
 
+import java.awt.BorderLayout;
 import peli.Kentta;
 import peli.Palikka;
 import java.awt.Color;
@@ -22,28 +23,43 @@ public class Nakyma extends JFrame {
     Palikka palikka;
     Kentta kentta;
     PeliNakyma peliNakyma;
-       
+    public DebugNakyma debugNakyma;
+    
     public Nakyma(Palikka palikka, Kentta kentta){
         this.palikka = palikka;
         this.kentta = kentta;
-        setSize(400, 700);
-        setTitle("Rewtris");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-        
+        this.setSize(700, 700);
+        this.setTitle("Rewtris");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
+        peliNakyma = new PeliNakyma(kentta, palikka);
+        peliNakyma.setVisible(true);
+        debugNakyma = new DebugNakyma(kentta, palikka);
+        debugNakyma.setVisible(true);
     }
     
     public void paivita(Palikka palikka, Kentta kentta){
         this.palikka = palikka;
         this.kentta = kentta;
         peliNakyma = new PeliNakyma(kentta, palikka);
-        //peliNakyma.setLocation(20, 20);
-        peliNakyma.setSize(300, 600);
+        peliNakyma.setLocation(20, 20);
+        peliNakyma.setSize(302, 602);
         //peliNakyma.setBackground(Color.yellow);
-        getContentPane().add(peliNakyma);
+        add(peliNakyma, BorderLayout.WEST);
         peliNakyma.repaint();
+        paivitaDebug();
+       
     }
     
+    
+    //debug paneeli
+    public void paivitaDebug(){
+        debugNakyma = new DebugNakyma(kentta, palikka);
+        debugNakyma.setLocation(370, 20);
+        debugNakyma.setSize(302, 602);
+        add(debugNakyma, BorderLayout.EAST);
+        debugNakyma.repaint();
+    }
     
         
     
