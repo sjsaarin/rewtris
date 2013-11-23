@@ -9,6 +9,7 @@ package peli;
 import java.util.Random;
 import kayttoliittyma.Nakyma;
 import java.util.Timer;
+import java.util.TimerTask;
 import kayttoliittyma.Ohjaus;
 
 
@@ -35,9 +36,10 @@ public class Logiikka {
         kentanMarginaali = kentta.getMarginaali();
         //palikka = new PalikkaO();
         nakyma = new Nakyma(palikka, kentta);
-        uusiPalikka();
         ohjaus = new Ohjaus(this, nakyma);
+        uusiPalikka();
         piirraTilanne();
+        kaynnistaAjastin();
     }
     
     /**
@@ -45,9 +47,17 @@ public class Logiikka {
      * 
      */
    public void uusiPalikka(){
-       
-       lisaaPalikka(arvoPalikanNumero());
-       palikka.setX((kentanLeveys)/2);
+       int palikannro = arvoPalikanNumero();
+       int x;
+       lisaaPalikka(palikannro);
+       if (palikannro == 1){
+           x = (kentanLeveys-1)/2;
+       } else if(palikannro == 2) {
+           x = ((kentanLeveys)/2)-(palikka.getKoko()/2);
+       } else {       
+           x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);
+       }
+       palikka.setX(x);
        palikka.setY(kentanKorkeus-1);
        piirraTilanne();
    }
@@ -55,13 +65,12 @@ public class Logiikka {
    public int arvoPalikanNumero(){
        Random random = new Random();
        int luku = random.nextInt(7) + 1;
-       
        return luku;
    }
     
     /**
     * Metodi lisää kenttään syötteenä annettua numeroa vastaavan palikan, kelvolliset syötteet:
-    * 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
+    * 0 - Tyhjä palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
     * Mikäli syötteenä annetaan jokin muu numero lisätään kenttään O-palikka.
     * 
     * @param   nro   
@@ -70,7 +79,9 @@ public class Logiikka {
     public void lisaaPalikka(int nro){
         
         switch(nro){
-            case 1: default: 
+            case 0: default:
+                palikka = new PalikkaTyhja();
+            case 1: 
                 palikka = new PalikkaO();
                 break;
             case 2:               
@@ -234,12 +245,17 @@ public class Logiikka {
             }
             kentta.setRivi(palikka.getY()-i, kentanrivi);
         }
+        /*
+        palikka = new PalikkaTyhja();
+        palikka.setX(0);
+        palikka.setY(0);
+        */
         piirraTilanne();
         poistaTaydetRivit();
         uusiPalikka();
     }
     
-    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä?)
+    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet)
     private void poistaTaydetRivit(){
         int rivitaynna;
         boolean[][] kentansolut = kentta.getSolut();
@@ -252,8 +268,8 @@ public class Logiikka {
             }
             if(rivitaynna == kentanLeveys){
                 kentta.poistaRivi(i);
+                piirraTilanne();
             }
-            piirraTilanne();
         }
     }
     
@@ -298,6 +314,23 @@ public class Logiikka {
      */
     public void setKentanRivi(int rivinro, boolean[] rivi){
         kentta.setRivi(rivinro, rivi);
+    }
+    
+    private void kaynnistaAjastin(){
+        int viive = 1000;
+        int jakso = 1000;
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+                if(!pudotaPalikkaa()){
+                    paivitaKentta();
+                }
+            }
+        }, viive, jakso);
+ 
     }
     
 }

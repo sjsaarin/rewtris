@@ -67,6 +67,8 @@ public class PeliNakyma extends JPanel {
             for (int j = 0; j < kentta.getLeveys(); j++){
                 if (kentanSolut[i][j]){
                     g.drawRect(x, y, width, height);
+                    g.setColor(Color.GRAY);
+                    g.fillRect(x+1, y+1, width-2, height-2);
                 }
                 x += width;
             }
