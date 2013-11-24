@@ -41,7 +41,7 @@ public class Logiikka {
     }
     
     /**
-     * Lisää uuden satunnaisen palikan kentän huipulle.
+     * Lisää uuden satunnaisen palikan kentän huipulle jos on tilaa, jos ei ole tilaa peli loppuu.
      * 
      */
    public void uusiPalikka(){
@@ -57,6 +57,9 @@ public class Logiikka {
        }
        palikka.setX(x);
        palikka.setY(kentanKorkeus-1);
+       if(!(palikalleOnTilaa(0,0))){
+           lopetaPeli();
+       }
    }
    
    /**
@@ -83,6 +86,7 @@ public class Logiikka {
         switch(nro){
             case 0: default:
                 palikka = new PalikkaTyhja();
+                break;
             case 1: 
                 palikka = new PalikkaO();
                 break;
@@ -116,37 +120,22 @@ public class Logiikka {
     */
     public boolean pudotaPalikkaa(){
         
-        boolean[] kentanRivi;
-        boolean[][] palikanSolut = palikka.getSolut();
-        int palikanKoko = palikka.getKoko();
-        int palikanX = palikka.getX();
-        int palikanY = palikka.getY();
+        if (palikalleOnTilaa(0,-1)){
         
-        //käydään palikka & palikan X:stä kentän seuraavat rivi läpi ja tarkistetaan voiko pudottaa
-        for (int i = 0; i<palikanKoko; i++){
-            kentanRivi = kentta.getRivi(palikanY-palikanKoko+i+kentanMarginaali);
-            for (int j = 0; j < palikanKoko; j++){
-                //onko alemmalla rivillä tilaa
-                if (palikanSolut[palikanKoko-1-i][j] && kentanRivi[palikanX+j+kentanMarginaali]){
-                    return false;
-                }
-            }
+            palikka.setY(palikka.getY()-1);
+            piirraTilanne();
+            return true;
         }
-                
-        //tiputetaan palikkaa
-        palikka.setY(palikka.getY()-1);
-        piirraTilanne();
-        return true;   
+        return false;
     }
 
-    
     /**
     * Metodi siirtää palikkaa yhden sarakkeen oikealle mikäli on tilaa
     * 
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
     public boolean palikkaOikealle(){
-        if (siirtoSivulleOnnistuu(1)){
+        if (palikalleOnTilaa(1, 0)){
             palikka.setX(palikka.getX()+1);
             piirraTilanne();
             return true;
@@ -163,7 +152,7 @@ public class Logiikka {
     public boolean palikkaVasemmalle(){
         
         //siirretään vasemmalle jos onnistuu
-        if (siirtoSivulleOnnistuu(-1)){
+        if (palikalleOnTilaa(-1, 0)){
             palikka.setX(palikka.getX()-1);
             piirraTilanne();
             return true;
@@ -172,17 +161,37 @@ public class Logiikka {
         }
     }
     
-    private boolean siirtoSivulleOnnistuu(int mihin){
+        /**
+     * Kääntää palikkaa myötäpäivään, jos kentässä on tilaa.
+     * 
+     * @return 'true' jos palikan kääntö onnsitui, muuten 'false' 
+     */
+    public boolean kaannaPalikka(){
+        //käännetaan palikkaa
+        palikka.kaanna();
+        //tarkistetaan mahtuuuko palikka
+        if (palikalleOnTilaa(0,0)){
+            piirraTilanne();
+            return true;
+        }
+        //ei mahtunut, käännetään takaisin
+        palikka.kaanna();
+        palikka.kaanna();
+        palikka.kaanna();
+        return false;
+    }
+    
+    private boolean palikalleOnTilaa(int x, int y){
         int palikanX = palikka.getX();
         int palikanY = palikka.getY();
         int palikanKoko = palikka.getKoko();
         boolean[][] palikanSolut = palikka.getSolut();
         boolean[] kentanRivi;
         for (int i = 0; i < palikanKoko; i++){
-            kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali);
+            kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali+y);
             for (int j = 0; j < palikanKoko; j++){
                 // onko rivillä tilaa
-                if (palikanSolut[i][j] && kentanRivi[palikanX+j+kentanMarginaali+mihin]){
+                if (palikanSolut[i][j] && kentanRivi[palikanX+j+kentanMarginaali+x]){
                     return false;
                 }
             }
@@ -200,34 +209,6 @@ public class Logiikka {
         paivitaKentta();
     }
     
-    /**
-     * Kääntää palikkaa myötäpäivään, jos kentässä on tilaa.
-     * 
-     * @return 'true' jos palikan kääntö onnsitui, muuten 'false' 
-     */
-    public boolean kaannaPalikka(){
-        palikka.kaanna();
-        boolean[] kentanRivi;
-        boolean[][] palikanSolut = palikka.getSolut();
-        int palikanKoko = palikka.getKoko();
-        int palikanY = palikka.getY();
-        int palikanX = palikka.getX();
-        for (int i=0; i < palikanKoko; i++){
-            kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali);
-            for (int j=0; j < palikanKoko; j++){
-                //tarkistetaan mahtuiko kääntämään
-                if (palikanSolut[i][j] && kentanRivi[palikanX+j+kentanMarginaali]){
-                    //ei mahtunut, käännetään takaisin
-                    palikka.kaanna();
-                    palikka.kaanna();
-                    palikka.kaanna();
-                    return false;
-                }
-            }
-        }
-        piirraTilanne();
-        return true;
-    }
     
     /**
     * Metodi päivittää kentän solut taulukkoon palikan sijainnin, tarkoitus kutsua aina kun palikkaa on pudotettu niin alas kuin mahdollista
@@ -315,6 +296,7 @@ public class Logiikka {
         ajastin = new Timer();
         ajastin.scheduleAtFixedRate(new TimerTask()
         {
+            @Override
             public void run()
             {
                 if(!pudotaPalikkaa()){
@@ -323,6 +305,10 @@ public class Logiikka {
             }
         }, viive, jakso);
  
+    }
+    
+    public void lopetaPeli(){
+        tyhjennaKentta();
     }
     
 }
