@@ -24,6 +24,7 @@ public class DebugNakyma extends JPanel {
         this.palikka = palikka;
         this.kentta = kentta;
         setBackground(Color.YELLOW);
+        setVisible(true);
     }
     
     //public void vastaanOtaViesti(String viesti){

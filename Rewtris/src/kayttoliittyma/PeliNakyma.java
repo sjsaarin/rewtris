@@ -32,6 +32,10 @@ public class PeliNakyma extends JPanel {
         setBackground(Color.WHITE);
     }
     
+    public void setPalikka(Palikka palikka){
+        this.palikka = palikka;
+    }
+    
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
@@ -42,6 +46,9 @@ public class PeliNakyma extends JPanel {
     }
         
     private void piirraPalikka(Graphics g){
+        //g.drawString("palikka ok", 10, 10);
+        //super.paintComponent(g);
+        //g.setColor(Color.BLACK);
         x = palikka.getX()*width;
         y = (kentta.getKorkeus()-1-palikka.getY())*height;
         //palikka.kaannaPalikkaa();
@@ -59,6 +66,8 @@ public class PeliNakyma extends JPanel {
     }
     
     private void piirraKentta(Graphics g){
+        //super.paintComponent(g);
+        //g.setColor(Color.BLACK);
         x = 0; 
         //(kentta.getKorkeus())* height;
         y = 0;

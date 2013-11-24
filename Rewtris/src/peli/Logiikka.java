@@ -35,10 +35,10 @@ public class Logiikka {
         kentanKorkeus = kentta.getKorkeus();
         kentanMarginaali = kentta.getMarginaali();
         //palikka = new PalikkaO();
+        uusiPalikka();
         nakyma = new Nakyma(palikka, kentta);
         ohjaus = new Ohjaus(this, nakyma);
-        uusiPalikka();
-        piirraTilanne();
+        //nakyma.paivita();
         kaynnistaAjastin();
     }
     
@@ -59,7 +59,6 @@ public class Logiikka {
        }
        palikka.setX(x);
        palikka.setY(kentanKorkeus-1);
-       piirraTilanne();
    }
    
    public int arvoPalikanNumero(){
@@ -232,6 +231,7 @@ public class Logiikka {
     * Metodi päivittää kentän solut taulukkoon palikan sijainnin, tarkoitus kutsua aina kun palikkaa on pudotettu niin alas kuin mahdollista
     */
     public void paivitaKentta(){
+        ajastin.cancel();
         boolean[] kentanrivi;
         boolean[][] palikansolut = palikka.getSolut();
         int palikankoko=palikka.getKoko();
@@ -250,27 +250,34 @@ public class Logiikka {
         palikka.setX(0);
         palikka.setY(0);
         */
-        piirraTilanne();
-        poistaTaydetRivit();
         uusiPalikka();
+        poistaTaydetRivit();
+        nakyma.setPalikka(palikka);
+        kaynnistaAjastin();
+        piirraTilanne();
     }
     
     //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet)
     private void poistaTaydetRivit(){
         int rivitaynna;
-        boolean[][] kentansolut = kentta.getSolut();
-        for (int i = 0; i < kentanKorkeus; i++){
-            rivitaynna = 0;
-            for (int j = 0; j < kentanLeveys; j++){
-               if(kentansolut[i][j]){
+        boolean[][] kentansolut;
+        int rivi = 0;
+        while (rivi < kentanKorkeus){
+          kentansolut = kentta.getSolut();
+          rivitaynna = 0;
+          for (int i = 0; i < kentanLeveys; i++){
+              if(kentansolut[rivi][i]){
                    rivitaynna++;
                }
-            }
-            if(rivitaynna == kentanLeveys){
-                kentta.poistaRivi(i);
-                piirraTilanne();
-            }
+          }
+          if (rivitaynna == kentanLeveys){
+              kentta.poistaRivi(rivi);
+          } else {
+              rivi++;
+          }
+            
         }
+ 
     }
     
     /**
@@ -281,7 +288,7 @@ public class Logiikka {
     }
     
     /**
-    * Metodi tyhjentää kentän
+    * Tyhjentää kentän
     */
     public void tyhjennaKentta(){
         kentta.tyhjenna();
@@ -291,21 +298,9 @@ public class Logiikka {
     * Metodi piirtää tilanteen näkymään
     */
     public void piirraTilanne(){
-        nakyma.paivita(palikka, kentta);
+        nakyma.paivita();
     }
-    
-    public Palikka getPalikka(){
-        return this.palikka;
-    }
-    
-    public void setPalikka(Palikka palikka){
-        this.palikka = palikka;
-    }
-    
-    public void setKentta(Kentta kentta){
-        this.kentta = kentta;
-    }
-    
+        
     /**
      * Asetta kenttaan rivin parametreina saatujen rivinumeron ja rivin mukaan 
      * 
@@ -320,8 +315,8 @@ public class Logiikka {
         int viive = 1000;
         int jakso = 1000;
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
+        ajastin = new Timer();
+        ajastin.scheduleAtFixedRate(new TimerTask()
         {
             public void run()
             {
