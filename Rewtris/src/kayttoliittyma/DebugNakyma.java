@@ -13,7 +13,8 @@ import peli.Kentta;
 import peli.Palikka;
 
 /**
- *
+ * Debuggaukseen
+ * 
  * @author sjsaarin
  */
 public class DebugNakyma extends JPanel {
@@ -31,8 +32,13 @@ public class DebugNakyma extends JPanel {
     //    this.viesti = viesti;
     //    this.repaint();
     //}
+    
+    public void setPalikka(Palikka palikka){
+        this.palikka = palikka;
+    }
         
  
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);

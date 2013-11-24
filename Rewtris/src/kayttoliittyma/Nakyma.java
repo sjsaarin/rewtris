@@ -20,7 +20,7 @@ import javax.swing.border.EtchedBorder;
 
 
 /**
- * Luokka vastaa pelin 
+ * Luokka vastaa pelin graafisesta nakymasta 
  * 
  * @author sjsaarin
  */
@@ -82,6 +82,8 @@ public class Nakyma extends JFrame {
     public void setPalikka(Palikka palikka){
         this.palikka = palikka;
         pelinakyma.setPalikka(palikka);
+        
+        debugnakyma.setPalikka(palikka);
     }
     
     //debug paneeli

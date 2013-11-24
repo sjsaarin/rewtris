@@ -13,4 +13,6 @@ package kayttoliittyma;
  */
 public class SivuNakyma {
     
+    //ei toteutettu vielä
+    
 }

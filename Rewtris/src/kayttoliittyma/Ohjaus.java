@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import peli.Logiikka;
 
 /**
- * Luokka vastaa pelin ohjauksen toteuttamisest 
+ * Luokka vastaa pelin ohjauksen toteuttamisesta
  *
  * @author sjsaarin
  */

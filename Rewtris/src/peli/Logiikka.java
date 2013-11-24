@@ -34,11 +34,9 @@ public class Logiikka {
         kentanLeveys = kentta.getLeveys();
         kentanKorkeus = kentta.getKorkeus();
         kentanMarginaali = kentta.getMarginaali();
-        //palikka = new PalikkaO();
         uusiPalikka();
         nakyma = new Nakyma(palikka, kentta);
         ohjaus = new Ohjaus(this, nakyma);
-        //nakyma.paivita();
         kaynnistaAjastin();
     }
     
@@ -61,6 +59,11 @@ public class Logiikka {
        palikka.setY(kentanKorkeus-1);
    }
    
+   /**
+    * Metodi arpoo satunnaisen numeron väliltä 1-7
+    * 
+    * @return palikan numero 
+    */
    public int arvoPalikanNumero(){
        Random random = new Random();
        int luku = random.nextInt(7) + 1;
@@ -143,23 +146,13 @@ public class Logiikka {
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
     public boolean palikkaOikealle(){
-        int palikanX = palikka.getX();
-        int palikanY = palikka.getY();
-        int palikanKoko = palikka.getKoko();
-        boolean[][] palikanSolut = palikka.getSolut();
-        boolean[] kentanRivi;
-        for (int i = 0; i < palikanKoko; i++){
-            kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali);
-            for (int j = 0; j < palikanKoko; j++){
-                //onko rivillä tilaa oikealla
-                if (palikanSolut[i][j] && kentanRivi[palikanX+j+1+kentanMarginaali]){
-                    return false;
-                }
-            }
+        if (siirtoSivulleOnnistuu(1)){
+            palikka.setX(palikka.getX()+1);
+            piirraTilanne();
+            return true;
+        } else {
+            return false;
         }
-        palikka.setX(palikanX+1);
-        piirraTilanne();
-        return true;
     }
     
     /**
@@ -168,6 +161,18 @@ public class Logiikka {
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
     public boolean palikkaVasemmalle(){
+        
+        //siirretään vasemmalle jos onnistuu
+        if (siirtoSivulleOnnistuu(-1)){
+            palikka.setX(palikka.getX()-1);
+            piirraTilanne();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean siirtoSivulleOnnistuu(int mihin){
         int palikanX = palikka.getX();
         int palikanY = palikka.getY();
         int palikanKoko = palikka.getKoko();
@@ -177,15 +182,12 @@ public class Logiikka {
             kentanRivi = kentta.getRivi(palikanY-i+kentanMarginaali);
             for (int j = 0; j < palikanKoko; j++){
                 // onko rivillä tilaa
-                if (palikanSolut[i][j] && kentanRivi[palikanX+j-1+kentanMarginaali]){
+                if (palikanSolut[i][j] && kentanRivi[palikanX+j+kentanMarginaali+mihin]){
                     return false;
                 }
             }
             
         }
-        //siirretään vasemmalle
-        palikka.setX(palikanX-1);
-        piirraTilanne();
         return true;
     }
     
@@ -231,6 +233,7 @@ public class Logiikka {
     * Metodi päivittää kentän solut taulukkoon palikan sijainnin, tarkoitus kutsua aina kun palikkaa on pudotettu niin alas kuin mahdollista
     */
     public void paivitaKentta(){
+        //pysäytetään ajastin varmuuden vuoksi jottei yritä tipauttaa palikkaa turhaan
         ajastin.cancel();
         boolean[] kentanrivi;
         boolean[][] palikansolut = palikka.getSolut();
@@ -245,11 +248,6 @@ public class Logiikka {
             }
             kentta.setRivi(palikka.getY()-i, kentanrivi);
         }
-        /*
-        palikka = new PalikkaTyhja();
-        palikka.setX(0);
-        palikka.setY(0);
-        */
         uusiPalikka();
         poistaTaydetRivit();
         nakyma.setPalikka(palikka);
@@ -257,7 +255,7 @@ public class Logiikka {
         piirraTilanne();
     }
     
-    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet)
+    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet?)
     private void poistaTaydetRivit(){
         int rivitaynna;
         boolean[][] kentansolut;
@@ -277,7 +275,6 @@ public class Logiikka {
           }
             
         }
- 
     }
     
     /**
