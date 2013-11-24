@@ -126,8 +126,8 @@ public class KenttaTest {
     @Test
     public void rivinTyhjennysToimii(){
         kentta.tayta();
-        kentta.tyhjennaRivi(5);
-        kentta.tyhjennaRivi(5);
+        kentta.poistaRivi(5);
+        kentta.poistaRivi(5);
         
         boolean[] rivi = kentta.getRivi(kentta.getKorkeus()+kentta.getMarginaali()-1);
         boolean rivitOikein = true;

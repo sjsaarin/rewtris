@@ -80,13 +80,13 @@ public class PalikkaTest{
     @Test
     public void palikoideKaantoToimii(){
         
-        palikkaO.kaannaPalikkaa();
-        palikkaI.kaannaPalikkaa();
-        palikkaJ.kaannaPalikkaa();
-        palikkaL.kaannaPalikkaa();
-        palikkaS.kaannaPalikkaa();
-        palikkaZ.kaannaPalikkaa();
-        palikkaT.kaannaPalikkaa();
+        palikkaO.kaanna();
+        palikkaI.kaanna();
+        palikkaJ.kaanna();
+        palikkaL.kaanna();
+        palikkaS.kaanna();
+        palikkaZ.kaanna();
+        palikkaT.kaanna();
         
         boolean solut[][] = palikkaO.getSolut();
         boolean onOikein = true;
