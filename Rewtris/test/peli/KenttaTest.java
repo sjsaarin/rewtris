@@ -147,7 +147,7 @@ public class KenttaTest {
         
     }
     
-    /*
+    
     @Test
     public void setSolutToimiiOikein(){
         boolean[][] kentanSolut = new boolean[20][10];
@@ -160,9 +160,8 @@ public class KenttaTest {
         }
         kentanSolut[0] = rivi0;
         kentanSolut[1] = rivi1;
-        kentta.asetaSolut(kentanSolut);
-        assertEquals(Arrays.toString());
+        kentta.setSolut(kentanSolut);
+        assertEquals(Arrays.deepToString(kentta.getSolut()), Arrays.deepToString(kentanSolut));
     }
-    */
     
 }

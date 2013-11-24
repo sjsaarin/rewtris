@@ -54,6 +54,7 @@ public class DebugNakyma extends JPanel {
         g.drawString("Nuoli ylös: palikan kääntö", 10, 420);
         g.drawString("Nuoli alas: palikka alas", 10, 440);
         g.drawString("Välilyönti: palikan tiputus + uusi palikka", 10, 460);
+        g.drawString("R: kelaa takaisin (buginen)", 10, 480);
 
     }
 }

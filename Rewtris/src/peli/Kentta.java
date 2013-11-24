@@ -160,7 +160,7 @@ public class Kentta {
     public void setSolut(boolean[][] solut){
         for(int i=marginaali; i<todellinenKorkeus; i++){
             for(int j=marginaali; j<LEVEYS+marginaali; j++){
-                this.solut[i][j] = solut[i][j];
+                this.solut[i][j] = solut[i-marginaali][j-marginaali];
             }
         }
     }

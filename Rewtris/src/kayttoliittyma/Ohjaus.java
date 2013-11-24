@@ -53,9 +53,13 @@ public class Ohjaus extends KeyAdapter {
              case KeyEvent.VK_SPACE:
              //tiputtaa palikan
              logiikka.pudotaPalikka();
+                 break;          
+             case KeyEvent.VK_R:
+             //kelaa takaisin
+             logiikka.kelaaTakaisin();
                  break;
-             
              }
+             
 
          }
          
