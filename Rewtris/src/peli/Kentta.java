@@ -22,7 +22,8 @@ public class Kentta {
     private final int marginaali = 4;
     
     private final int todellinenLeveys;
-    private final int todellinenKorkeus;    
+    private final int todellinenKorkeus;
+    
     
     /*
     *  kaksiulotteinen taulukko [i][j] missä

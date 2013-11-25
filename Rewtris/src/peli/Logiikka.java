@@ -45,24 +45,24 @@ public class Logiikka {
         kentanLeveys = kentta.getLeveys();
         kentanKorkeus = kentta.getKorkeus();
         kentanMarginaali = kentta.getMarginaali();
-        uusiPalikka(0);
         nakyma = new Nakyma(palikka, kentta);
+        uusiPalikka(-1);
         ohjaus = new Ohjaus(this, nakyma);
         kaynnistaAjastin();
     }
     
     /**
     * Metodi lisää kenttään syötteenä annettua numeroa vastaavan palikan, kelvolliset syötteet:
-    * 0 - Tyhjä palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
+    * 0 - tyhja palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
     * Mikäli syötteenä annetaan jokin muu numero lisätään kenttään satunnainen palikka. Palikka lisätään kentän huipulle.
     * 
-    * @param   nro   
+    * @param   numero   
     * 
     */
     public void uusiPalikka(int numero){
     
        int x;
-       if (numero < 1 || numero > 7){
+       if (numero < 0 || numero > 7){
          palikannumero = arvoPalikanNumero();
        } else {
            palikannumero = numero;
@@ -77,6 +77,8 @@ public class Logiikka {
        }
        palikka.setX(x);
        palikka.setY(kentanKorkeus-1);
+       
+       nakyma.setPalikka(palikka);
        
        if(!(palikalleOnTilaa(0,0))){
            lopetaPeli();
@@ -202,9 +204,9 @@ public class Logiikka {
             }
             kentta.setRivi(palikka.getY()-i, kentanrivi);
         }
-        uusiPalikka(0);
+        uusiPalikka(-1);
         poistaTaydetRivit();
-        nakyma.setPalikka(palikka);
+        //nakyma.setPalikka(palikka);
         kaynnistaAjastin();
         piirraTilanne();
     }
@@ -248,15 +250,15 @@ public class Logiikka {
     }
     
     /**
-     * Kelaa takaisin edelliseen palikkaan
+     * Kelaa pelitilanteen takaisin edelliseen palikkaan
      */
     public void kelaaTakaisin(){
         if (muistettu){
             ajastin.cancel();
-            lisaaPalikka(muistettupalikka);
+            uusiPalikka(muistettupalikka);
             kentta.setSolut(muistettukentta);
-            kaynnistaAjastin();
             piirraTilanne();
+            kaynnistaAjastin();
         }
         
     }
