@@ -56,6 +56,6 @@ public class PisteLaskuri {
     }
     
     public int getPisteet(){
-        return (int)this.pisteet;
+        return this.pisteet;
     }
 }
