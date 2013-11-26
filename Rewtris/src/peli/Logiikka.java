@@ -6,12 +6,11 @@
 
 package peli;
 
+import java.util.Calendar;
 import java.util.Random;
 import kayttoliittyma.Nakyma;
 import java.util.Timer;
 import java.util.TimerTask;
-import kayttoliittyma.Ohjaus;
-
 
 /**
  * Luokka vastaa pelin logiikasta
@@ -23,36 +22,64 @@ public class Logiikka {
     public Kentta kentta;
     private Palikka palikka;
     private final Nakyma nakyma;
-    private final Ohjaus ohjaus;
     private final int kentanLeveys;
     private final int kentanKorkeus;
     private final int kentanMarginaali;
+    private  PisteLaskuri pistelaskuri;
     private Timer ajastin;
-    
+    private int ajastimenjakso;
+    private int taso;
+    private long aikaleima;
+    private boolean pelikaynnissa;
+    private int palikannumero;
+
     //takaisinkelausta varten
+    private int kelauksia;
+    private int kelauslaskuri;
+    private boolean voikelata;
     private int muistettupalikka;
     private boolean[][] muistettukentta;
-    private boolean muistettu;
-    private int palikannumero;
-    private boolean tallennettu;
     
     public Logiikka(){
-        
-        muistettu = false;
-        tallennettu = false;
-        
+               
         kentta = new Kentta();
         kentanLeveys = kentta.getLeveys();
         kentanKorkeus = kentta.getKorkeus();
         kentanMarginaali = kentta.getMarginaali();
-        nakyma = new Nakyma(palikka, kentta);
-        uusiPalikka(-1);
-        ohjaus = new Ohjaus(this, nakyma);
-        kaynnistaAjastin();
+        pistelaskuri = new PisteLaskuri();
+        nakyma = new Nakyma(palikka, kentta, this);
+        pelikaynnissa = false;
+        
     }
     
     /**
-    * Metodi lisää kenttään syötteenä annettua numeroa vastaavan palikan, kelvolliset syötteet:
+     * Aloittaa pelin
+     */
+    public void aloitaPeli(){
+        
+        pelikaynnissa = true;
+        
+        kentta.tyhjenna();
+        pistelaskuri.nollaa();
+        
+        voikelata = false;
+        kelauslaskuri = 0;
+        
+        taso = 0;
+        kelauksia = 0;
+      
+        Calendar cal = Calendar.getInstance();
+        aikaleima = cal.getTimeInMillis(); 
+        
+        uusiPalikka(-1);
+                
+        ajastimenjakso = 1000;
+        kaynnistaAjastin(ajastimenjakso);
+        
+    }
+    
+    /**
+    * Metodi lisää peliin syötteenä annettua numeroa vastaavan palikan, mikäli peli on käynnissä. Kelvolliset syötteet:
     * 0 - tyhja palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
     * Mikäli syötteenä annetaan jokin muu numero lisätään kenttään satunnainen palikka. Palikka lisätään kentän huipulle.
     * 
@@ -61,27 +88,36 @@ public class Logiikka {
     */
     public void uusiPalikka(int numero){
     
-       int x;
-       if (numero < 0 || numero > 7){
-         palikannumero = arvoPalikanNumero();
-       } else {
-           palikannumero = numero;
-       }
-       lisaaPalikka(palikannumero);
-       if (palikannumero == 1){
-           x = (kentanLeveys-1)/2;
-       } else if(palikannumero == 2) {
-           x = ((kentanLeveys)/2)-(palikka.getKoko()/2);
-       } else {       
-           x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);
-       }
-       palikka.setX(x);
-       palikka.setY(kentanKorkeus-1);
+        if (pelikaynnissa){
+            
+            int x;
+            
+            if (numero < 0 || numero > 7){
+                palikannumero = arvoPalikanNumero();
+            } else {
+                palikannumero = numero;
+            }
+            
+            lisaaPalikka(palikannumero);
        
-       nakyma.setPalikka(palikka);
+            if (palikannumero == 1){           
+                x = (kentanLeveys-1)/2;       
+            } else if(palikannumero == 2) {           
+                x = ((kentanLeveys)/2)-(palikka.getKoko()/2);       
+            } else {                 
+                x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);       
+            }
        
-       if(!(palikalleOnTilaa(0,0))){
-           lopetaPeli();
+            palikka.setX(x);
+            palikka.setY(kentanKorkeus-1);
+       
+            //jos palikalle ei ole tilaa kentässä lopetetaan peli, muuten lisätään palikka peliin;
+            if(!(palikalleOnTilaa(0,0))){
+                lopetaPeli();
+            } else {
+                nakyma.setPalikka(palikka);
+            }
+            piirraTilanne();
        }
    }
    
@@ -172,45 +208,9 @@ public class Logiikka {
     public void pudotaPalikka(){
         while (pudotaPalikkaa()) {
         }
-        paivitaKentta();
+        lopetaKierros();
     }
-    
-    
-    /**
-    * Metodi päivittää kentän solut taulukkoon palikan sijainnin, tarkoitus kutsua aina kun palikkaa on pudotettu niin alas kuin mahdollista
-    */
-    public void paivitaKentta(){
-        //pysäytetään ajastin varmuuden vuoksi jottei yritä tipauttaa palikkaa turhaan
-        ajastin.cancel();
-        
-        //otetaan kentän solut ja palikan numero talteen takaisinkelausta varten 
-        tallenna();
-        
-        while(!tallennettu){
-            
-        }
-        tallennettu = false;
-        
-        boolean[] kentanrivi;
-        boolean[][] palikansolut = palikka.getSolut();
-        int palikankoko=palikka.getKoko();
-        for (int i=0; i<palikankoko; i++){
-            int rivi = palikka.getY()+kentanMarginaali-i;
-            kentanrivi = kentta.getRivi(rivi);
-            for (int j=0; j<palikankoko; j++){
-                if (palikansolut[i][j]){
-                    kentanrivi[palikka.getX()+j+kentanMarginaali] = true;
-                }
-            }
-            kentta.setRivi(palikka.getY()-i, kentanrivi);
-        }
-        uusiPalikka(-1);
-        poistaTaydetRivit();
-        //nakyma.setPalikka(palikka);
-        kaynnistaAjastin();
-        piirraTilanne();
-    }
-    
+     
     /**
     * Täyttää kentän
     */
@@ -246,48 +246,113 @@ public class Logiikka {
      * lopettaa pelin
      */
     public void lopetaPeli(){
-        tyhjennaKentta();
+        pelikaynnissa = false;
+        ajastin.cancel();
+        //odotetaan pari sekunttia ennen kuin ilmoitetaan näkymälle että peli ohi jotta ajastin varmasti on pysähtynyt
+        ajastin = new Timer();
+        ajastin.schedule(new TimerTask(){
+                @Override
+                public void run(){
+                    nakyma.peliOhi();
+                }
+            },2000);
     }
     
     /**
      * Kelaa pelitilanteen takaisin edelliseen palikkaan
      */
     public void kelaaTakaisin(){
-        if (muistettu){
+        if (kelauksia>0 && voikelata){
             ajastin.cancel();
             uusiPalikka(muistettupalikka);
             kentta.setSolut(muistettukentta);
+            pistelaskuri.vahennaPisteetKelauksesta(kelauksia);
+            kelauksia--;
+            voikelata = false;
             piirraTilanne();
-            kaynnistaAjastin();
-        }
-        
+            kaynnistaAjastin(ajastimenjakso);
+        }    
     }
     
+    public int getPisteet(){
+        return pistelaskuri.getPisteet();
+    }
+    
+    public int getTaso(){
+        return this.taso;
+    }
+    
+    public int getKelauksia(){
+        return this.kelauksia;
+    }
+    
+    public boolean getVoikelata(){
+        return (this.voikelata && kelauksia > 0);
+    }
+    
+    //kutsutaan kierroksen lopussa, kun palikkaa on tiputettu niin pitkälle kuin mahdollista
+    private void lopetaKierros(){
+        //otetaan kentän solut ja palikan numero talteen takaisinkelausta varten
+        tallenna();
+        voikelata = true;
+        ajastin.cancel();
+        paivitaKentta();
+        piirraTilanne();
+        uusiKierros();
+    }
+    
+    //tallentaa kentän solut ja palikan numeron takaisinkelausta varten
     private void tallenna(){
         muistettukentta = kentta.getSolut();
         muistettupalikka = palikannumero;
-        muistettu = true;
-        tallennettu = true;
     }
     
-    private void kaynnistaAjastin(){
-        int viive = 1000;
-        int jakso = 1000;
-
-        ajastin = new Timer();
-        ajastin.scheduleAtFixedRate(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                if(!pudotaPalikkaa()){
-                    paivitaKentta();
+    //päivittää kentän solut taulukkoon palikan solut kierroksen lopuksi
+    private void paivitaKentta(){
+        
+        boolean[] kentanrivi;
+        boolean[][] palikansolut = palikka.getSolut();
+        int palikankoko=palikka.getKoko();
+        for (int i=0; i<palikankoko; i++){
+            int rivi = palikka.getY()+kentanMarginaali-i;
+            kentanrivi = kentta.getRivi(rivi);
+            for (int j=0; j<palikankoko; j++){
+                if (palikansolut[i][j]){
+                    kentanrivi[palikka.getX()+j+kentanMarginaali] = true;
                 }
             }
-        }, viive, jakso);
- 
+            kentta.setRivi(palikka.getY()-i, kentanrivi);
+        }
+        //kun palikka päivitetty kenttään tarkastetaan tuliko täysiä rivejä
+        poistaTaydetRivit();
+       
     }
     
+    //käynnistää palikoita tiputtavan ajastimen jos peli on käynnissä
+    private void kaynnistaAjastin(int jakso){
+      
+        System.out.println(jakso+""+aikaleima);
+        if (pelikaynnissa){
+
+            int viive = jakso;
+            
+            ajastin = new Timer();
+            ajastin.scheduleAtFixedRate(new TimerTask()
+                {
+                    @Override
+                    public void run()
+                {
+                    System.out.println(hashCode());
+                    if(!pudotaPalikkaa()){
+                        this.cancel();
+                        lopetaKierros();
+                }
+            }
+            }, viive, jakso);
+        }    
+    }
+    
+    //lisaa numeron mukaisen palikan peliin
     private void lisaaPalikka(int nro){
         
         switch(nro){
@@ -314,15 +379,15 @@ public class Logiikka {
                 break;
             case 7:
                 palikka = new PalikkaT();
-                break;
-            
+                break;        
         }
           
     }
     
-    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet?)
+    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä)
     private void poistaTaydetRivit(){
         int rivitaynna;
+        int rivejapoistettu = 0;
         boolean[][] kentansolut;
         int rivi = 0;
         while (rivi < kentanKorkeus){
@@ -334,7 +399,15 @@ public class Logiikka {
                }
           }
           if (rivitaynna == kentanLeveys){
+              
+              //annetaan pisteet rivistä
+              pistelaskuri.annaPisteetRivista(rivi+rivejapoistettu, taso);
+              
               kentta.poistaRivi(rivi);
+              rivejapoistettu++;             
+              
+              paivitaKelaukset();
+              
           } else {
               rivi++;
           }
@@ -342,6 +415,24 @@ public class Logiikka {
         }
     }
     
+    //kutsutaan kun saatu täysi rivi, päivittää kelaukset
+    private void paivitaKelaukset(){
+              //lisätään kelaus jos täysiä rivejä tullut 5 ja nollataan kelauslaskuri
+              if (kelauslaskuri<5){
+                  kelauslaskuri++;
+              }
+              if (kelauslaskuri == 5){
+                  if (kelauksia < 10){
+                      kelauksia++;
+                  }
+                  kelauslaskuri = 0;
+              }
+              
+              //tuli täysi rivi, ei voi kelata seuraavalla kierroksella
+              voikelata = false;
+    }
+    
+    //tarkistaa onko annetuissa koordinaateissa suhteessa palikkaan tilaa palikalle
     private boolean palikalleOnTilaa(int x, int y){
         int palikanX = palikka.getX();
         int palikanY = palikka.getY();
@@ -359,6 +450,27 @@ public class Logiikka {
             
         }
         return true;
+    }
+    
+    //aloittaa uuden kierroksen jos peli on käynnissä
+    private void uusiKierros(){
+        if (pelikaynnissa){
+            Calendar cal = Calendar.getInstance();
+            long aikanyt = cal.getTimeInMillis();
+            //mikäli aikaa on kulunut yli 30 sekuntia edellisestä tason nostosta, nostetaan tasoa
+            if (aikanyt - aikaleima > 30000){
+                taso++;
+                if (taso < 20) {
+                    ajastimenjakso -= 50;
+                } else {
+                    ajastimenjakso *= 0.5;
+                }
+                aikaleima = aikanyt;
+            }
+            uusiPalikka(-1);
+            piirraTilanne(); 
+            kaynnistaAjastin(ajastimenjakso);
+        }
     }
     
 }
