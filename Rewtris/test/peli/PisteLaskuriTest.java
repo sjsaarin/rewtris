@@ -56,6 +56,12 @@ public class PisteLaskuriTest {
     }
     
     @Test
+    public void pisteLaskuriAntaaPisteetOikeinRiveistaKorkeillaTasoilla(){
+        pistelaskuri.annaPisteetRivista(5, 15); //110
+        assertEquals(120, pistelaskuri.getPisteet());
+    }
+    
+    @Test
     public void pistelaskuriVahentaaPisteetOikeinKelauksesta(){
         pistelaskuri.annaPisteetRivista(0, 0);
         pistelaskuri.vahennaPisteetKelauksesta(1);
