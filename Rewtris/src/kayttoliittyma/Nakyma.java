@@ -157,7 +157,7 @@ public class Nakyma extends JFrame {
         
         peliajastin.start();
         
-        //paivita();
+        paivita();
         
     }
     

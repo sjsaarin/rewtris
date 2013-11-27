@@ -206,8 +206,12 @@ public class Logiikka {
     * Metodi pudottaa palikkaa alaspäin niin pitkälle kuin mahdollista
     */
     public void pudotaPalikka(){
+        //peruutetaan ajastin jottei yritä tiputtaa palikkaa yhtäaikaisesti tämän metodin kanssa
+        ajastin.cancel();
         while (pudotaPalikkaa()) {
         }
+        //tarkastetaan onko peli käynnissä ja kutsutaan lopetaKierros vain siinä tapauksessa, muuten saattaa käydä
+        //niin että lopetaKierrosta kutsutaan pelin loppumisen jälkeen
         if (pelikaynnissa){
             lopetaKierros();
         }
