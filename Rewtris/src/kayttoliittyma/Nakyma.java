@@ -182,14 +182,12 @@ public class Nakyma extends JFrame {
     }
     
     public void peliOhi(){
-        int response = JOptionPane.showConfirmDialog(null, "Start a new game?", "GAME OVER",
+        int vastaus = JOptionPane.showConfirmDialog(null, "Start a new game?", "GAME OVER",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
-            System.out.println("No button clicked");
+        if (vastaus == JOptionPane.NO_OPTION || vastaus == JOptionPane.CLOSED_OPTION) {
             poistaPeli();
             naytaAlkuvalikko();
-        } else if (response == JOptionPane.YES_OPTION) {
-            System.out.println("Yes button clicked");
+        } else if (vastaus == JOptionPane.YES_OPTION) {
             logiikka.aloitaPeli();
         }
     }

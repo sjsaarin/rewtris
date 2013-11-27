@@ -65,7 +65,7 @@ public class Logiikka {
         voikelata = false;
         kelauslaskuri = 0;
         
-        taso = 0;
+        taso = 1;
         kelauksia = 0;
       
         Calendar cal = Calendar.getInstance();
@@ -248,7 +248,7 @@ public class Logiikka {
     public void lopetaPeli(){
         pelikaynnissa = false;
         ajastin.cancel();
-        //odotetaan pari sekunttia ennen kuin ilmoitetaan näkymälle että peli ohi jotta ajastin varmasti on pysähtynyt
+        //odotetaan pari sekunttia ennen kuin ilmoitetaan näkymälle että peli ohi, jotta ajastin varmasti on pysähtynyt
         ajastin = new Timer();
         ajastin.schedule(new TimerTask(){
                 @Override
@@ -457,11 +457,9 @@ public class Logiikka {
             long aikanyt = cal.getTimeInMillis();
             //mikäli aikaa on kulunut yli 30 sekuntia edellisestä tason nostosta, nostetaan tasoa
             if (aikanyt - aikaleima > 30000){
-                taso++;
                 if (taso < 20) {
+                    taso++;
                     ajastimenjakso -= 50;
-                } else {
-                    ajastimenjakso *= 0.5;
                 }
                 aikaleima = aikanyt;
             }
