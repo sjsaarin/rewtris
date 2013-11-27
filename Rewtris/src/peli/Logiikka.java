@@ -208,7 +208,9 @@ public class Logiikka {
     public void pudotaPalikka(){
         while (pudotaPalikkaa()) {
         }
-        lopetaKierros();
+        if (pelikaynnissa){
+            lopetaKierros();
+        }
     }
      
     /**
