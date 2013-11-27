@@ -13,12 +13,13 @@ import peli.Palikka;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import peli.Logiikka;
 
@@ -41,6 +42,8 @@ public class Nakyma extends JFrame {
     //private DebugNakyma debugnakyma;
     private Alkuvalikko alkuvalikko;
     private GridBagConstraints gbc;
+    private Timer peliajastin;
+    private final int paivitystiheys = 33;
     
     public Nakyma(Palikka palikka, Kentta kentta, Logiikka logiikka){
         this.palikka = palikka;
@@ -66,6 +69,13 @@ public class Nakyma extends JFrame {
         this.getContentPane().add(paneeli);
         
         ohjaus = new Ohjaus(logiikka);
+        
+        peliajastin = new javax.swing.Timer(paivitystiheys, new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              pelinakyma.repaint();
+          }
+        });
         
         naytaAlkuvalikko();
         
@@ -107,7 +117,6 @@ public class Nakyma extends JFrame {
      */
     public void poistaAlkuvalikko()
     {
-        System.out.println("poista alkuvalikko");
         paneeli.remove(alkuvalikko);
         paneeli.remove(pistelista);
     }
@@ -117,7 +126,6 @@ public class Nakyma extends JFrame {
      */ 
     public void naytaPeli(){
         
-        System.out.println("nayta peli kutsuttu");
         poistaAlkuvalikko();
         
         pelinakyma.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -140,13 +148,14 @@ public class Nakyma extends JFrame {
         this.addKeyListener(ohjaus);
         
         logiikka.aloitaPeli();
-        System.out.println("peli aloitettu");
         
         this.getContentPane().invalidate();
         this.getContentPane().validate();
         
         this.setFocusable(true);
         this.requestFocus();
+        
+        peliajastin.start();
         
         //paivita();
         
@@ -156,17 +165,18 @@ public class Nakyma extends JFrame {
      * Poistaa pelinäkymän
      */
     public void poistaPeli(){
+        peliajastin.stop();
         paneeli.remove(pelinakyma);
         paneeli.remove(sivunakyma);
         this.removeKeyListener(ohjaus);
     }
     
     /**
-     * päivittää pelinäkymän
+     * päivittää sivunäkymän
      */
     public void paivita(){
         
-        pelinakyma.repaint();
+        //pelinakyma.repaint();
         sivunakyma.repaint();
         
     }

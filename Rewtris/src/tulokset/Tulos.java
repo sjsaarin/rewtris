@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pisteet;
+package tulokset;
 
 import java.io.Serializable;
 
@@ -13,18 +13,18 @@ import java.io.Serializable;
  * 
  * @author sjsaarin
  */
-public class Piste implements Comparable<Piste>, Serializable {
+public class Tulos implements Comparable<Tulos>, Serializable {
     
     int pisteet;
     String nimi;
 
-    public Piste(int pisteet, String nimi){
+    public Tulos(int pisteet, String nimi){
         this.pisteet = pisteet;
         this.nimi = nimi;
     } 
     
     @Override
-    public int compareTo(Piste t) {
+    public int compareTo(Tulos t) {
         return pisteet < t.pisteet ? -1 : pisteet > t.pisteet ? 1 : 0;
     }
  

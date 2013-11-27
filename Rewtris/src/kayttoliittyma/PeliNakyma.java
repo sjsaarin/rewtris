@@ -38,19 +38,19 @@ public class PeliNakyma extends JPanel {
     
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
         piirraPalikka(g);    
         piirraKentta(g);
     }
         
     private void piirraPalikka(Graphics g){
+        g.setColor(Color.GREEN);
         x = palikka.getX()*width;
         y = (kentta.getKorkeus()-1-palikka.getY())*height;
         boolean[][] koordinaatit = palikka.getSolut();
         for (int i = 0; i < palikka.getKoko(); i++){
             for (int j = 0; j < palikka.getKoko(); j++){
                 if (koordinaatit[i][j]){
-                    g.drawRect(x, y, width, height);
+                    g.fill3DRect(x, y, width, height, true);
                 }
                 x += width;
             }
@@ -60,15 +60,15 @@ public class PeliNakyma extends JPanel {
     }
     
     private void piirraKentta(Graphics g){
+        g.setColor(Color.GRAY);
         x = 0; 
         y = 0;
         boolean[][] kentanSolut = kentta.getSolut();
         for (int i = kentta.getKorkeus()-1; i >= 0; i--){
             for (int j = 0; j < kentta.getLeveys(); j++){
                 if (kentanSolut[i][j]){
-                    g.drawRect(x, y, width, height);
-                    g.setColor(Color.GRAY);
-                    g.fillRect(x+1, y+1, width-2, height-2);
+                    g.fill3DRect(x, y, width, height, true);
+                    //g.fillRect(x+1, y+1, width-2, height-2);
                 }
                 x += width;
             }

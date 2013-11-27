@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pisteet;
+package tulokset;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,57 +17,60 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Luokka vastaa pisteiden tallennuksesta, tallentaa 20 parasta tulosta.
+ * Luokka vastaa pelitulosten tallennuksesta, tallentaa 20 parasta tulosta.
  * 
  * @author sjsaarin
  */
-public class Pisteet {
+public class Tulokset {
     
-    private List<Piste> pisteet;
-    private final String TIEDOSTONNIMI = "PISTEET";
+    private List<Tulos> tulokset;
+    private final String TIEDOSTONNIMI = "SCORES";
     
-    public Pisteet(){
-        pisteet = new ArrayList<>();
+    public Tulokset(){
+        tulokset = new ArrayList<>();
     }
     
     /**
-     * Lisää tuloksen
+     * Lisää tuloksen. Jos listassa on tämän jälkeen enemmän kuin 20 tulosta, poistetaan viimeinen.
      * 
-     * @param piste 
+     * @param tulos
      */
-    public void lisaaPiste(Piste piste){
-        pisteet.add(piste);
-        Collections.sort(pisteet);
+    public void lisaaTulos(Tulos tulos){
+        tulokset.add(tulos);
+        Collections.sort(tulokset);
+        if (tulokset.size()>20){
+            tulokset.remove(20);
+        }
     }
     
     /**
-     * Tallentaa pisteet levylle
+     * Tallentaa tulokset levylle
      * 
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void tallennaPisteet() throws FileNotFoundException, IOException {
+    public void tallennaTulokset() throws FileNotFoundException, IOException {
         FileOutputStream fos = new FileOutputStream(TIEDOSTONNIMI);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(pisteet);
+        oos.writeObject(tulokset);
         oos.close();
     }
     
     /**
-     * Lataa pisteet levyltä
+     * Lataa tulokset levyltä
      * 
      * @throws IOException
      * @throws ClassNotFoundException 
      */
-    public void lataaPisteet() throws IOException, ClassNotFoundException{
+    public void lataaTulokset() throws IOException, ClassNotFoundException{
         FileInputStream fis = new FileInputStream(TIEDOSTONNIMI);
         ObjectInputStream ois = new ObjectInputStream(fis);
-        pisteet = (List<Piste>) ois.readObject();
+        tulokset = (List<Tulos>) ois.readObject();
         ois.close();
     }
     
-    public List getPisteet(){
-        return this.pisteet;
+    public List getTulokset(){
+        return this.tulokset;
     }
  
 }

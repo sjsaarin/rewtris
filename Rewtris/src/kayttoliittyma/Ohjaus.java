@@ -35,7 +35,6 @@ public class Ohjaus extends KeyAdapter {
         switch (nappain) {
             case KeyEvent.VK_LEFT:
                 //siirtää palikkaa vasemmalle
-                System.out.println("vasen");
                 logiikka.palikkaVasemmalle();
                 break;
              case KeyEvent.VK_RIGHT:   

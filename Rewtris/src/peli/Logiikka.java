@@ -117,7 +117,7 @@ public class Logiikka {
             } else {
                 nakyma.setPalikka(palikka);
             }
-            piirraTilanne();
+            //piirraTilanne();
        }
    }
    
@@ -143,7 +143,7 @@ public class Logiikka {
         if (palikalleOnTilaa(0,-1)){
         
             palikka.setY(palikka.getY()-1);
-            piirraTilanne();
+            //piirraTilanne();
             return true;
         }
         return false;
@@ -157,7 +157,7 @@ public class Logiikka {
     public boolean palikkaOikealle(){
         if (palikalleOnTilaa(1, 0)){
             palikka.setX(palikka.getX()+1);
-            piirraTilanne();
+            //piirraTilanne();
             return true;
         } else {
             return false;
@@ -174,7 +174,7 @@ public class Logiikka {
         //siirretään vasemmalle jos onnistuu
         if (palikalleOnTilaa(-1, 0)){
             palikka.setX(palikka.getX()-1);
-            piirraTilanne();
+            //piirraTilanne();
             return true;
         } else {
             return false;
@@ -191,7 +191,7 @@ public class Logiikka {
         palikka.kaanna();
         //tarkistetaan mahtuuuko palikka
         if (palikalleOnTilaa(0,0)){
-            piirraTilanne();
+            //piirraTilanne();
             return true;
         }
         //ei mahtunut, käännetään takaisin
@@ -226,7 +226,7 @@ public class Logiikka {
     }
     
     /**
-    * Metodi piirtää tilanteen näkymään
+    * Metodi päivittää pisteet ja muut tiedot sivunäkymään
     */
     public void piirraTilanne(){
         nakyma.paivita();
@@ -331,7 +331,6 @@ public class Logiikka {
     //käynnistää palikoita tiputtavan ajastimen jos peli on käynnissä
     private void kaynnistaAjastin(int jakso){
       
-        System.out.println(jakso+""+aikaleima);
         if (pelikaynnissa){
 
             int viive = jakso;
@@ -342,7 +341,6 @@ public class Logiikka {
                     @Override
                     public void run()
                 {
-                    System.out.println(hashCode());
                     if(!pudotaPalikkaa()){
                         this.cancel();
                         lopetaKierros();
@@ -468,7 +466,7 @@ public class Logiikka {
                 aikaleima = aikanyt;
             }
             uusiPalikka(-1);
-            piirraTilanne(); 
+            //piirraTilanne(); 
             kaynnistaAjastin(ajastimenjakso);
         }
     }
