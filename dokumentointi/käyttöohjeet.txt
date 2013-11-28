@@ -2,3 +2,6 @@ nuolinäppäin vasemmalle	- palikan siirto vasemmalle
 nuolinäppäin oikealle	- palikan siirto oikealle
 nuolinäppäin alas	- palikan siirto alas
 välilyönti		- palikan tiputus alas
+r			- takaisinkelaus
+
+Jokaisesta viidestä täydestä rivistä saa yhden takaisinkelauksen. Takaisinkelauksia voi saada enintään 10. Takaisinkelauksen voi käyttää jos edellisellä kierroksella ei ole käyttänyt takaisinkelausta tai saanut täyttä riviä. Takaisinkelaus vähentää pisteitä, sitä enemmän mitä vähemmäm takaisinkelauksia on jäljellä

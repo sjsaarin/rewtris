@@ -188,6 +188,7 @@ public class Nakyma extends JFrame {
             naytaAlkuvalikko();
         } else if (vastaus == JOptionPane.YES_OPTION) {
             logiikka.aloitaPeli();
+            paivita();
         }
     }
     

@@ -8,3 +8,9 @@
 19.11.  6t	Logiikan koodausta
 20.11.	4t	Logiikan ja graafisen näkymän koodausta
 21.11.	4t	koodausta, sekvennsikaavion ja päivitetyn luokkakaavion teko
+23.11.  2t	Graafisen näkymän suunnittelua
+24.11.  4t	Bugien korjausta, graafisen näkymän koodausta
+25.11.  5t	PisteLaskuri, Tulos ja Tulokset luokkien suunnittelu ja koodaus
+26.11.	3t	Testausta ja graafisen näkymän koodausta 
+27.11.	2t      Testausta ja bugien korjailua
+28.11.	5t	Ulkönäön hiomista, sekvenssi- ja luokkakaavioiden piirtelyä, dokumenttien päivittelyä

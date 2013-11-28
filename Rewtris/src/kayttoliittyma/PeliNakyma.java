@@ -43,7 +43,7 @@ public class PeliNakyma extends JPanel {
     }
         
     private void piirraPalikka(Graphics g){
-        g.setColor(Color.GREEN);
+        g.setColor(Color.MAGENTA);
         x = palikka.getX()*width;
         y = (kentta.getKorkeus()-1-palikka.getY())*height;
         boolean[][] koordinaatit = palikka.getSolut();
@@ -60,15 +60,18 @@ public class PeliNakyma extends JPanel {
     }
     
     private void piirraKentta(Graphics g){
-        g.setColor(Color.GRAY);
         x = 0; 
         y = 0;
         boolean[][] kentanSolut = kentta.getSolut();
         for (int i = kentta.getKorkeus()-1; i >= 0; i--){
             for (int j = 0; j < kentta.getLeveys(); j++){
                 if (kentanSolut[i][j]){
+                    g.setColor(Color.GRAY);
                     g.fill3DRect(x, y, width, height, true);
                     //g.fillRect(x+1, y+1, width-2, height-2);
+                } else {
+                    g.setColor(Color.LIGHT_GRAY);
+                    g.drawRect(x, y, width, height);
                 }
                 x += width;
             }
