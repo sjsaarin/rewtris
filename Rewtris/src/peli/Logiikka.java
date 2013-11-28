@@ -140,12 +140,13 @@ public class Logiikka {
     */
     public boolean pudotaPalikkaa(){
         
-        if (palikalleOnTilaa(0,-1)){
-        
-            palikka.setY(palikka.getY()-1);
-            //piirraTilanne();
-            return true;
+        if(pelikaynnissa){        
+            if (palikalleOnTilaa(0,-1)){
+                    palikka.setY(palikka.getY()-1);
+                return true;
+            }
         }
+        
         return false;
     }
 
@@ -155,13 +156,13 @@ public class Logiikka {
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
     public boolean palikkaOikealle(){
-        if (palikalleOnTilaa(1, 0)){
-            palikka.setX(palikka.getX()+1);
-            //piirraTilanne();
-            return true;
-        } else {
-            return false;
+        if (pelikaynnissa){
+            if (palikalleOnTilaa(1, 0)){
+                palikka.setX(palikka.getX()+1);
+                return true;
+            }
         }
+        return false;
     }
     
     /**
@@ -171,14 +172,15 @@ public class Logiikka {
     */
     public boolean palikkaVasemmalle(){
         
-        //siirretään vasemmalle jos onnistuu
-        if (palikalleOnTilaa(-1, 0)){
-            palikka.setX(palikka.getX()-1);
-            //piirraTilanne();
-            return true;
-        } else {
-            return false;
+        if (pelikaynnissa){
+            //siirretään vasemmalle jos onnistuu
+            if (palikalleOnTilaa(-1, 0)){
+                palikka.setX(palikka.getX()-1);
+                //piirraTilanne();
+                return true;
+            } 
         }
+        return false;
     }
     
      /**
@@ -187,17 +189,19 @@ public class Logiikka {
      * @return 'true' jos palikan kääntö onnsitui, muuten 'false' 
      */
     public boolean kaannaPalikka(){
-        //käännetaan palikkaa
-        palikka.kaanna();
-        //tarkistetaan mahtuuuko palikka
-        if (palikalleOnTilaa(0,0)){
-            //piirraTilanne();
-            return true;
+        if (pelikaynnissa){
+            //käännetaan palikkaa
+            palikka.kaanna();
+            //tarkistetaan mahtuuuko palikka
+            if (palikalleOnTilaa(0,0)){
+                //piirraTilanne();
+                return true;
+            }
+            //ei mahtunut, käännetään takaisin
+            palikka.kaanna();
+            palikka.kaanna();
+            palikka.kaanna();
         }
-        //ei mahtunut, käännetään takaisin
-        palikka.kaanna();
-        palikka.kaanna();
-        palikka.kaanna();
         return false;
     }
     
@@ -206,14 +210,16 @@ public class Logiikka {
     * Metodi pudottaa palikkaa alaspäin niin pitkälle kuin mahdollista
     */
     public void pudotaPalikka(){
-        //peruutetaan ajastin jottei yritä tiputtaa palikkaa yhtäaikaisesti tämän metodin kanssa
-        ajastin.cancel();
-        while (pudotaPalikkaa()) {
-        }
-        //tarkastetaan onko peli käynnissä ja kutsutaan lopetaKierros vain siinä tapauksessa, muuten saattaa käydä
-        //niin että lopetaKierrosta kutsutaan pelin loppumisen jälkeen
         if (pelikaynnissa){
-            lopetaKierros();
+            //peruutetaan ajastin jottei yritä tiputtaa palikkaa yhtäaikaisesti tämän metodin kanssa
+            ajastin.cancel();
+            while (pudotaPalikkaa()) {
+            }
+            //tarkastetaan onko peli vielä käynnissä ja kutsutaan lopetaKierros vain siinä tapauksessa, muuten saattaa käydä
+            //niin että lopetaKierrosta kutsutaan pelin loppumisen jälkeen
+            if (pelikaynnissa){
+                lopetaKierros();
+            }
         }
     }
      
@@ -232,7 +238,7 @@ public class Logiikka {
     }
     
     /**
-    * Metodi päivittää pisteet ja muut tiedot sivunäkymään
+    * Metodi päivittää pisteet ja muut tiedot pelinäkymään
     */
     public void piirraTilanne(){
         nakyma.paivita();
@@ -296,14 +302,25 @@ public class Logiikka {
         return (this.voikelata && kelauksia > 0);
     }
     
+    public boolean getPelikaynnissa(){
+        return pelikaynnissa;
+    }
+    
     //kutsutaan kierroksen lopussa, kun palikkaa on tiputettu niin pitkälle kuin mahdollista
     private void lopetaKierros(){
+        
+        pelikaynnissa = false;
+        ajastin.cancel();
+        
         //otetaan kentän solut ja palikan numero talteen takaisinkelausta varten
         tallenna();
         voikelata = true;
-        ajastin.cancel();
+        
         paivitaKentta();
         piirraTilanne();
+        
+        pelikaynnissa = true;
+        
         uusiKierros();
     }
     
@@ -406,10 +423,9 @@ public class Logiikka {
               
               //annetaan pisteet rivistä
               pistelaskuri.annaPisteetRivista(rivi+rivejapoistettu, taso);
-              
+  
               kentta.poistaRivi(rivi);
-              rivejapoistettu++;             
-              
+              rivejapoistettu++;                       
               paivitaKelaukset();
               
           } else {
@@ -451,7 +467,6 @@ public class Logiikka {
                     return false;
                 }
             }
-            
         }
         return true;
     }
@@ -470,7 +485,6 @@ public class Logiikka {
                 aikaleima = aikanyt;
             }
             uusiPalikka(-1);
-            //piirraTilanne(); 
             kaynnistaAjastin(ajastimenjakso);
         }
     }

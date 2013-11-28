@@ -72,5 +72,9 @@ public class Tulokset {
     public List getTulokset(){
         return this.tulokset;
     }
+    
+    public Tulos getTulos(int indeksi){
+        return tulokset.get(indeksi);
+    }
  
 }

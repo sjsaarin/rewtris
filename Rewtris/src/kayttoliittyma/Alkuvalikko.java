@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 public class Alkuvalikko extends JPanel {
     
     Nakyma nakyma;
+    
     public Alkuvalikko(Nakyma nakyma){
         this.nakyma = nakyma;
         alusta();
@@ -34,15 +35,19 @@ public class Alkuvalikko extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         
         JButton aloitaPainike = new JButton("Start Game");
+        
         aloitaPainike.addActionListener(new ActionListener() {
  
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 nakyma.naytaPeli();
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.PAGE_END;
         this.add(aloitaPainike, gbc);
     }
     
@@ -52,7 +57,7 @@ public class Alkuvalikko extends JPanel {
         
         g.setColor(Color.BLACK);
         g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        g.drawString("Rewtris", 120, 80);
+        g.drawString("Rewtris", 117, 80);
         g.setColor(Color.GREEN);
         g.fill3DRect(120, 100, 30, 30, true);
         g.fill3DRect(180, 100, 30, 30, true);

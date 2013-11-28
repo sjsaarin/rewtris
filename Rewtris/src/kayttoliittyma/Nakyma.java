@@ -6,7 +6,6 @@
 
 package kayttoliittyma;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import peli.Kentta;
 import peli.Palikka;
@@ -35,11 +34,10 @@ public class Nakyma extends JFrame {
     private Palikka palikka;
     private Kentta kentta;
     private Logiikka logiikka;
-    private SivuNakyma sivunakyma;
+    private PisteNakyma sivunakyma;
     private Pistelista pistelista;
     private PeliNakyma pelinakyma;
     private JPanel paneeli;
-    //private DebugNakyma debugnakyma;
     private Alkuvalikko alkuvalikko;
     private GridBagConstraints gbc;
     private Timer peliajastin;
@@ -53,8 +51,8 @@ public class Nakyma extends JFrame {
     }
     
     private void alusta(){
-        this.setSize(650, 700);
-        //this.setLocationRelativeTo(null);
+        this.setSize(320, 680);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Rewtris");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,7 +61,7 @@ public class Nakyma extends JFrame {
         pistelista = new Pistelista();
         
         pelinakyma = new PeliNakyma(kentta, palikka);
-        sivunakyma = new SivuNakyma(logiikka);
+        sivunakyma = new PisteNakyma(logiikka);
         
         paneeli = new JPanel(new GridBagLayout());
         this.getContentPane().add(paneeli);
@@ -88,20 +86,20 @@ public class Nakyma extends JFrame {
     public void naytaAlkuvalikko(){
         gbc = new GridBagConstraints();
         
-        alkuvalikko.setPreferredSize(new Dimension(300,600));
+        alkuvalikko.setPreferredSize(new Dimension(300,300));
         
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5,5,15,5);
         gbc.gridx = 0;
         gbc.gridy = 0;
         
         paneeli.add(alkuvalikko, gbc);
         
-        pistelista.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        pistelista.setPreferredSize(new Dimension(300,600));
+        pistelista.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        pistelista.setPreferredSize(new Dimension(270,300));
         
-        gbc.insets = new Insets(5,5,5,5);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.insets = new Insets(15,5,15,5);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         
         paneeli.add(pistelista, gbc);
         
@@ -128,23 +126,24 @@ public class Nakyma extends JFrame {
         
         poistaAlkuvalikko();
         
-        pelinakyma.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        pelinakyma.setPreferredSize(new Dimension(300,600));
+        sivunakyma.setPreferredSize(new Dimension(300,30));
     
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(1,1,1,1);
         gbc.gridx = 0;
         gbc.gridy = 0;
   
+        paneeli.add(sivunakyma, gbc);
+    
+        pelinakyma.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        pelinakyma.setPreferredSize(new Dimension(300,600));
+        
+        gbc.insets = new Insets(4,1,1,1);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+  
         paneeli.add(pelinakyma, gbc);
         
-        sivunakyma.setPreferredSize(new Dimension(300,600));
-    
-        gbc.insets = new Insets(5,5,5,5);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-  
-        paneeli.add(sivunakyma, gbc);
-       
         this.addKeyListener(ohjaus);
         
         logiikka.aloitaPeli();

@@ -24,8 +24,13 @@ public class LogiikkaTest {
     @Before
     public void setUp() {
        peliLogiikka = new Logiikka();
+       peliLogiikka.aloitaPeli();
     }
     
+    @After
+    public void tearDown() {
+        peliLogiikka.lopetaPeli();
+    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
@@ -40,10 +45,12 @@ public class LogiikkaTest {
     
     @Test
     public void palikanTiputusKentanPohjastaLapiEiOnnistu(){
+        peliLogiikka.aloitaPeli();
         for (int i = 0; i < 20; i++){
             peliLogiikka.pudotaPalikkaa();
         }
         assertEquals(false, peliLogiikka.pudotaPalikkaa());
+        peliLogiikka.lopetaPeli();
     }
     
     @Test
@@ -78,12 +85,19 @@ public class LogiikkaTest {
     
     @Test
     public void palikanSiirtoReunanYliVasemmalleEiOnnistu(){
+        for (int i = 0; i < 6; i++){
+            peliLogiikka.palikkaVasemmalle();
+        }
+        assertFalse(peliLogiikka.palikkaVasemmalle());
         
     }
     
     @Test
     public void palikanSiirtoReunanYliOikealleEiOnnistu(){
-        
+        for (int i = 0; i < 6; i++){
+            peliLogiikka.palikkaOikealle();
+        }
+        assertFalse(peliLogiikka.palikkaOikealle());
     }
     
     @Test
@@ -130,4 +144,163 @@ public class LogiikkaTest {
         assertTrue(onYksi && onKaksi && onKolme && onNelja && onViisi && onKuusi && onSeitseman && onSallittuLuku);
         
     }
+    
+    @Test
+    public void pelinAlussaTasoOnYksi(){
+        assertEquals(1, peliLogiikka.getTaso());
+    }
+    
+    @Test
+    public void pelinAlussaPisteetOnNolla(){
+        assertEquals(0, peliLogiikka.getPisteet());
+    }
+    
+    @Test
+    public void pelinAlussaKelauksiaOnNolla(){
+        assertEquals(0, peliLogiikka.getKelauksia());
+    }
+    
+    @Test
+    public void pelinAlussaEiVoiKelata(){
+        assertFalse(peliLogiikka.getVoikelata());
+    }
+    
+    @Test 
+    public void peliLoppuuKunPalikoitaKentanHuipussaAsti(){
+        for (int i = 0; i < 12; i++){
+            peliLogiikka.pudotaPalikka();
+        }
+        assertFalse(peliLogiikka.getPelikaynnissa());
+        
+    }
+    
+    @Test
+    public void palikkaaEiVoiLiikuttaaJosPeliEiKäynnissä(){
+        peliLogiikka.lopetaPeli();
+        assertFalse(peliLogiikka.palikkaOikealle() || peliLogiikka.palikkaVasemmalle() || peliLogiikka.kaannaPalikka() || peliLogiikka.pudotaPalikkaa());
+    }
+    
+    @Test
+    public void uudenPalikanLisaysTayteenKenttaanLopettaaPelin(){
+        peliLogiikka.taytaKentta();
+        peliLogiikka.uusiPalikka(1);
+        assertFalse(peliLogiikka.getPelikaynnissa());
+    }
+    
+    @Test 
+    public void viidestaTaydestaRivistaSaaKelauksen(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        assertEquals(1, peliLogiikka.getKelauksia());
+    }
+    
+    @Test 
+    public void TaydenRivinSaanninJälkeenEiVoiKelata(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        assertFalse(peliLogiikka.getVoikelata());
+    }
+    
+    @Test 
+    public void kunOnSaanutKelauksenSitaSeuraavallaKierroksellaVoiKelata(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        assertTrue(peliLogiikka.getVoikelata());
+    }
+    
+    @Test 
+    public void kunOnKelannutSeuraavallaKierroksellaEiVoiKelata(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        peliLogiikka.kelaaTakaisin();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        assertFalse(peliLogiikka.getVoikelata());
+    }
+    
+    @Test 
+    public void taysistaRiveistaSaaPisteita(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        assertTrue(peliLogiikka.getPisteet() > 505);
+    }
+    
+    @Test 
+    public void kelausVahentaaPisteita(){
+        boolean[] rivi = new boolean[18];
+        for (int i = 0; i < 18; i++){
+            rivi[i] = true;
+        }
+        peliLogiikka.setKentanRivi(0, rivi);
+        peliLogiikka.setKentanRivi(1, rivi);
+        peliLogiikka.setKentanRivi(2, rivi);
+        peliLogiikka.setKentanRivi(3, rivi);
+        peliLogiikka.setKentanRivi(4, rivi);
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        peliLogiikka.pudotaPalikka();
+        while (!peliLogiikka.pudotaPalikkaa()){
+        }
+        peliLogiikka.kelaaTakaisin();
+        assertTrue(peliLogiikka.getPisteet()<500);
+    }
+    
+    
 }
