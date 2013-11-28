@@ -60,7 +60,7 @@ public class TuloksetTest {
     @Test
     public void tuloksetOnTallennettuJarjestyksessa(){
         Tulos tulos = tulokset.getTulos(9);
-        assertEquals(10, tulos.pisteet);
+        assertEquals(11, tulos.pisteet);
     }
     
     @Test
@@ -74,6 +74,21 @@ public class TuloksetTest {
     public void uudenTuloksenLisaaminenTayteenToimiiOIkein(){
         Tulos tulos = new Tulos(19, "toinen yhdeksastoista");
         tulokset.lisaaTulos(tulos);
-        assertTrue(tulokset.getTulos(19).pisteet == 19);
+        assertTrue(tulokset.getTulos(19).pisteet == 2);
+    }
+    
+    @Test
+    public void getKokoAntaaOikeanTuloksen(){
+        assertEquals(tulokset.getKoko(), 20);
+    }
+    
+    @Test
+    public void getHuonoimmatPisteetAntaaHuonoimmatPisteet(){
+        assertEquals(tulokset.getHuonoimmatPisteet(), 1);
+    }
+    
+    @Test
+    public void getParhaatPisteetAntaaParhaimmatPisteet(){
+        assertEquals(tulokset.getParhaatPisteet(), 20);
     }
 }

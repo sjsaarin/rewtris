@@ -11,6 +11,8 @@ import java.util.Random;
 import kayttoliittyma.Nakyma;
 import java.util.Timer;
 import java.util.TimerTask;
+import tulokset.Tulokset;
+import tulokset.Tulos;
 
 /**
  * Luokka vastaa pelin logiikasta
@@ -265,6 +267,7 @@ public class Logiikka {
         ajastin.schedule(new TimerTask(){
                 @Override
                 public void run(){
+                    tallennaTulos("Joku Vaan");
                     nakyma.peliOhi();
                 }
             },2000);
@@ -284,6 +287,26 @@ public class Logiikka {
             piirraTilanne();
             kaynnistaAjastin(ajastimenjakso);
         }    
+    }
+    
+    /**
+     * Tallentaa pisteet ja parametrina saadun nimen tuloslistaan
+     * 
+     * @param nimi
+     * 
+     * @return 
+     */
+    public boolean tallennaTulos(String nimi){
+        Tulos tulos = new Tulos(pistelaskuri.getPisteet(), nimi);
+        Tulokset tulokset = new Tulokset();
+        if(!tulokset.lataaTulokset()){
+            return false;
+        }
+        tulokset.lisaaTulos(tulos);
+        if(!tulokset.tallennaTulokset()){
+            return false;
+        }
+        return true;
     }
     
     public int getPisteet(){

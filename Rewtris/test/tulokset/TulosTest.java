@@ -53,13 +53,13 @@ public class TulosTest {
     @Test
     public void suuremmanVertailuPienempäänTuottaaOikeanTuloksen(){
         
-        assertEquals(tulos2.compareTo(tulos1), 1);
+        assertEquals(tulos2.compareTo(tulos1), -1);
     }
     
     @Test
     public void pienemmänVertailuSuurempaanTuottaaOikeanTuloksen(){
         
-        assertEquals(tulos1.compareTo(tulos2), -1);
+        assertEquals(tulos1.compareTo(tulos2), 1);
     }
     
     @Test

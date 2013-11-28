@@ -46,27 +46,79 @@ public class Tulokset {
     /**
      * Tallentaa tulokset levylle
      * 
-     * @throws FileNotFoundException
-     * @throws IOException 
+     * @return 'true' jos tallennus onnistui, 'false' jos tallennus ei onnistunut
+     * 
      */
-    public void tallennaTulokset() throws FileNotFoundException, IOException {
-        FileOutputStream fos = new FileOutputStream(TIEDOSTONNIMI);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(tulokset);
-        oos.close();
+    public boolean tallennaTulokset() {
+        try {
+            FileOutputStream fos = new FileOutputStream(TIEDOSTONNIMI);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(tulokset);
+            oos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        } catch (IOException e){
+            return false;
+        }
     }
     
     /**
      * Lataa tulokset levyltä
      * 
-     * @throws IOException
-     * @throws ClassNotFoundException 
+     * @return 'true' jos lataus onnistui, 'false' jos lataus ei onnistunut
+     * 
      */
-    public void lataaTulokset() throws IOException, ClassNotFoundException{
-        FileInputStream fis = new FileInputStream(TIEDOSTONNIMI);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        tulokset = (List<Tulos>) ois.readObject();
-        ois.close();
+    public boolean lataaTulokset(){
+        try {
+            FileInputStream fis = new FileInputStream(TIEDOSTONNIMI);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tulokset = (List<Tulos>) ois.readObject();
+            ois.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Palauttaa montako tulosta on tallennettuna
+     * 
+     * @return tulosten lukumäärä
+     */
+    public int getKoko(){
+        return this.tulokset.size();
+    }
+    
+    /**
+     * Palauttaa parhaimman talletetun pisteluvun
+     * 
+     * @return pisteet
+     */
+    public int getParhaatPisteet(){
+        if (tulokset.isEmpty()){
+            return 0;
+        } else {
+            Tulos tulos = tulokset.get(0);
+            return tulos.pisteet;
+        }
+    }
+    
+    /**
+     * Palauttaa huonoimman talletetun pisteluvun
+     * 
+     * @return pisteet
+     */
+    public int getHuonoimmatPisteet(){
+        if (tulokset.isEmpty()){
+            return 0;
+        } else {
+            int viimeinen = tulokset.size() - 1;
+            Tulos tulos = tulokset.get(viimeinen);
+            return tulos.pisteet;
+        }
     }
     
     public List getTulokset(){

@@ -103,6 +103,8 @@ public class Nakyma extends JFrame {
         
         paneeli.add(pistelista, gbc);
         
+        pistelista.lataaPisteet();
+        
         this.getContentPane().invalidate();
         this.getContentPane().validate();
         //this.requestFocus();

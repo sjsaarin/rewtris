@@ -15,9 +15,11 @@ import java.io.Serializable;
  */
 public class Tulos implements Comparable<Tulos>, Serializable {
     
-    int pisteet;
-    String nimi;
+    public int pisteet;
+    public String nimi;
 
+    private static final long serialVersionUID = 659317598;
+    
     public Tulos(int pisteet, String nimi){
         this.pisteet = pisteet;
         this.nimi = nimi;
@@ -25,7 +27,7 @@ public class Tulos implements Comparable<Tulos>, Serializable {
     
     @Override
     public int compareTo(Tulos t) {
-        return pisteet < t.pisteet ? -1 : pisteet > t.pisteet ? 1 : 0;
+        return pisteet < t.pisteet ? 1 : pisteet > t.pisteet ? -1 : 0;
     }
  
 }

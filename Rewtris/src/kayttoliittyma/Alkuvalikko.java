@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  * @author sjsaarin
  */
 public class Alkuvalikko extends JPanel {
