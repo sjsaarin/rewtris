@@ -17,13 +17,13 @@ import static org.junit.Assert.*;
  *
  * @author sjsaarin
  */
-public class TulosTesti {
+public class TulosTest {
     
     Tulos tulos1;
     Tulos tulos2;
     Tulos tulos3;
     
-    public TulosTesti() {
+    public TulosTest() {
     }
     
     @BeforeClass

@@ -6,6 +6,7 @@
 
 package tulokset;
 
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,19 +20,32 @@ import static org.junit.Assert.*;
  */
 public class TuloksetTest {
     
-    public TuloksetTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    Tulokset tulokset;
     
     @Before
     public void setUp() {
+        tulokset = new Tulokset();
+        tulokset.lisaaTulos(new Tulos(1, "eka"));
+        tulokset.lisaaTulos(new Tulos(4, "neljas"));
+        tulokset.lisaaTulos(new Tulos(3, "kolmas"));
+        tulokset.lisaaTulos(new Tulos(17, "seitsemastoista"));
+        tulokset.lisaaTulos(new Tulos(18, "kahdeksastoista"));
+        tulokset.lisaaTulos(new Tulos(5, "viides"));
+        tulokset.lisaaTulos(new Tulos(6, "kuudes"));
+        tulokset.lisaaTulos(new Tulos(10, "kymmenes"));
+        tulokset.lisaaTulos(new Tulos(7, "seitsemas"));
+        tulokset.lisaaTulos(new Tulos(11, "yhdestoista"));
+        tulokset.lisaaTulos(new Tulos(12, "kahdestoista"));
+        tulokset.lisaaTulos(new Tulos(14, "neljastoista"));
+        tulokset.lisaaTulos(new Tulos(13, "kolmastoista"));
+        tulokset.lisaaTulos(new Tulos(15, "viidestoista"));
+        tulokset.lisaaTulos(new Tulos(2, "toka"));
+        tulokset.lisaaTulos(new Tulos(16, "kuudestoista"));
+        tulokset.lisaaTulos(new Tulos(9, "yhdeksas"));
+        tulokset.lisaaTulos(new Tulos(20, "vika"));
+        tulokset.lisaaTulos(new Tulos(19, "yhdeksastoista"));
+        tulokset.lisaaTulos(new Tulos(8, "kahdeksas"));
+        
     }
     
     @After
@@ -43,4 +57,23 @@ public class TuloksetTest {
     //
     // @Test
     // public void hello() {}
+    @Test
+    public void tuloksetOnTallennettuJarjestyksessa(){
+        Tulos tulos = tulokset.getTulos(9);
+        assertEquals(10, tulos.pisteet);
+    }
+    
+    @Test
+    public void tayteenTuloksiinUudenLisaaminenEiKasvataKokoa(){
+        Tulos tulos = new Tulos(19, "toinen yhdeksastoista");
+        tulokset.lisaaTulos(tulos);
+        assertTrue(tulokset.getTulokset().size() == 20);
+    }
+    
+    @Test
+    public void uudenTuloksenLisaaminenTayteenToimiiOIkein(){
+        Tulos tulos = new Tulos(19, "toinen yhdeksastoista");
+        tulokset.lisaaTulos(tulos);
+        assertTrue(tulokset.getTulos(19).pisteet == 19);
+    }
 }

@@ -67,4 +67,13 @@ public class PisteLaskuriTest {
         pistelaskuri.vahennaPisteetKelauksesta(1);
         assertEquals(90, pistelaskuri.getPisteet());
     }
+    
+    @Test
+    public void pisteLaskurinVoiNollata(){
+        pistelaskuri.annaPisteetRivista(0, 0);
+        pistelaskuri.annaPisteetRivista(2, 10);
+        pistelaskuri.nollaa();
+        assertEquals(0, pistelaskuri.getPisteet());
+        
+    }
 }
