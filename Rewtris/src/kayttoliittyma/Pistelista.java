@@ -24,6 +24,7 @@ public class Pistelista extends JPanel {
     private boolean tuloksetladattu;
     
     public Pistelista(){
+        setBackground(Color.GRAY);
         lataaPisteet();
     }
     
@@ -37,8 +38,13 @@ public class Pistelista extends JPanel {
     
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         //g.drawString("Tähän tulee highscore lista", 20, 20);
+        g.drawString("High Scores",100 ,20);
+        g.drawString("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",10 ,30);
+        for (int i = 0; i < 10; i++){
+            g.drawString((i+1)+". ", 20, 50+(25*i));
+        }
         if (tuloksetladattu){
             Tulos tulos;
             for (int i = 0; i < tulokset.getKoko(); i++){

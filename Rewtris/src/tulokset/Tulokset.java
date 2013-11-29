@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Luokka vastaa pelitulosten tallennuksesta, tallentaa 20 parasta tulosta.
+ * Luokka vastaa pelitulosten tallennuksesta, tallentaa 10 parasta tulosta.
  * 
  * @author sjsaarin
  */
@@ -38,8 +38,8 @@ public class Tulokset {
     public void lisaaTulos(Tulos tulos){
         tulokset.add(tulos);
         Collections.sort(tulokset);
-        if (tulokset.size()>20){
-            tulokset.remove(20);
+        if (tulokset.size()>10){
+            tulokset.remove(10);
         }
     }
     
@@ -52,9 +52,9 @@ public class Tulokset {
     public boolean tallennaTulokset() {
         try {
             FileOutputStream fos = new FileOutputStream(TIEDOSTONNIMI);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(tulokset);
-            oos.close();
+            try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(tulokset);
+            }
             return true;
         } catch (FileNotFoundException e) {
             return false;
@@ -72,13 +72,11 @@ public class Tulokset {
     public boolean lataaTulokset(){
         try {
             FileInputStream fis = new FileInputStream(TIEDOSTONNIMI);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            tulokset = (List<Tulos>) ois.readObject();
-            ois.close();
+            try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+                tulokset = (List<Tulos>) ois.readObject();
+            }
             return true;
-        } catch (IOException e) {
-            return false;
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             return false;
         }
     }

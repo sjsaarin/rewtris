@@ -28,22 +28,12 @@ public class TuloksetTest {
         tulokset.lisaaTulos(new Tulos(1, "eka"));
         tulokset.lisaaTulos(new Tulos(4, "neljas"));
         tulokset.lisaaTulos(new Tulos(3, "kolmas"));
-        tulokset.lisaaTulos(new Tulos(17, "seitsemastoista"));
-        tulokset.lisaaTulos(new Tulos(18, "kahdeksastoista"));
         tulokset.lisaaTulos(new Tulos(5, "viides"));
         tulokset.lisaaTulos(new Tulos(6, "kuudes"));
         tulokset.lisaaTulos(new Tulos(10, "kymmenes"));
         tulokset.lisaaTulos(new Tulos(7, "seitsemas"));
-        tulokset.lisaaTulos(new Tulos(11, "yhdestoista"));
-        tulokset.lisaaTulos(new Tulos(12, "kahdestoista"));
-        tulokset.lisaaTulos(new Tulos(14, "neljastoista"));
-        tulokset.lisaaTulos(new Tulos(13, "kolmastoista"));
-        tulokset.lisaaTulos(new Tulos(15, "viidestoista"));
         tulokset.lisaaTulos(new Tulos(2, "toka"));
-        tulokset.lisaaTulos(new Tulos(16, "kuudestoista"));
         tulokset.lisaaTulos(new Tulos(9, "yhdeksas"));
-        tulokset.lisaaTulos(new Tulos(20, "vika"));
-        tulokset.lisaaTulos(new Tulos(19, "yhdeksastoista"));
         tulokset.lisaaTulos(new Tulos(8, "kahdeksas"));
         
     }
@@ -60,26 +50,26 @@ public class TuloksetTest {
     @Test
     public void tuloksetOnTallennettuJarjestyksessa(){
         Tulos tulos = tulokset.getTulos(9);
-        assertEquals(11, tulos.pisteet);
+        assertEquals(1, tulos.pisteet);
     }
     
     @Test
     public void tayteenTuloksiinUudenLisaaminenEiKasvataKokoa(){
-        Tulos tulos = new Tulos(19, "toinen yhdeksastoista");
+        Tulos tulos = new Tulos(9, "toinen yhdeksas");
         tulokset.lisaaTulos(tulos);
-        assertTrue(tulokset.getTulokset().size() == 20);
+        assertTrue(tulokset.getTulokset().size() == 10);
     }
     
     @Test
     public void uudenTuloksenLisaaminenTayteenToimiiOIkein(){
-        Tulos tulos = new Tulos(19, "toinen yhdeksastoista");
+        Tulos tulos = new Tulos(9, "toinen yhdeksas");
         tulokset.lisaaTulos(tulos);
-        assertTrue(tulokset.getTulos(19).pisteet == 2);
+        assertTrue(tulokset.getTulos(9).pisteet == 2);
     }
     
     @Test
     public void getKokoAntaaOikeanTuloksen(){
-        assertEquals(tulokset.getKoko(), 20);
+        assertEquals(tulokset.getKoko(), 10);
     }
     
     @Test
@@ -89,6 +79,6 @@ public class TuloksetTest {
     
     @Test
     public void getParhaatPisteetAntaaParhaimmatPisteet(){
-        assertEquals(tulokset.getParhaatPisteet(), 20);
+        assertEquals(tulokset.getParhaatPisteet(), 10);
     }
 }
