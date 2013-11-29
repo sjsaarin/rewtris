@@ -183,7 +183,7 @@ public class Nakyma extends JFrame {
     }
     
     public void peliOhi(){
-        int vastaus = JOptionPane.showConfirmDialog(null, "Start a new game?", "GAME OVER",
+        int vastaus = JOptionPane.showConfirmDialog(this, "Start a new game?", "GAME OVER",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (vastaus == JOptionPane.NO_OPTION || vastaus == JOptionPane.CLOSED_OPTION) {
             poistaPeli();
@@ -192,6 +192,15 @@ public class Nakyma extends JFrame {
             logiikka.aloitaPeli();
             paivita();
         }
+    }
+    
+    public String peliOhiJaOnHighScore(){
+        String vastaus = (String)JOptionPane.showInputDialog(this, "Congratulations!\n"
+                                                                  +"You got a high score.\n\n"
+                                                                  +"Enter your name:",
+                                                                  "HIGH SCORE",
+                                                                JOptionPane.PLAIN_MESSAGE);
+        return vastaus;
     }
     
     public void setPalikka(Palikka palikka){

@@ -81,4 +81,10 @@ public class TuloksetTest {
     public void getParhaatPisteetAntaaParhaimmatPisteet(){
         assertEquals(tulokset.getParhaatPisteet(), 10);
     }
+    
+    @Test
+    public void josEiOleTalletettuYhtaanTulostaGetKokoPalauttaNolla(){
+        Tulokset tulokset = new Tulokset();
+        assertEquals(0, tulokset.getKoko());
+    }
 }

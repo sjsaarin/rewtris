@@ -34,7 +34,8 @@ public class Logiikka {
     private long aikaleima;
     private boolean pelikaynnissa;
     private int palikannumero;
-
+    private Tulokset tulokset;
+    
     //takaisinkelausta varten
     private int kelauksia;
     private int kelauslaskuri;
@@ -50,6 +51,8 @@ public class Logiikka {
         kentanMarginaali = kentta.getMarginaali();
         pistelaskuri = new PisteLaskuri();
         nakyma = new Nakyma(palikka, kentta, this);
+        tulokset = new Tulokset();
+        tulokset.lataaTulokset();
         pelikaynnissa = false;
         
     }
@@ -257,7 +260,7 @@ public class Logiikka {
     }
     
     /**
-     * lopettaa pelin
+     * Lopettaa pelin. Jos pisteet 10 parhaan joukossa pyydetään näkymältä nimi ja tallennetaan pisteet.
      */
     public void lopetaPeli(){
         pelikaynnissa = false;
@@ -267,7 +270,13 @@ public class Logiikka {
         ajastin.schedule(new TimerTask(){
                 @Override
                 public void run(){
-                    tallennaTulos("Joku Vaan");
+                    if (pistelaskuri.getPisteet() > tulokset.getHuonoimmatPisteet() || 
+                            tulokset.getKoko() < 10){
+                        String nimi = nakyma.peliOhiJaOnHighScore();
+                        if (nimi != null){
+                            tallennaTulos(nimi);
+                        }
+                    }
                     nakyma.peliOhi();
                 }
             },2000);
@@ -298,10 +307,6 @@ public class Logiikka {
      */
     public boolean tallennaTulos(String nimi){
         Tulos tulos = new Tulos(pistelaskuri.getPisteet(), nimi);
-        Tulokset tulokset = new Tulokset();
-        if(!tulokset.lataaTulokset()){
-            return false;
-        }
         tulokset.lisaaTulos(tulos);
         if(!tulokset.tallennaTulokset()){
             return false;

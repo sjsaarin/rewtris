@@ -49,8 +49,8 @@ public class Pistelista extends JPanel {
             Tulos tulos;
             for (int i = 0; i < tulokset.getKoko(); i++){
                 tulos = tulokset.getTulos(i);
-                g.drawString(i+1+". "+tulos.pisteet, 20, 20*(i+1));
-                //g.drawString(tulos.nimi, 100, 20*(i+1));
+                g.drawString(""+tulos.pisteet, 50, 50+(25*i));
+                g.drawString(tulos.nimi, 120, 50+(25*i));
             }
             tuloksetladattu = false;
         }
