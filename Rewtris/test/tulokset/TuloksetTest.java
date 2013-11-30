@@ -87,4 +87,33 @@ public class TuloksetTest {
         Tulokset tulokset = new Tulokset();
         assertEquals(0, tulokset.getKoko());
     }
+    
+    @Test
+    public void tulostenTallennusOnnistuu(){
+        assertTrue(tulokset.tallennaTulokset());
+    }
+    
+    @Test
+    public void tallennettujenTulostenLatausOnnistuu(){
+        assertTrue(tulokset.lataaTulokset());
+    }
+    
+    @Test
+    public void tuloksetOnTallennettuOikein(){
+        tulokset.tallennaTulokset();
+        tulokset.lataaTulokset();
+        assertEquals(6, tulokset.getTulos(4).pisteet);
+    }
+    
+    @Test
+    public void tyhjaTuloksetAntaaParhaimmiksiPisteiksiNollan(){
+        tulokset = new Tulokset();
+        assertEquals(0, tulokset.getParhaatPisteet());
+    }
+    
+    @Test
+    public void tyhjaTuloksetAntaaHuonoimmiksiPisteiksiNollan(){
+        tulokset = new Tulokset();
+        assertEquals(0, tulokset.getHuonoimmatPisteet());
+    }
 }

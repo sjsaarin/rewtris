@@ -2,3 +2,5 @@
 /Rewtris/build/
 /Rewtris/dist/
 /Rewtris/src/kokeiluja/
+/Rewtris/.jacocoverage/
+/Rewtris/jacoco*
