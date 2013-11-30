@@ -36,12 +36,10 @@ public class PisteNakyma extends JPanel {
         g.drawString("Rewinds:", 5, 150);
         g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         g.drawString(""+logiikka.getKelauksia(), 160, 15);
-        piirraPalikat(130, 1, g);
-        
-        
+        piirraKelausIndikaattori(130, 1, g);        
     }
     
-    private void piirraPalikat(int x, int y, Graphics g){
+    private void piirraKelausIndikaattori(int x, int y, Graphics g){
       
         if (logiikka.getVoikelata()){
             g.setColor(Color.green);

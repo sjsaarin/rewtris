@@ -14,6 +14,7 @@ package peli;
 public class PalikkaI extends Palikka {
     
     private final int koko = 4;
+    private final int tyyppi = 1;
     private int korkeus;
     private int leveys;
     
@@ -48,6 +49,7 @@ public class PalikkaI extends Palikka {
         super.asento = 0;
         super.koko = this.koko;
         super.asennot = this.asennot;
+        super.tyyppi = this.tyyppi;
     }
     
 }

@@ -21,13 +21,13 @@ import tulokset.Tulos;
  */
 public class Logiikka {
     
-    public Kentta kentta;
+    private Kentta kentta;
     private Palikka palikka;
     private final Nakyma nakyma;
     private final int kentanLeveys;
     private final int kentanKorkeus;
     private final int kentanMarginaali;
-    private  PisteLaskuri pistelaskuri;
+    private PisteLaskuri pistelaskuri;
     private Timer ajastin;
     private int ajastimenjakso;
     private int taso;
@@ -35,6 +35,7 @@ public class Logiikka {
     private boolean pelikaynnissa;
     private int palikannumero;
     private Tulokset tulokset;
+    private boolean kenttamuistaapalikat;
     
     //takaisinkelausta varten
     private int kelauksia;
@@ -44,8 +45,9 @@ public class Logiikka {
     private boolean[][] muistettukentta;
     
     public Logiikka(){
-               
-        kentta = new Kentta();
+        
+        kenttamuistaapalikat = true;
+        kentta = new Kentta(kenttamuistaapalikat);
         kentanLeveys = kentta.getLeveys();
         kentanKorkeus = kentta.getKorkeus();
         kentanMarginaali = kentta.getMarginaali();
@@ -58,7 +60,7 @@ public class Logiikka {
     }
     
     /**
-     * Aloittaa pelin
+     * Aloittaa pelin.
      */
     public void aloitaPeli(){
         
@@ -84,50 +86,50 @@ public class Logiikka {
     }
     
     /**
-    * Metodi lisää peliin syötteenä annettua numeroa vastaavan palikan, mikäli peli on käynnissä. Kelvolliset syötteet:
-    * 0 - tyhja palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
-    * Mikäli syötteenä annetaan jokin muu numero lisätään kenttään satunnainen palikka. Palikka lisätään kentän huipulle.
-    * 
-    * @param   numero   
-    * 
-    */
-    public void uusiPalikka(int numero){
-    
-        if (pelikaynnissa){
+     * Metodi lisää peliin syötteenä annettua numeroa vastaavan palikan, mikäli peli on käynnissä. Mikäli palikalle ei ole tilaa peli loppuu.
+     * 
+     * Kelvolliset syötteet:
+     * 0 - tyhja palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
+     * Mikäli syötteenä annetaan jokin muu numero lisätään kenttään satunnainen palikka. Palikka lisätään kentän huipulle.
+     * 
+     * @param   numero   
+     * @return 'true' jos palikan lisäys onnistui, 'false' jos ei onnistunut    
+     * 
+     */
+    public boolean uusiPalikka(int numero){
             
-            int x;
+        int x;
             
-            if (numero < 0 || numero > 7){
-                palikannumero = arvoPalikanNumero();
-            } else {
-                palikannumero = numero;
-            }
+        if (numero < 0 || numero > 7){
+            palikannumero = arvoPalikanNumero();
+        } else {
+            palikannumero = numero;
+        }
             
-            lisaaPalikka(palikannumero);
+        lisaaPalikka(palikannumero);
        
-            if (palikannumero == 1){           
-                x = (kentanLeveys-1)/2;       
-            } else if(palikannumero == 2) {           
-                x = ((kentanLeveys)/2)-(palikka.getKoko()/2);       
-            } else {                 
-                x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);       
-            }
+        if (palikannumero == 1){           
+            x = (kentanLeveys-1)/2;       
+        } else if(palikannumero == 2) {           
+            x = ((kentanLeveys)/2)-(palikka.getKoko()/2);       
+        } else {                 
+            x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);       
+        }
        
-            palikka.setX(x);
-            palikka.setY(kentanKorkeus-1);
+        palikka.setX(x);
+        palikka.setY(kentanKorkeus-1);
        
-            //jos palikalle ei ole tilaa kentässä lopetetaan peli, muuten lisätään palikka peliin;
-            if(!(palikalleOnTilaa(0,0))){
-                lopetaPeli();
-            } else {
-                nakyma.setPalikka(palikka);
-            }
-            //piirraTilanne();
-       }
+        //tarkistetaan mahtuuko palikka kenttaan
+        if(!(palikalleOnTilaa(0,0))){
+            return false;
+        } else {
+            nakyma.setPalikka(palikka);
+            return true;
+        }   
    }
    
    /**
-    * Metodi arpoo satunnaisen numeron väliltä 1-7
+    * Metodi arpoo satunnaisen (palikan) numeron väliltä 1-7
     * 
     * @return palikan numero 
     */
@@ -347,9 +349,13 @@ public class Logiikka {
         paivitaKentta();
         piirraTilanne();
         
-        pelikaynnissa = true;
-        
-        uusiKierros();
+        //yritetaan lisata uusi palikka peliin, jos onnistui aloitetaan uusi kierros muuten lopetetaan peli
+        if (uusiPalikka(-1)){
+            pelikaynnissa = true;
+            uusiKierros();
+        } else {
+            lopetaPeli();
+        }
     }
     
     //tallentaa kentän solut ja palikan numeron takaisinkelausta varten
@@ -362,17 +368,23 @@ public class Logiikka {
     private void paivitaKentta(){
         
         boolean[] kentanrivi;
+        int[] kentanpalikkarivi;
         boolean[][] palikansolut = palikka.getSolut();
         int palikankoko=palikka.getKoko();
         for (int i=0; i<palikankoko; i++){
             int rivi = palikka.getY()+kentanMarginaali-i;
             kentanrivi = kentta.getRivi(rivi);
+            kentanpalikkarivi = kentta.getPalikkaRivi(rivi);
             for (int j=0; j<palikankoko; j++){
                 if (palikansolut[i][j]){
                     kentanrivi[palikka.getX()+j+kentanMarginaali] = true;
+                    kentanpalikkarivi[palikka.getX()+j+kentanMarginaali] = palikka.getTyyppi();
                 }
             }
             kentta.setRivi(palikka.getY()-i, kentanrivi);
+            if (kenttamuistaapalikat){
+                kentta.setPalikkaRivi(palikka.getY()-i, kentanpalikkarivi);
+            }    
         }
         //kun palikka päivitetty kenttään tarkastetaan tuliko täysiä rivejä
         poistaTaydetRivit();
@@ -409,25 +421,25 @@ public class Logiikka {
                 palikka = new PalikkaTyhja();
                 break;
             case 1: 
-                palikka = new PalikkaO();
-                break;
-            case 2:               
                 palikka = new PalikkaI();
                 break;
-            case 3:
+            case 2:               
                 palikka = new PalikkaJ();
                 break;
-            case 4:
+            case 3:
                 palikka = new PalikkaL();
+                break;
+            case 4:
+                palikka = new PalikkaO();
                 break;
             case 5:
                 palikka = new PalikkaS();
                 break;
             case 6:
-                palikka = new PalikkaZ();
+                palikka = new PalikkaT();
                 break;
             case 7:
-                palikka = new PalikkaT();
+                palikka = new PalikkaZ();
                 break;        
         }
           
@@ -512,7 +524,6 @@ public class Logiikka {
                 }
                 aikaleima = aikanyt;
             }
-            uusiPalikka(-1);
             kaynnistaAjastin(ajastimenjakso);
         }
     }

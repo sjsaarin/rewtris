@@ -102,12 +102,10 @@ public class Nakyma extends JFrame {
         gbc.gridy = 1;
         
         paneeli.add(pistelista, gbc);
-        
         pistelista.lataaPisteet();
         
         this.getContentPane().invalidate();
         this.getContentPane().validate();
-        //this.requestFocus();
         this.repaint();
         
     }
@@ -122,7 +120,7 @@ public class Nakyma extends JFrame {
     }
     
     /**
-     * piirtää pelinäkymän
+     * Näyttää pelinäkymän
      */ 
     public void naytaPeli(){
         
@@ -173,7 +171,7 @@ public class Nakyma extends JFrame {
     }
     
     /**
-     * päivittää sivunäkymän
+     * Päivittää pistenäkymän
      */
     public void paivita(){
         
@@ -182,6 +180,9 @@ public class Nakyma extends JFrame {
         
     }
     
+    /**
+     * Näyttää 'Game Over' ilmoituksen ja kysyy pelaajalta haluaako pelata uudestaan.
+     */
     public void peliOhi(){
         int vastaus = JOptionPane.showConfirmDialog(this, "Start a new game?", "GAME OVER",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -194,6 +195,11 @@ public class Nakyma extends JFrame {
         }
     }
     
+    /**
+     * Näyttää 'High Score' ilmoituksen ja kysyy pelaajan nimeä
+     * 
+     * @return nimi
+     */
     public String peliOhiJaOnHighScore(){
         String vastaus = (String)JOptionPane.showInputDialog(this, "Congratulations!\n"
                                                                   +"You got a high score.\n\n"

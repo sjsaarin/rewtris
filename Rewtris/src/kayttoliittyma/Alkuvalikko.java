@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
+ * Alkuvalikko, näytetään kun ohjelma on käynnistetty
  * 
  * @author sjsaarin
  */
@@ -57,7 +58,7 @@ public class Alkuvalikko extends JPanel {
         
         g.setColor(Color.BLACK);
         g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        g.drawString("Rewtris", 117, 80);
+        g.drawString("Rewtris", 119, 80);
         g.setColor(Color.GREEN);
         g.fill3DRect(120, 100, 30, 30, true);
         g.fill3DRect(180, 100, 30, 30, true);
@@ -67,6 +68,16 @@ public class Alkuvalikko extends JPanel {
         g.fill3DRect(180, 130, 30, 30, true);
         g.fill3DRect(120, 160, 30, 30, true);
         g.fill3DRect(180, 160, 30, 30, true);
+        
+        g.setColor(Color.BLACK);
+        g.drawRect(120, 100, 30, 30);
+        g.drawRect(180, 100, 30, 30);
+        g.drawRect(90, 130, 30, 30);
+        g.drawRect(120, 130, 30, 30);
+        g.drawRect(150, 130, 30, 30);
+        g.drawRect(180, 130, 30, 30);
+        g.drawRect(120, 160, 30, 30);
+        g.drawRect(180, 160, 30, 30);
     }
     
 }

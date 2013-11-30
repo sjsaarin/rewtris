@@ -8,8 +8,9 @@ package rewtris;
 
 import peli.Logiikka;
 
-/*
- *
+/**
+ * Pääohjelma
+ * 
  * @author sjsaarin
  */
 public class Rewtris {
@@ -26,7 +27,6 @@ public class Rewtris {
         }
         
     }
-    
     
     private static void aloitaPeli(){
         Logiikka logiikka = new Logiikka();

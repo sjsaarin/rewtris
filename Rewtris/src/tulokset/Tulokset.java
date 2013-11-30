@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Luokka vastaa pelitulosten tallennuksesta, tallentaa 10 parasta tulosta.
+ * Tulokset Tallenetaan Tulos olioita sisältävänä ArrayList oliona.
  * 
  * @author sjsaarin
  */
@@ -31,7 +32,7 @@ public class Tulokset {
     }
     
     /**
-     * Lisää tuloksen. Jos listassa on tämän jälkeen enemmän kuin 20 tulosta, poistetaan viimeinen.
+     * Lisää tuloksen. Jos listassa on tämän jälkeen enemmän kuin 10 tulosta, poistetaan viimeinen.
      * 
      * @param tulos
      */
@@ -119,12 +120,12 @@ public class Tulokset {
         }
     }
     
-    public List getTulokset(){
-        return this.tulokset;
-    }
-    
     public Tulos getTulos(int indeksi){
         return tulokset.get(indeksi);
+    }
+    
+    public List getTulokset(){
+        return this.tulokset;
     }
  
 }

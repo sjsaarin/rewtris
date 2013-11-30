@@ -12,7 +12,8 @@ package peli;
 
 public class PalikkaTyhja extends Palikka {
     
-    private final int koko = 0;       
+    private final int koko = 0;
+    private final int tyyppi = 0;
     private final boolean asennot[][][] = {
         {
             {false}
@@ -23,6 +24,7 @@ public class PalikkaTyhja extends Palikka {
         super.asento = 0;
         super.koko = this.koko;
         super.asennot = this.asennot;
+        super.tyyppi = this.tyyppi;
     } 
     
     @Override

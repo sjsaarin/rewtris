@@ -25,6 +25,7 @@ public class PisteLaskuri {
      * Tason mukaan lisäpisteet: peruspisteet * taso/100
      * 
      * @param rivi
+     * @param taso
      * @return päivitetyt pisteet 
      */
     public int annaPisteetRivista(int rivi, int taso){

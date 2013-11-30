@@ -13,7 +13,8 @@ package peli;
  */
 public class PalikkaO extends Palikka {
     
-    private final int koko = 2;       
+    private final int koko = 2;
+    private final int tyyppi = 4;
     private final boolean asennot[][][] = {
         {
             {true,true},
@@ -25,6 +26,7 @@ public class PalikkaO extends Palikka {
         super.asento = 0;
         super.koko = this.koko;
         super.asennot = this.asennot;
+        super.tyyppi = this.tyyppi;
     } 
     
     @Override

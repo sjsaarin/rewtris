@@ -29,7 +29,7 @@ public class PeliNakyma extends JPanel {
     public PeliNakyma(Kentta kentta, Palikka palikka){
         this.palikka = palikka;
         this.kentta = kentta;
-        setBackground(Color.WHITE);
+        setBackground(Color.DARK_GRAY);
     }
     
     public void setPalikka(Palikka palikka){
@@ -43,7 +43,7 @@ public class PeliNakyma extends JPanel {
     }
         
     private void piirraPalikka(Graphics g){
-        g.setColor(Color.MAGENTA);
+        asetaVari(palikka.getTyyppi(), g);
         x = palikka.getX()*width;
         y = (kentta.getKorkeus()-1-palikka.getY())*height;
         boolean[][] koordinaatit = palikka.getSolut();
@@ -63,20 +63,48 @@ public class PeliNakyma extends JPanel {
         x = 0; 
         y = 0;
         boolean[][] kentanSolut = kentta.getSolut();
+        int[][] kentanpalikat = kentta.getPalikat();
         for (int i = kentta.getKorkeus()-1; i >= 0; i--){
             for (int j = 0; j < kentta.getLeveys(); j++){
                 if (kentanSolut[i][j]){
-                    g.setColor(Color.GRAY);
+                    asetaVari(kentanpalikat[i][j], g);
                     g.fill3DRect(x, y, width, height, true);
-                    //g.fillRect(x+1, y+1, width-2, height-2);
-                } else {
-                    g.setColor(Color.LIGHT_GRAY);
-                    g.drawRect(x, y, width, height);
                 }
+                g.setColor(Color.BLACK);
+                g.drawRect(x, y, width, height);
                 x += width;
             }
             x = 0;
             y += height;
+        }
+    }
+    
+    private void asetaVari(int numero, Graphics g){
+        switch(numero){
+            case 0: default:
+                g.setColor(Color.WHITE);
+                break;
+            case 1: 
+                g.setColor(Color.CYAN);
+                break;
+            case 2:               
+                g.setColor(Color.MAGENTA);
+                break;
+            case 3:
+                g.setColor(Color.PINK);
+                break;
+            case 4:
+                g.setColor(Color.RED);
+                break;
+            case 5:
+                g.setColor(Color.GREEN);
+                break;
+            case 6:
+                g.setColor(Color.BLUE);
+                break;
+            case 7:
+                g.setColor(Color.YELLOW);
+                break;
         }
     }
 }

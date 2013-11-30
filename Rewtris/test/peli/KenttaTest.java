@@ -24,7 +24,7 @@ public class KenttaTest {
     
     @Before
     public void setUp() {
-        kentta = new Kentta();
+        kentta = new Kentta(false);
     }
     
 

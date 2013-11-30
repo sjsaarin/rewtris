@@ -17,6 +17,7 @@ public abstract class Palikka implements PalikkaIf {
     int asento;
     boolean[][][] asennot;
     boolean[][] solut;
+    int tyyppi;
     
     /*
     /   Palikan vasemman yläkulma x ja y koordinaatit
@@ -68,6 +69,10 @@ public abstract class Palikka implements PalikkaIf {
     
     public int getY(){
         return this.sijaintiY;
+    }
+    
+    public int getTyyppi(){
+        return this.tyyppi;
     }
     
     @Override
