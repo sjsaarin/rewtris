@@ -13,8 +13,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -99,6 +102,8 @@ public class Alkuvalikko extends JPanel {
  
     private void lisaaVariValikko(){
         
+        JPanel varivalintapaneeli = new JPanel(new GridBagLayout());
+        
         JRadioButton variprofiili1Valinta = new JRadioButton(variprofiili1);
         variprofiili1Valinta.setActionCommand(variprofiili1);
         variprofiili1Valinta.setSelected(true);
@@ -114,26 +119,25 @@ public class Alkuvalikko extends JPanel {
         varivalinta.add(variprofiili2Valinta);
         varivalinta.add(variprofiili3Valinta);
         
+        Box varivalintalaatikko = Box.createHorizontalBox();
+        varivalintalaatikko.add(variprofiili1Valinta);
+        varivalintalaatikko.add(variprofiili2Valinta);
+        varivalintalaatikko.add(variprofiili3Valinta);
+        varivalintalaatikko.setBorder(BorderFactory.createTitledBorder("Set game colors:"));
+        
         VariValinnanKuuntelija vvk = new VariValinnanKuuntelija();
         
         variprofiili1Valinta.addActionListener(vvk);
         variprofiili2Valinta.addActionListener(vvk);
         variprofiili3Valinta.addActionListener(vvk);
-        
-        JPanel varivalintapaneeli = new JPanel(new GridBagLayout());
-        gbc.gridx = 0;
-        varivalintapaneeli.add(variprofiili1Valinta, gbc);
-        gbc.gridx = 1;
-        varivalintapaneeli.add(variprofiili2Valinta, gbc);
-        gbc.gridx = 3;
-        varivalintapaneeli.add(variprofiili3Valinta, gbc);
+       
+        varivalintapaneeli.add(varivalintalaatikko, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weighty = 10.0;
         gbc.anchor = GridBagConstraints.PAGE_END;
         this.add(varivalintapaneeli, gbc);
-        
     }
     
     private class VariValinnanKuuntelija implements ActionListener {

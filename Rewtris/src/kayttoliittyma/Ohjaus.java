@@ -35,23 +35,23 @@ public class Ohjaus extends KeyAdapter {
         switch (nappain) {
             case KeyEvent.VK_LEFT:
                 //siirtää palikkaa vasemmalle
-                logiikka.palikkaVasemmalle();
+                logiikka.siirraPalikkaaVasemmalle();
                 break;
              case KeyEvent.VK_RIGHT:   
                 //siirtää palikkaa oikealle
-                logiikka.palikkaOikealle();
+                logiikka.siirraPalikkaaOikealle();
                 break;
              case KeyEvent.VK_DOWN:
                 //siirtää palikkaa alas
                 logiikka.pudotaPalikkaa();
                  break;
              case KeyEvent.VK_UP:
-                logiikka.kaannaPalikka();
+                logiikka.kaannaPalikkaa();
                 //kääntää palikkaa    
                  break;
              case KeyEvent.VK_SPACE:
                 //tiputtaa palikan
-                logiikka.pudotaPalikka();
+                logiikka.tipautaPalikkaAlas();
                 break;          
              case KeyEvent.VK_R:
                 //kelaa takaisin

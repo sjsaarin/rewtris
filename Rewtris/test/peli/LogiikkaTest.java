@@ -62,42 +62,42 @@ public class LogiikkaTest {
     @Test
     public void palikanSiirtoTyhjassaKentassaOikealleOnnistuu(){
         peliLogiikka.tyhjennaKentta();
-        assertEquals(true, peliLogiikka.palikkaOikealle());
+        assertEquals(true, peliLogiikka.siirraPalikkaaOikealle());
     }
     
     @Test
     public void palikanSiirtoTaydessaKentassaVasemmalleEiOnnistu(){
         peliLogiikka.taytaKentta();
-        assertEquals(false, peliLogiikka.palikkaVasemmalle());
+        assertEquals(false, peliLogiikka.siirraPalikkaaVasemmalle());
     }
     
     @Test
     public void palikanSiirtoTyhjassaKentassaVasemmalleOnnistuu(){
-        assertEquals(true, peliLogiikka.palikkaVasemmalle());
+        assertEquals(true, peliLogiikka.siirraPalikkaaVasemmalle());
     }
     
     @Test
     public void palikanSiirtoTaydessaKentassaOikealleEiOnnistu(){
         peliLogiikka.taytaKentta();
-        assertEquals(false, peliLogiikka.palikkaOikealle());
+        assertEquals(false, peliLogiikka.siirraPalikkaaOikealle());
     }
     
     
     @Test
     public void palikanSiirtoReunanYliVasemmalleEiOnnistu(){
         for (int i = 0; i < 6; i++){
-            peliLogiikka.palikkaVasemmalle();
+            peliLogiikka.siirraPalikkaaVasemmalle();
         }
-        assertFalse(peliLogiikka.palikkaVasemmalle());
+        assertFalse(peliLogiikka.siirraPalikkaaVasemmalle());
         
     }
     
     @Test
     public void palikanSiirtoReunanYliOikealleEiOnnistu(){
         for (int i = 0; i < 6; i++){
-            peliLogiikka.palikkaOikealle();
+            peliLogiikka.siirraPalikkaaOikealle();
         }
-        assertFalse(peliLogiikka.palikkaOikealle());
+        assertFalse(peliLogiikka.siirraPalikkaaOikealle());
     }
     
     @Test
@@ -168,7 +168,7 @@ public class LogiikkaTest {
     @Test 
     public void peliLoppuuKunPalikoitaKentanHuipussaAsti(){
         for (int i = 0; i < 12; i++){
-            peliLogiikka.pudotaPalikka();
+            peliLogiikka.tipautaPalikkaAlas();
         }
         assertFalse(peliLogiikka.getPelikaynnissa());
         
@@ -177,7 +177,7 @@ public class LogiikkaTest {
     @Test
     public void palikkaaEiVoiLiikuttaaJosPeliEiKäynnissä(){
         peliLogiikka.lopetaPeli();
-        assertFalse(peliLogiikka.palikkaOikealle() || peliLogiikka.palikkaVasemmalle() || peliLogiikka.kaannaPalikka() || peliLogiikka.pudotaPalikkaa());
+        assertFalse(peliLogiikka.siirraPalikkaaOikealle() || peliLogiikka.siirraPalikkaaVasemmalle() || peliLogiikka.kaannaPalikkaa() || peliLogiikka.pudotaPalikkaa());
     }
     
     @Test
@@ -189,7 +189,7 @@ public class LogiikkaTest {
     
     @Test
     public void palikanVoiKaantaaJosPeliOnKaynnissaJaKenttaTyhja(){
-        assertTrue(peliLogiikka.kaannaPalikka());
+        assertTrue(peliLogiikka.kaannaPalikkaa());
     }
     
     @Test 
@@ -203,7 +203,7 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         assertEquals(1, peliLogiikka.getKelauksia());
@@ -220,7 +220,7 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         assertFalse(peliLogiikka.getVoikelata());
@@ -237,10 +237,10 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         assertTrue(peliLogiikka.getVoikelata());
@@ -257,10 +257,10 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         peliLogiikka.kelaaTakaisin();
@@ -280,7 +280,7 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         assertTrue(peliLogiikka.getPisteet() > 505);
@@ -297,10 +297,10 @@ public class LogiikkaTest {
         peliLogiikka.setKentanRivi(2, rivi);
         peliLogiikka.setKentanRivi(3, rivi);
         peliLogiikka.setKentanRivi(4, rivi);
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
-        peliLogiikka.pudotaPalikka();
+        peliLogiikka.tipautaPalikkaAlas();
         while (!peliLogiikka.pudotaPalikkaa()){
         }
         peliLogiikka.kelaaTakaisin();

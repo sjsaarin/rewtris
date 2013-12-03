@@ -34,7 +34,7 @@ public class Nakyma extends JFrame {
     private Palikka palikka;
     private Kentta kentta;
     private Logiikka logiikka;
-    private PisteNakyma sivunakyma;
+    private PisteNakyma pistenakyma;
     private Pistelista pistelista;
     private PeliNakyma pelinakyma;
     private JPanel paneeli;
@@ -63,7 +63,7 @@ public class Nakyma extends JFrame {
         pistelista = new Pistelista();
         
         pelinakyma = new PeliNakyma(kentta, palikka);
-        sivunakyma = new PisteNakyma(logiikka);
+        pistenakyma = new PisteNakyma(logiikka);
         
         paneeli = new JPanel(new GridBagLayout());
         this.getContentPane().add(paneeli);
@@ -128,13 +128,13 @@ public class Nakyma extends JFrame {
         
         poistaAlkuvalikko();
         
-        sivunakyma.setPreferredSize(new Dimension(300,30));
+        pistenakyma.setPreferredSize(new Dimension(290,30));
     
-        gbc.insets = new Insets(1,1,1,1);
+        gbc.insets = new Insets(1,1,1,2);
         gbc.gridx = 0;
         gbc.gridy = 0;
   
-        paneeli.add(sivunakyma, gbc);
+        paneeli.add(pistenakyma, gbc);
     
         pelinakyma.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         pelinakyma.setPreferredSize(new Dimension(300,600));
@@ -169,7 +169,7 @@ public class Nakyma extends JFrame {
     public void poistaPeli(){
         peliajastin.stop();
         paneeli.remove(pelinakyma);
-        paneeli.remove(sivunakyma);
+        paneeli.remove(pistenakyma);
         this.removeKeyListener(ohjaus);
     }
     
@@ -179,7 +179,7 @@ public class Nakyma extends JFrame {
     public void paivita(){
         
         //pelinakyma.repaint();
-        sivunakyma.repaint();
+        pistenakyma.paivita();
         
     }
     

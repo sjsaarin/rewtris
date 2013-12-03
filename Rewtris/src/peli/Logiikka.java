@@ -56,6 +56,7 @@ public class Logiikka {
         tulokset = new Tulokset();
         tulokset.lataaTulokset();
         pelikaynnissa = false;
+        taso = 1;
         
     }
     
@@ -108,9 +109,9 @@ public class Logiikka {
             
         lisaaPalikka(palikannumero);
        
-        if (palikannumero == 1){           
+        if (palikannumero == 4){           
             x = (kentanLeveys-1)/2;       
-        } else if(palikannumero == 2) {           
+        } else if(palikannumero == 1) {           
             x = ((kentanLeveys)/2)-(palikka.getKoko()/2);       
         } else {                 
             x = ((kentanLeveys-1)/2)-(palikka.getKoko()/2);       
@@ -162,7 +163,7 @@ public class Logiikka {
     * 
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
-    public boolean palikkaOikealle(){
+    public boolean siirraPalikkaaOikealle(){
         if (pelikaynnissa){
             if (palikalleOnTilaa(1, 0)){
                 palikka.setX(palikka.getX()+1);
@@ -177,7 +178,7 @@ public class Logiikka {
     * 
     * @return 'true' jos siirto onnistui, 'false' jos ei onnistunut
     */
-    public boolean palikkaVasemmalle(){
+    public boolean siirraPalikkaaVasemmalle(){
         
         if (pelikaynnissa){
             //siirretään vasemmalle jos onnistuu
@@ -195,7 +196,7 @@ public class Logiikka {
      * 
      * @return 'true' jos palikan kääntö onnsitui, muuten 'false' 
      */
-    public boolean kaannaPalikka(){
+    public boolean kaannaPalikkaa(){
         if (pelikaynnissa){
             //käännetaan palikkaa
             palikka.kaanna();
@@ -216,7 +217,7 @@ public class Logiikka {
     /**
     * Metodi pudottaa palikkaa alaspäin niin pitkälle kuin mahdollista
     */
-    public void pudotaPalikka(){
+    public void tipautaPalikkaAlas(){
         if (pelikaynnissa){
             //peruutetaan ajastin jottei yritä tiputtaa palikkaa yhtäaikaisesti tämän metodin kanssa
             ajastin.cancel();
@@ -247,7 +248,7 @@ public class Logiikka {
     /**
     * Metodi päivittää pisteet ja muut tiedot pelinäkymään
     */
-    public void piirraTilanne(){
+    public void paivitaTiedotNakymaan(){
         nakyma.paivita();
     }
         
@@ -294,7 +295,7 @@ public class Logiikka {
             pistelaskuri.vahennaPisteetKelauksesta(kelauksia);
             kelauksia--;
             voikelata = false;
-            piirraTilanne();
+            paivitaTiedotNakymaan();
             kaynnistaAjastin(ajastimenjakso);
         }    
     }
@@ -312,6 +313,9 @@ public class Logiikka {
         return tulokset.tallennaTulokset();
     }
     
+    /**
+     * Pysäyttää pelin jos peli on käynnissä, jos peli on pysäytettynä käynnistää pelin uudelleen
+     */
     public void pause(){
         if (pelikaynnissa){
             ajastin.cancel();
@@ -353,7 +357,7 @@ public class Logiikka {
         voikelata = true;
         
         paivitaKentta();
-        piirraTilanne();
+        paivitaTiedotNakymaan();
         
         //yritetaan lisata uusi palikka peliin, jos onnistui aloitetaan uusi kierros muuten lopetetaan peli
         if (uusiPalikka(-1)){
@@ -377,8 +381,9 @@ public class Logiikka {
         int[] kentanpalikkarivi;
         boolean[][] palikansolut = palikka.getSolut();
         int palikankoko=palikka.getKoko();
+        int palikany = palikka.getY();
         for (int i=0; i<palikankoko; i++){
-            int rivi = palikka.getY()+kentanMarginaali-i;
+            int rivi = palikany+kentanMarginaali-i;
             kentanrivi = kentta.getRivi(rivi);
             kentanpalikkarivi = kentta.getPalikkaRivi(rivi);
             for (int j=0; j<palikankoko; j++){
@@ -387,13 +392,13 @@ public class Logiikka {
                     kentanpalikkarivi[palikka.getX()+j+kentanMarginaali] = palikka.getTyyppi();
                 }
             }
-            kentta.setRivi(palikka.getY()-i, kentanrivi);
+            kentta.setRivi(palikany-i, kentanrivi);
             if (kenttamuistaapalikat){
-                kentta.setPalikkaRivi(palikka.getY()-i, kentanpalikkarivi);
+                kentta.setPalikkaRivi(palikany-i, kentanpalikkarivi);
             }    
         }
         //kun palikka päivitetty kenttään tarkastetaan tuliko täysiä rivejä
-        poistaTaydetRivit();
+        poistaTaydetRivitJaAnnaPisteetRiveista(palikany-palikankoko-1,palikany);
        
     }
     
@@ -451,13 +456,16 @@ public class Logiikka {
           
     }
     
-    //käy kentän läpi ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä)
-    private void poistaTaydetRivit(){
+    //käy kentän läpi annetulta väliltä ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä)
+    private void poistaTaydetRivitJaAnnaPisteetRiveista(int alkurivi, int loppurivi){
         int rivitaynna;
         int rivejapoistettu = 0;
         boolean[][] kentansolut;
-        int rivi = 0;
-        while (rivi < kentanKorkeus){
+        if (alkurivi<0){
+            alkurivi = 0;
+        }
+        int rivi = alkurivi;
+        while (rivi <= loppurivi){
           kentansolut = kentta.getSolut();
           rivitaynna = 0;
           for (int i = 0; i < kentanLeveys; i++){
@@ -465,11 +473,9 @@ public class Logiikka {
                    rivitaynna++;
                }
           }
+          //jos rivi täynnä, poistetaan rivi, annetaan pisteet ja päivitetään kelaukset
           if (rivitaynna == kentanLeveys){
-              
-              //annetaan pisteet rivistä
               pistelaskuri.annaPisteetRivista(rivi+rivejapoistettu, taso);
-  
               kentta.poistaRivi(rivi);
               rivejapoistettu++;                       
               paivitaKelaukset();
@@ -480,6 +486,7 @@ public class Logiikka {
             
         }
     }
+    
     
     //kutsutaan kun saatu täysi rivi, päivittää kelaukset
     private void paivitaKelaukset(){
@@ -493,7 +500,6 @@ public class Logiikka {
                   }
                   kelauslaskuri = 0;
               }
-              
               //tuli täysi rivi, ei voi kelata seuraavalla kierroksella
               voikelata = false;
     }

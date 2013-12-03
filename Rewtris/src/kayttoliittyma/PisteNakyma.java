@@ -9,6 +9,9 @@ package kayttoliittyma;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import peli.Logiikka;
 
@@ -21,9 +24,51 @@ import peli.Logiikka;
 public class PisteNakyma extends JPanel {
     
     private Logiikka logiikka;
+    private JLabel pisteLabel;
+    private JLabel tasoLabel;
     
     public PisteNakyma(Logiikka logiikka){
         this.logiikka = logiikka;
+        alusta();
+    }
+    
+    private void alusta(){
+        
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        pisteLabel = new JLabel();
+        pisteLabel.setFont(this.getFont().deriveFont(Font.BOLD, 16));
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        
+        this.add(pisteLabel, gbc);
+        pisteLabel.setText("Score: ");
+        
+        tasoLabel = new JLabel();
+        tasoLabel.setFont(this.getFont().deriveFont(Font.BOLD, 16));
+        
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        
+        this.add(tasoLabel, gbc);
+        tasoLabel.setText("Level: ");
+        
+        paivita();
+        
+    }
+    
+    /**
+     * Päivittää pisteet, tason ja kelausten tilan
+     */
+    public void paivita(){
+        pisteLabel.setText("Score: "+logiikka.getPisteet());
+        tasoLabel.setText("Level: "+logiikka.getTaso());
+        this.repaint();
     }
     
     @Override
@@ -31,12 +76,10 @@ public class PisteNakyma extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 16));
-        g.drawString("Score: "+logiikka.getPisteet(), 10, 18);
-        g.drawString("Level: "+logiikka.getTaso(), 230, 18);
-        g.drawString(""+logiikka.getKelauksia(), 160, 18);
-        piirraKelausIndikaattori(130, 4, g);        
+        g.drawString(""+logiikka.getKelauksia(), 160, 21);
+        piirraKelausIndikaattori(130, 7, g);        
     }
-    
+   
     private void piirraKelausIndikaattori(int x, int y, Graphics g){
       
         if (logiikka.getVoikelata()){
