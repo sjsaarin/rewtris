@@ -287,7 +287,7 @@ public class Logiikka {
      * Kelaa pelitilanteen takaisin edelliseen palikkaan
      */
     public void kelaaTakaisin(){
-        if (kelauksia>0 && voikelata){
+        if (kelauksia>0 && voikelata && pelikaynnissa){
             ajastin.cancel();
             uusiPalikka(muistettupalikka);
             kentta.setSolut(muistettukentta);
@@ -309,10 +309,17 @@ public class Logiikka {
     public boolean tallennaTulos(String nimi){
         Tulos tulos = new Tulos(pistelaskuri.getPisteet(), nimi);
         tulokset.lisaaTulos(tulos);
-        if(!tulokset.tallennaTulokset()){
-            return false;
+        return tulokset.tallennaTulokset();
+    }
+    
+    public void pause(){
+        if (pelikaynnissa){
+            ajastin.cancel();
+            pelikaynnissa = false;
+        } else {
+            pelikaynnissa = true;
+            kaynnistaAjastin(ajastimenjakso);
         }
-        return true;
     }
     
     public int getPisteet(){

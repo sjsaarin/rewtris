@@ -50,14 +50,19 @@ public class Tulokset {
     }
     
     /**
-     * Lataa tulokset
+     * Lataa tulokset.
      * 
      * @return 'true' jos lataus onnistui, 'false' jos lataus ei onnistunut
      * 
      */
     public boolean lataaTulokset(){
-        tulokset = tallentaja.lataa();
-        return tulokset != null;
+        ArrayList<Tulos> ladatuttulokset = tallentaja.lataa();
+        if (ladatuttulokset == null){
+           return false; 
+        } else {
+            tulokset = ladatuttulokset;
+            return true;
+        }
     }
     
     /**

@@ -57,6 +57,9 @@ public class Ohjaus extends KeyAdapter {
                 //kelaa takaisin
                 logiikka.kelaaTakaisin();
                 break;
+             case KeyEvent.VK_P:
+                 logiikka.pause();
+                 break;
         }      
 
     }
