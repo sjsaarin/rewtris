@@ -99,6 +99,20 @@ public class PalikkaTest{
         }
         assertEquals(true, onOikein);
         
-    }      
+    }
+    
+    @Test
+    public void josPalikkaaKaantaaNeljaKertaaSeOnAlkuperaisessaAsennossa(){
+        
+        String palikkaEnnenKaantoa = Arrays.deepToString(palikkaT.getSolut());
+        palikkaT.kaanna();
+        palikkaT.kaanna();
+        palikkaT.kaanna();
+        palikkaT.kaanna();
+        String palikkaKaanonJalkeen = Arrays.deepToString(palikkaT.getSolut());
+      
+        assertEquals(palikkaEnnenKaantoa, palikkaKaanonJalkeen);
+        
+    }
     
 }

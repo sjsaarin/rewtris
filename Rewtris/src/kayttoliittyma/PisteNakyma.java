@@ -26,17 +26,15 @@ public class PisteNakyma extends JPanel {
         this.logiikka = logiikka;
     }
     
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        g.drawString("Score: "+logiikka.getPisteet(), 5, 15);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        g.drawString("Level: "+logiikka.getTaso(), 235, 15);
-        g.drawString("Rewinds:", 5, 150);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        g.drawString(""+logiikka.getKelauksia(), 160, 15);
-        piirraKelausIndikaattori(130, 1, g);        
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 16));
+        g.drawString("Score: "+logiikka.getPisteet(), 10, 18);
+        g.drawString("Level: "+logiikka.getTaso(), 230, 18);
+        g.drawString(""+logiikka.getKelauksia(), 160, 18);
+        piirraKelausIndikaattori(130, 4, g);        
     }
     
     private void piirraKelausIndikaattori(int x, int y, Graphics g){

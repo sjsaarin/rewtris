@@ -86,7 +86,7 @@ public class Logiikka {
     }
     
     /**
-     * Metodi lisää peliin syötteenä annettua numeroa vastaavan palikan, mikäli peli on käynnissä. Mikäli palikalle ei ole tilaa peli loppuu.
+     * Metodi lisää peliin syötteenä annettua numeroa vastaavan palikan, mikäli peli on käynnissä.
      * 
      * Kelvolliset syötteet:
      * 0 - tyhja palikka, 1 - O-palikka, 2 - I-palikka, 3 - J-palikka, 4 - L-palikka, 5 - S-palikka, 6 - Z-palikka, 7 - T-palikka 
@@ -131,7 +131,7 @@ public class Logiikka {
    /**
     * Metodi arpoo satunnaisen (palikan) numeron väliltä 1-7
     * 
-    * @return palikan numero 
+    * @return kokonaisluku [1,7]
     */
     public int arvoPalikanNumero(){
         Random random = new Random();
@@ -272,8 +272,7 @@ public class Logiikka {
         ajastin.schedule(new TimerTask(){
                 @Override
                 public void run(){
-                    if (pistelaskuri.getPisteet() > tulokset.getHuonoimmatPisteet() || 
-                            tulokset.getKoko() < 10){
+                    if (pistelaskuri.getPisteet() > tulokset.getHuonoimmatPisteet() || tulokset.getKoko() < 10){
                         String nimi = nakyma.peliOhiJaOnHighScore();
                         if (nimi != null){
                             tallennaTulos(nimi);

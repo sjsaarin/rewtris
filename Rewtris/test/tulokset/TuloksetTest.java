@@ -25,16 +25,16 @@ public class TuloksetTest {
     @Before
     public void setUp() {
         tulokset = new Tulokset();
-        tulokset.lisaaTulos(new Tulos(1, "eka"));
-        tulokset.lisaaTulos(new Tulos(4, "neljas"));
-        tulokset.lisaaTulos(new Tulos(3, "kolmas"));
-        tulokset.lisaaTulos(new Tulos(5, "viides"));
-        tulokset.lisaaTulos(new Tulos(6, "kuudes"));
-        tulokset.lisaaTulos(new Tulos(10, "kymmenes"));
-        tulokset.lisaaTulos(new Tulos(7, "seitsemas"));
-        tulokset.lisaaTulos(new Tulos(2, "toka"));
-        tulokset.lisaaTulos(new Tulos(9, "yhdeksas"));
-        tulokset.lisaaTulos(new Tulos(8, "kahdeksas"));
+        tulokset.lisaaTulos(new Tulos(1, "kymmenes"));
+        tulokset.lisaaTulos(new Tulos(4, "seitsemas"));
+        tulokset.lisaaTulos(new Tulos(3, "kahdeksas"));
+        tulokset.lisaaTulos(new Tulos(5, "kuudes"));
+        tulokset.lisaaTulos(new Tulos(6, "viides"));
+        tulokset.lisaaTulos(new Tulos(10, "eka"));
+        tulokset.lisaaTulos(new Tulos(7, "neljas"));
+        tulokset.lisaaTulos(new Tulos(2, "yhdeksas"));
+        tulokset.lisaaTulos(new Tulos(9, "toka"));
+        tulokset.lisaaTulos(new Tulos(8, "kolmas"));
         
     }
     

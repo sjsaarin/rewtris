@@ -181,10 +181,15 @@ public class LogiikkaTest {
     }
     
     @Test
-    public void uudenPalikanLisaysTayteenKenttaanLopettaaPelin(){
+    public void uudenPalikanLisaysTayteenKenttaanEiOnnistuPelin(){
         peliLogiikka.taytaKentta();
-        peliLogiikka.uusiPalikka(1);
-        assertFalse(peliLogiikka.getPelikaynnissa());
+        
+        assertFalse(peliLogiikka.uusiPalikka(-1));
+    }
+    
+    @Test
+    public void palikanVoiKaantaaJosPeliOnKaynnissaJaKenttaTyhja(){
+        assertTrue(peliLogiikka.kaannaPalikka());
     }
     
     @Test 
@@ -300,6 +305,11 @@ public class LogiikkaTest {
         }
         peliLogiikka.kelaaTakaisin();
         assertTrue(peliLogiikka.getPisteet()<500);
+    }
+    
+    @Test
+    public void pisteidenTallennusOnnistuu(){
+        assertTrue(peliLogiikka.tallennaTulos("Dr. Foo"));
     }
     
     

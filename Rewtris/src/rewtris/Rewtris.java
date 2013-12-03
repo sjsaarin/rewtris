@@ -19,13 +19,7 @@ public class Rewtris {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
             aloitaPeli();
-        } catch (Throwable ex) {
-            System.err.println("Uncaught exception - " + ex.getMessage());
-            ex.printStackTrace(System.err);
-        }
-        
     }
     
     private static void aloitaPeli(){

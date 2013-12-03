@@ -143,8 +143,13 @@ public class KenttaTest {
     @Test
     public void getSolutAntaaKentanSolutOikein(){
         kentta.tayta();
-        boolean[][] kentanSolut = kentta.getSolut();
-        
+        boolean[][] kentanSolut = new boolean[20][10];
+        for (int i = 0; i < 20; i++){
+            for (int j = 0; j < 10; j++){
+                kentanSolut[i][j] = true;
+            }
+        }
+        assertTrue(Arrays.deepEquals(kentanSolut, kentta.getSolut()));  
     }
     
     
@@ -162,6 +167,29 @@ public class KenttaTest {
         kentanSolut[1] = rivi1;
         kentta.setSolut(kentanSolut);
         assertEquals(Arrays.deepToString(kentta.getSolut()), Arrays.deepToString(kentanSolut));
+    }
+    
+    @Test
+    public void setSolutJaPalikatToimiiOikein(){
+        Kentta kentta = new Kentta(true);
+        boolean[][] kentanSolut = new boolean[20][10];
+        int[][] kentanPalikat = new int[20][10];
+        boolean[] rivi0 = { true, true, true, true, true, true, true, true, true, true };
+        boolean[] rivi1 = { true, false, true, true, true, false, true, true, true, true };
+        int[] palikkarivi0 = { 1, 2, 3, 4, 5, 7, 0, 0, 0, 0 };
+        int[] palikkarivi1 = { 1, 2, 3, 4, 5, 7, 0, 0, 2, 1 };
+        for (int i = 2; i<20; i++){
+            for(int j = 0; j<10; j++){
+                kentanSolut[i][j] = false;
+                kentanPalikat[i][j] = 0;
+            }
+        }
+        kentanSolut[0] = rivi0;
+        kentanSolut[1] = rivi1;
+        kentanPalikat[0] = palikkarivi0;
+        kentanPalikat[1] = palikkarivi1;
+        kentta.setSolutJaPalikat(kentanSolut, kentanPalikat);
+        assertTrue(Arrays.deepEquals(kentanSolut, kentta.getSolut()) && Arrays.deepEquals(kentanPalikat, kentta.getPalikat()));
     }
     
 }

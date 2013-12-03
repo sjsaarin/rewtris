@@ -11,7 +11,7 @@ package peli;
  * 
  * @author sjsaarin
  */
-public abstract class Palikka implements PalikkaIf {
+public abstract class Palikka {
     
     int koko;
     int asento;
@@ -25,7 +25,6 @@ public abstract class Palikka implements PalikkaIf {
     private int sijaintiX;
     private int sijaintiY;
 
-    @Override
     public int getKoko() {
          return koko;
     }
@@ -38,7 +37,6 @@ public abstract class Palikka implements PalikkaIf {
      * @return palikan muoto kaksiulotteisena boolean taulukkona 
      * 
      */
-    @Override
     public boolean[][] getSolut() {
         return this.asennot[asento];
     }
@@ -46,7 +44,6 @@ public abstract class Palikka implements PalikkaIf {
     /**
      * Kääntää palikkaa myötäpäivään
      */
-    @Override
     public void kaanna() {
         if (asento < 3){
             asento++;
@@ -73,25 +70,6 @@ public abstract class Palikka implements PalikkaIf {
     
     public int getTyyppi(){
         return this.tyyppi;
-    }
-    
-    @Override
-    public String toString(){
-        String mjono = "";
-        
-        int indeksi = 0;
-        for (int i = 0; i < koko; i++){ 
-                for (int j = 0; j < koko; j++){
-                    if (solut[i][j]){
-                        mjono += "X";
-                    } else {
-                        mjono += " ";
-                    }
-                    indeksi++;
-                }
-                mjono += "\n";
-            }
-        return mjono;
     }
     
 }

@@ -18,8 +18,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.DocumentFilter;
 import peli.Logiikka;
 
 
@@ -196,17 +198,23 @@ public class Nakyma extends JFrame {
     }
     
     /**
-     * Näyttää 'High Score' ilmoituksen ja kysyy pelaajan nimeä
+     * Näyttää 'High Score' ilmoituksen ja kysyy pelaajan nimeä. 
+     * Palautetaan merkkijono jossa on enintään 15 ensimmäistä merkkiä syötetystä nimestä.
      * 
      * @return nimi
      */
     public String peliOhiJaOnHighScore(){
+ 
         String vastaus = (String)JOptionPane.showInputDialog(this, "Congratulations!\n"
                                                                   +"You got a high score.\n\n"
                                                                   +"Enter your name:",
                                                                   "HIGH SCORE",
                                                                 JOptionPane.PLAIN_MESSAGE);
-        return vastaus;
+        if ( vastaus == null || vastaus.length() < 16){
+            return vastaus;
+        } else {
+            return vastaus.substring(0, 15);
+        }
     }
     
     public void setPalikka(Palikka palikka){

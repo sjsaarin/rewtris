@@ -6,15 +6,8 @@
 
 package tulokset;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Luokka vastaa pelitulosten tallennuksesta, tallentaa 10 parasta tulosta.
@@ -24,11 +17,13 @@ import java.util.List;
  */
 public class Tulokset {
     
-    private List<Tulos> tulokset;
+    private ArrayList<Tulos> tulokset;
     private final String TIEDOSTONNIMI = "SCORES";
+    private final TuloksetTallentaja tallentaja;
     
     public Tulokset(){
         tulokset = new ArrayList<>();
+        tallentaja = new TuloksetTallentaja();
     }
     
     /**
@@ -45,41 +40,24 @@ public class Tulokset {
     }
     
     /**
-     * Tallentaa tulokset levylle
+     * Tallentaa tulokset
      * 
      * @return 'true' jos tallennus onnistui, 'false' jos tallennus ei onnistunut
      * 
      */
     public boolean tallennaTulokset() {
-        try {
-            FileOutputStream fos = new FileOutputStream(TIEDOSTONNIMI);
-            try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                oos.writeObject(tulokset);
-            }
-            return true;
-        } catch (FileNotFoundException e) {
-            return false;
-        } catch (IOException e){
-            return false;
-        }
+        return tallentaja.tallenna(tulokset);
     }
     
     /**
-     * Lataa tulokset levyltä
+     * Lataa tulokset
      * 
      * @return 'true' jos lataus onnistui, 'false' jos lataus ei onnistunut
      * 
      */
     public boolean lataaTulokset(){
-        try {
-            FileInputStream fis = new FileInputStream(TIEDOSTONNIMI);
-            try (ObjectInputStream ois = new ObjectInputStream(fis)) {
-                tulokset = (List<Tulos>) ois.readObject();
-            }
-            return true;
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
-        }
+        tulokset = tallentaja.lataa();
+        return tulokset != null;
     }
     
     /**
@@ -124,7 +102,7 @@ public class Tulokset {
         return tulokset.get(indeksi);
     }
     
-    public List getTulokset(){
+    public ArrayList<Tulos> getTulokset(){
         return this.tulokset;
     }
  

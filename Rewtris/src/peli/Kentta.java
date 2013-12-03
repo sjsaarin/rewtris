@@ -19,7 +19,7 @@ public class Kentta {
 
     private final static int LEVEYS = 10;
     
-    private final int marginaali = 4;
+    private final static int MARGINAALI = 4;
     
     private final int todellinenLeveys;
     private final int todellinenKorkeus;
@@ -46,8 +46,8 @@ public class Kentta {
      */
     public Kentta(boolean muistaapalikat){
         this.muistaapalikat = muistaapalikat;
-        todellinenLeveys = LEVEYS+(2*marginaali);
-        todellinenKorkeus = KORKEUS+marginaali;
+        todellinenLeveys = LEVEYS+(2*MARGINAALI);
+        todellinenKorkeus = KORKEUS+MARGINAALI;
         if (muistaapalikat){
             palikat = new int[todellinenKorkeus][todellinenLeveys];
         }
@@ -77,7 +77,7 @@ public class Kentta {
     }
     
     public int getMarginaali(){
-        return this.marginaali;
+        return Kentta.MARGINAALI;
     }
     
     /**
@@ -122,7 +122,7 @@ public class Kentta {
     */
     public void setRivi(int rivi, boolean[] uusirivi){
         for (int i = 0; i < todellinenLeveys; i++){
-            solut[rivi+marginaali][i] = uusirivi[i];
+            solut[rivi+MARGINAALI][i] = uusirivi[i];
         }
     }
     
@@ -137,7 +137,7 @@ public class Kentta {
     */
     public void setPalikkaRivi(int rivi, int[] uusirivi){
         for (int i = 0; i < todellinenLeveys; i++){
-            palikat[rivi+marginaali][i] = uusirivi[i];
+            palikat[rivi+MARGINAALI][i] = uusirivi[i];
         }
     }
     
@@ -145,8 +145,8 @@ public class Kentta {
     *  Metodi tyhjentää kentän eli asettaa kaikkien kentän alkioiden arvoksi 'false'
     */
     public void tyhjenna(){
-        for (int i = marginaali; i < todellinenKorkeus; i++){
-            for (int j = marginaali; j < LEVEYS+marginaali; j++){
+        for (int i = MARGINAALI; i < todellinenKorkeus; i++){
+            for (int j = MARGINAALI; j < LEVEYS+MARGINAALI; j++){
                 this.solut[i][j] = false;
                 if (muistaapalikat){
                     palikat[i][j]= 0;
@@ -161,8 +161,8 @@ public class Kentta {
     *  @param rivi rivin numero ilman marginaalia
     */
     public void poistaRivi(int rivi){
-        for (int i=rivi+marginaali; i<todellinenKorkeus; i++){
-            for (int j=marginaali; j<LEVEYS+marginaali; j++){
+        for (int i=rivi+MARGINAALI; i<todellinenKorkeus; i++){
+            for (int j=MARGINAALI; j<LEVEYS+MARGINAALI; j++){
                 if (i==todellinenKorkeus-1){
                     this.solut[i][j] = false;
                     if (muistaapalikat){
@@ -183,8 +183,8 @@ public class Kentta {
     * Metodi täyttää kentän eli asettaa kaikkien kentän alkioden arvoksi 'true'
     */
     public void tayta(){
-        for (int i = marginaali; i < todellinenKorkeus; i++){
-            for (int j = marginaali; j < LEVEYS+marginaali; j++){
+        for (int i = MARGINAALI; i < todellinenKorkeus; i++){
+            for (int j = MARGINAALI; j < LEVEYS+MARGINAALI; j++){
                 this.solut[i][j] = true;
             }
         }
@@ -199,7 +199,7 @@ public class Kentta {
         boolean[][] annettavatSolut = new boolean[KORKEUS][LEVEYS];
         for (int i = 0; i < KORKEUS; i++){
             for (int j = 0; j < LEVEYS; j++){
-                annettavatSolut[i][j] = solut[i+marginaali][j+marginaali];
+                annettavatSolut[i][j] = solut[i+MARGINAALI][j+MARGINAALI];
             }
         }
         return annettavatSolut;
@@ -214,7 +214,7 @@ public class Kentta {
         int[][] annettavatpalikat = new int[KORKEUS][LEVEYS];
         for (int i = 0; i < KORKEUS; i++){
             for (int j = 0; j < LEVEYS; j++){
-                annettavatpalikat[i][j] = palikat[i+marginaali][j+marginaali];
+                annettavatpalikat[i][j] = palikat[i+MARGINAALI][j+MARGINAALI];
             }
         }
         return annettavatpalikat;
@@ -226,9 +226,9 @@ public class Kentta {
     * @param solut taulukko boolean[kentan korkeus ilman marginaalia][kentan leveys ilman marginaalia] 
     */
     public void setSolut(boolean[][] solut){
-        for(int i=marginaali; i<todellinenKorkeus; i++){
-            for(int j=marginaali; j<LEVEYS+marginaali; j++){
-                this.solut[i][j] = solut[i-marginaali][j-marginaali];
+        for(int i=MARGINAALI; i<todellinenKorkeus; i++){
+            for(int j=MARGINAALI; j<LEVEYS+MARGINAALI; j++){
+                this.solut[i][j] = solut[i-MARGINAALI][j-MARGINAALI];
             }
         }
     }
@@ -241,7 +241,11 @@ public class Kentta {
     */
     public void setSolutJaPalikat(boolean[][] solut, int[][] palikat){
         setSolut(solut);
-        this.palikat = palikat;
+        for(int i=MARGINAALI; i<todellinenKorkeus; i++){
+            for(int j=MARGINAALI; j<LEVEYS+MARGINAALI; j++){
+                this.palikat[i][j] = palikat[i-MARGINAALI][j-MARGINAALI];
+            }
+        }
     }
 
 }
