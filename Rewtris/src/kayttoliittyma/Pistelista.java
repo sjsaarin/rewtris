@@ -20,7 +20,6 @@ import tulokset.Tulos;
 public class Pistelista extends JPanel {
     
     private Tulokset tulokset;
-    private boolean tuloksetladattu;
     
     public Pistelista(){
         setBackground(Color.GRAY);

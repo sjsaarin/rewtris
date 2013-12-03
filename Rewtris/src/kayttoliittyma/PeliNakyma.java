@@ -26,16 +26,78 @@ public class PeliNakyma extends JPanel {
     private int x;
     private int y;
     
+    private Color palikkaTyhjavari;
+    private Color palikkaIvari;
+    private Color palikkaJvari;
+    private Color palikkaLvari;
+    private Color palikkaOvari;
+    private Color palikkaSvari;
+    private Color palikkaTvari;
+    private Color palikkaZvari;
+    private Color taustavari;
+    private Color ruudukonvari;
+ 
+    
     public PeliNakyma(Kentta kentta, Palikka palikka){
         this.palikka = palikka;
         this.kentta = kentta;
-        setBackground(Color.DARK_GRAY);
+    }
+    
+    /**
+     * Asettaa pelin väriprofiilin, profiileja on kolme: 'Dark', 'Light', 'Monochrome'
+     * 
+     * @param variprofiili 
+     */
+    public void setVariprofiili(String variprofiili){
+        switch(variprofiili){
+            case "Dark": default:
+                taustavari = Color.DARK_GRAY;
+                setBackground(taustavari);
+                palikkaTyhjavari = taustavari;
+                palikkaIvari = Color.CYAN;
+                palikkaJvari = Color.MAGENTA;
+                palikkaLvari = Color.PINK;
+                palikkaOvari = Color.RED;
+                palikkaSvari = Color.GREEN;
+                palikkaTvari = Color.BLUE;
+                palikkaZvari = Color.YELLOW;
+                ruudukonvari = Color.BLACK;
+                break;
+             case "Light":
+                taustavari = Color.WHITE;
+                setBackground(taustavari);
+                palikkaTyhjavari = taustavari;
+                palikkaIvari = Color.CYAN;
+                palikkaJvari = Color.MAGENTA;
+                palikkaLvari = Color.PINK;
+                palikkaOvari = Color.RED;
+                palikkaSvari = Color.GREEN;
+                palikkaTvari = Color.BLUE;
+                palikkaZvari = Color.YELLOW;
+                ruudukonvari = Color.LIGHT_GRAY;
+                break;
+             case "Monochrome":
+                taustavari = Color.WHITE;
+                setBackground(taustavari);
+                palikkaTyhjavari = taustavari;
+                palikkaTyhjavari = Color.WHITE;
+                palikkaIvari = Color.DARK_GRAY; 
+                palikkaJvari = Color.DARK_GRAY; 
+                palikkaLvari = Color.DARK_GRAY; 
+                palikkaOvari = Color.DARK_GRAY; 
+                palikkaSvari = Color.DARK_GRAY;
+                palikkaTvari = Color.DARK_GRAY;
+                palikkaZvari = Color.DARK_GRAY;
+                ruudukonvari = Color.LIGHT_GRAY;
+                break;
+        }
     }
     
     public void setPalikka(Palikka palikka){
         this.palikka = palikka;
     }
     
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         piirraPalikka(g);    
@@ -70,7 +132,7 @@ public class PeliNakyma extends JPanel {
                     asetaVari(kentanpalikat[i][j], g);
                     g.fill3DRect(x, y, width, height, true);
                 }
-                g.setColor(Color.BLACK);
+                g.setColor(ruudukonvari);
                 g.drawRect(x, y, width, height);
                 x += width;
             }
@@ -82,28 +144,28 @@ public class PeliNakyma extends JPanel {
     private void asetaVari(int numero, Graphics g){
         switch(numero){
             case 0: default:
-                g.setColor(Color.WHITE);
+                g.setColor(palikkaTyhjavari);
                 break;
             case 1: 
-                g.setColor(Color.CYAN);
+                g.setColor(palikkaIvari);
                 break;
             case 2:               
-                g.setColor(Color.MAGENTA);
+                g.setColor(palikkaJvari);
                 break;
             case 3:
-                g.setColor(Color.PINK);
+                g.setColor(palikkaLvari);
                 break;
             case 4:
-                g.setColor(Color.RED);
+                g.setColor(palikkaOvari);
                 break;
             case 5:
-                g.setColor(Color.GREEN);
+                g.setColor(palikkaSvari);
                 break;
             case 6:
-                g.setColor(Color.BLUE);
+                g.setColor(palikkaTvari);
                 break;
             case 7:
-                g.setColor(Color.YELLOW);
+                g.setColor(palikkaZvari);
                 break;
         }
     }

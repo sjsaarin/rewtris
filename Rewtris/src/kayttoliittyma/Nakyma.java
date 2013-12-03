@@ -18,10 +18,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
-import javax.swing.text.DocumentFilter;
 import peli.Logiikka;
 
 
@@ -44,6 +42,7 @@ public class Nakyma extends JFrame {
     private GridBagConstraints gbc;
     private Timer peliajastin;
     private final int paivitystiheys = 33;
+    protected String variprofiili;
     
     public Nakyma(Palikka palikka, Kentta kentta, Logiikka logiikka){
         this.palikka = palikka;
@@ -58,6 +57,7 @@ public class Nakyma extends JFrame {
         this.setResizable(false);
         this.setTitle("Rewtris");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.variprofiili = "Dark";
         
         alkuvalikko = new Alkuvalikko(this);
         pistelista = new Pistelista();
@@ -138,6 +138,7 @@ public class Nakyma extends JFrame {
     
         pelinakyma.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         pelinakyma.setPreferredSize(new Dimension(300,600));
+        pelinakyma.setVariprofiili(variprofiili);
         
         gbc.insets = new Insets(4,1,1,1);
         
