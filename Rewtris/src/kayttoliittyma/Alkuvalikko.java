@@ -79,7 +79,7 @@ public class Alkuvalikko extends JPanel {
     
     private void lisaaAloitaPainike(){
         
-                JButton aloitaPainike = new JButton("Start Game");
+        JButton aloitaPainike = new JButton("Start Game");
         
         aloitaPainike.addActionListener(new ActionListener() {
  
