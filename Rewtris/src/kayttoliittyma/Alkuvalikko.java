@@ -43,6 +43,7 @@ public class Alkuvalikko extends JPanel {
         
         this.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
+        lisaaNimi();
         lisaaVariValikko();
         lisaaAloitaPainike();
         
@@ -50,14 +51,9 @@ public class Alkuvalikko extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
+        
         super.paintComponent(g);
         
-        g.setColor(Color.BLACK);
-        
-        g.drawString("Set game colors:", 50, 220);
-        
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        g.drawString("Rewtris", 119, 60);
         g.setColor(Color.GREEN);
         g.fill3DRect(120, 80, 30, 30, true);
         g.fill3DRect(180, 80, 30, 30, true);
@@ -80,24 +76,14 @@ public class Alkuvalikko extends JPanel {
         
     }
     
-    private void lisaaAloitaPainike(){
-        
-        JButton aloitaPainike = new JButton("Start Game");
-        
-        aloitaPainike.addActionListener(new ActionListener() {
- 
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                nakyma.naytaPeli();
-            }
-        });
+    private void lisaaNimi(){
+        JLabel nimi = new JLabel("Rewtris");
+        nimi.setFont(new Font("Times New Roman", Font.PLAIN, 25));
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weighty = 1.0;
+        gbc.gridy = 0;
+        gbc.weighty = 2.0;
         gbc.anchor = GridBagConstraints.PAGE_END;
-        this.add(aloitaPainike, gbc);
-        
+        this.add(nimi, gbc);
     }
  
     private void lisaaVariValikko(){
@@ -135,10 +121,31 @@ public class Alkuvalikko extends JPanel {
         
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weighty = 10.0;
+        gbc.weighty = 7.0;
         gbc.anchor = GridBagConstraints.PAGE_END;
         this.add(varivalintapaneeli, gbc);
     }
+    
+    private void lisaaAloitaPainike(){
+        
+        JButton aloitaPainike = new JButton("Start Game");
+        
+        aloitaPainike.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                nakyma.naytaPeli();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.PAGE_END;
+        this.add(aloitaPainike, gbc);
+        
+    }
+    
     
     private class VariValinnanKuuntelija implements ActionListener {
 

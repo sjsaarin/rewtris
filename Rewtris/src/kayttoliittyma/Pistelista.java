@@ -8,6 +8,10 @@ package kayttoliittyma;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import tulokset.Tulokset;
 import tulokset.Tulos;
@@ -23,6 +27,23 @@ public class Pistelista extends JPanel {
     
     public Pistelista(){
         setBackground(Color.GRAY);
+        alusta();
+    }
+    
+    private void alusta(){
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        JLabel highscoresLabel = new JLabel("High Scores");
+        highscoresLabel.setFont(this.getFont().deriveFont(Font.BOLD, 14));
+        highscoresLabel.setForeground(Color.GREEN);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weighty = 1;
+        gbc.insets = new Insets(3,3,3,3);
+        gbc.anchor = GridBagConstraints.PAGE_START;
+        this.add(highscoresLabel, gbc);
+        highscoresLabel.setVisible(true);
     }
     
     /**
@@ -36,9 +57,11 @@ public class Pistelista extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        /*
         g.setColor(Color.GREEN);
         g.setFont(g.getFont().deriveFont(Font.BOLD));
         g.drawString("High Scores",100 ,20);
+        */
         g.setColor(Color.WHITE);
         g.drawLine(10, 30, 260, 30);
         for (int i = 0; i < 10; i++){
