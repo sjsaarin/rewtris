@@ -1,4 +1,4 @@
-28.10.	1t	Aloitusluento
+﻿28.10.	1t	Aloitusluento
 31.10.	1t	Alkutoimenpiteet: Projektin repositorion luonti githubiin, Netbeans projektin luonti, tunnuksen luonti labtooliin ja palautus
 6.11.	3t	Suunnittelua, koodausta
 7.11.	3t	Koodausta
@@ -14,3 +14,4 @@
 26.11.	3t	Testausta ja graafisen näkymän koodausta 
 27.11.	2t      Testausta ja bugien korjailua
 28.11.	5t	Ulkönäön hiomista, sekvenssi- ja luokkakaavioiden piirtelyä, dokumenttien päivittelyä
+12.12.	2t	Dokumenttien päivittelyä

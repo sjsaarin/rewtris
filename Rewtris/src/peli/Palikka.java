@@ -13,14 +13,33 @@ package peli;
  */
 public abstract class Palikka {
     
+    /**
+     * palikan sivun pituus
+     */
     int koko;
+    
+    /**
+     * palikan asento
+     */
     int asento;
+    
+    /**
+     * taulukko sisältää palikan muodot kaikissa mahdollisissa asennoissa
+     */
     boolean[][][] asennot;
+    
+    /**
+     * palikan muoto
+     */
     boolean[][] solut;
+    
+    /**
+     * palikan tyyyppi
+     */
     int tyyppi;
     
-    /*
-    /   Palikan vasemman yläkulma x ja y koordinaatit
+    /**
+    *   Palikan vasemman yläkulman x ja y koordinaatit
     */
     private int sijaintiX;
     private int sijaintiY;

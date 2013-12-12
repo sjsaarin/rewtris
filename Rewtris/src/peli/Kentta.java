@@ -15,16 +15,32 @@ package peli;
 
 public class Kentta {
     
+    /**
+     * Kentän korkeus
+     */
     private final static int KORKEUS = 20;
 
+    /**
+     * Kentän leveys
+     */
     private final static int LEVEYS = 10;
     
+    /**
+     * Marginaali joka asetetaan kentän sivuille ja alapuolelle
+     */
     private final static int MARGINAALI = 4;
     
+    /**
+     * Kentän leveys marginaalin kanssa
+     */
     private final int todellinenLeveys;
+    
+    /**
+     * Kentän korkeus marginaalin kanssa
+     */
     private final int todellinenKorkeus;
     
-    /*
+    /**
     *  kaksiulotteinen taulukko [i][j] missä
     *  i = kentän rivi alhaalta laskien
     *  j = i:n rivin j:s solu vasemmalta laskien
@@ -33,7 +49,7 @@ public class Kentta {
     */
     private boolean[][] solut;
     
-    /*
+    /**
     * kaksiulotteinen taulukko joka sisältää palikoiden numerot kentässä. 
     * Käytetään lähinnä graafisessa näkymässä jos halutaan piirtää palikoita vastaavat solut eri väreillä.
     */

@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import peli.Logiikka;
 
 /**
- * Luokka vastaa pelin ohjauksen toteuttamisesta
+ * Luokka vastaa pelin ohjauksen toteuuteksesta eli näppäinkomentojen välittämisestä Logiikalle.
  *
  * @author sjsaarin
  */
@@ -23,6 +23,11 @@ public class Ohjaus extends KeyAdapter {
         this.logiikka = logiikka;
     }
     
+    /**
+     * Metodi lisää ohjauksen kuuntelijan Nakymaan
+     * 
+     * @param nakyma 
+     */
     private void lisaaOhjausNakymaan(Nakyma nakyma){
         nakyma.addKeyListener(this);
     }

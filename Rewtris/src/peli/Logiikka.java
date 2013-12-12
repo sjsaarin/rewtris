@@ -79,7 +79,7 @@ public class Logiikka {
         Calendar cal = Calendar.getInstance();
         aikaleima = cal.getTimeInMillis(); 
         
-        uusiPalikka(-1);
+        lisaaUusiPalikka(-1);
                 
         ajastimenjakso = 1000;
         kaynnistaAjastin(ajastimenjakso);
@@ -97,7 +97,7 @@ public class Logiikka {
      * @return 'true' jos palikan lisäys onnistui, 'false' jos ei onnistunut    
      * 
      */
-    public boolean uusiPalikka(int numero){
+    public boolean lisaaUusiPalikka(int numero){
             
         int x;
             
@@ -230,6 +230,7 @@ public class Logiikka {
             }
         }
     }
+    
      
     /**
     * Täyttää kentän
@@ -290,7 +291,7 @@ public class Logiikka {
     public void kelaaTakaisin(){
         if (kelauksia>0 && voikelata && pelikaynnissa){
             ajastin.cancel();
-            uusiPalikka(muistettupalikka);
+            lisaaUusiPalikka(muistettupalikka);
             kentta.setSolut(muistettukentta);
             pistelaskuri.vahennaPisteetKelauksesta(kelauksia);
             kelauksia--;
@@ -338,6 +339,11 @@ public class Logiikka {
         return this.kelauksia;
     }
     
+    /**
+     * metodi palauttaa tiedon onko takasinkelausta mahdollista suorittaa
+     * 
+     * @return 'true' jos takaisinkelaus mahdollinen, muuten 'false' 
+     */
     public boolean getVoikelata(){
         return (this.voikelata && kelauksia > 0);
     }
@@ -346,7 +352,12 @@ public class Logiikka {
         return pelikaynnissa;
     }
     
-    //kutsutaan kierroksen lopussa, kun palikkaa on tiputettu niin pitkälle kuin mahdollista
+    /**
+     * Metodia kutsutaan kerroksen lopussa kun palikka on tiputettu niin pitkälle kuin mahdollista. 
+     * Metodi pysäyttää pelin, kutsuu tallenna, paivitaKentta, paivitaTiedotNakymaan sekä lisaaUusiPalikka metodeja.
+     * Mikäli lisaaUusiPalikka palauttaa 'true' kutsutaan uusiKierros metodia muuten kutsutaan lopetaPeli metodia koska kenttaan
+     * ei mahtunut enaa uutta palikkaa
+     */
     private void lopetaKierros(){
         
         pelikaynnissa = false;
@@ -360,7 +371,7 @@ public class Logiikka {
         paivitaTiedotNakymaan();
         
         //yritetaan lisata uusi palikka peliin, jos onnistui aloitetaan uusi kierros muuten lopetetaan peli
-        if (uusiPalikka(-1)){
+        if (lisaaUusiPalikka(-1)){
             pelikaynnissa = true;
             uusiKierros();
         } else {
@@ -368,13 +379,18 @@ public class Logiikka {
         }
     }
     
-    //tallentaa kentän solut ja palikan numeron takaisinkelausta varten
+    /**
+     * tallentaa kentän solut ja palikan numeron takaisinkelausta varten
+     */ 
     private void tallenna(){
         muistettukentta = kentta.getSolut();
         muistettupalikka = palikannumero;
     }
     
-    //päivittää kentän solut taulukkoon palikan solut kierroksen lopuksi
+    /**
+     * Päivittää kentän solut taulukkoon palikan solut kierroksen lopuksi ja sen jälkeen kutsuu
+     * poistaTaydetRivitJaAnnaPisteetRiveista metodia joka tarkistaa tuliko täysiä rivejä
+     */
     private void paivitaKentta(){
         
         boolean[] kentanrivi;
@@ -402,7 +418,10 @@ public class Logiikka {
        
     }
     
-    //käynnistää palikoita tiputtavan ajastimen jos peli on käynnissä
+    /**
+     * Käynnistää palikoita tiputtavan ajastimen jos peli on käynnissä. Ajastin yrittää pudottaa palikkaa pelin tasosta riippuvin välein alaspäin.
+     * Jos havaitaan että palikkaa ei voi enää tiputta kutsutaan lopetaKierros metodia
+     */
     private void kaynnistaAjastin(int jakso){
       
         if (pelikaynnissa){
@@ -424,7 +443,11 @@ public class Logiikka {
         }    
     }
     
-    //lisaa numeron mukaisen palikan peliin
+    /**
+     * luo parametrina annettua kokonaislukua vastaava palikan
+     * 
+     * @param nro (palikan numero 0-7)  
+     */
     private void lisaaPalikka(int nro){
         
         switch(nro){
@@ -456,7 +479,12 @@ public class Logiikka {
           
     }
     
-    //käy kentän läpi annetulta väliltä ja poistaa kaikki täyteen tulleet rivit (tässä annetaan myös pisteet riveistä)
+    /**
+     * metodi käy kentän läpi annetulta väliltä ja poistaa kaikki täyteen tulleet rivit.
+     * Jokaisen täyden rivin kohdalla annetaan pisteLaskuri oliolle tiedot tiedot rvistä pisteiden laskua varten ja
+     * kutsutaan paivitaKelaukset metodia takaisinkelaus tilanteen päivitäämiseksi
+     * 
+     */
     private void poistaTaydetRivitJaAnnaPisteetRiveista(int alkurivi, int loppurivi){
         int rivitaynna;
         int rivejapoistettu = 0;
@@ -488,7 +516,9 @@ public class Logiikka {
     }
     
     
-    //kutsutaan kun saatu täysi rivi, päivittää kelaukset
+    /**
+     * Metodia kutsutaan poistaTaydetRivitJaAnnaPisteetRiveista metodista aina kun on havaittu täysi rivi. Päivittää takaisinkelausten tilanteen.
+     */
     private void paivitaKelaukset(){
               //lisätään kelaus jos täysiä rivejä tullut 5 ja nollataan kelauslaskuri
               if (kelauslaskuri<5){
@@ -504,7 +534,12 @@ public class Logiikka {
               voikelata = false;
     }
     
-    //tarkistaa onko annetuissa koordinaateissa suhteessa palikkaan tilaa palikalle
+    /**
+    * Tarkistaa onko annetuissa koordinaateissa suhteessa palikkaan tilaa palikalle.
+    * Kutsutaan kaikista metodeista jotka yrittävät liikutta palikkaa.
+    * 
+    * @return 'true' jos palikalle tilaa, muuten 'false' 
+    */
     private boolean palikalleOnTilaa(int x, int y){
         int palikanX = palikka.getX();
         int palikanY = palikka.getY();
@@ -523,7 +558,9 @@ public class Logiikka {
         return true;
     }
     
-    //aloittaa uuden kierroksen jos peli on käynnissä
+    /**
+     * Metoid aloittaa uuden kierroksen (jos peli on kaynnissa). Kutsutaan lopetaKierros metodista jos em. metodi ei ole havainnut että peli loppunut.
+     */
     private void uusiKierros(){
         if (pelikaynnissa){
             Calendar cal = Calendar.getInstance();

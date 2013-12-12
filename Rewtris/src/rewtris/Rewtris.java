@@ -9,7 +9,7 @@ package rewtris;
 import peli.Logiikka;
 
 /**
- * Pääohjelma
+ * Pääohjelma, ainoana tehtävänä Logiikka-olion luominen.
  * 
  * @author sjsaarin
  */

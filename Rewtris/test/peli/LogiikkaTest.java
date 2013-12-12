@@ -184,7 +184,7 @@ public class LogiikkaTest {
     public void uudenPalikanLisaysTayteenKenttaanEiOnnistuPelin(){
         peliLogiikka.taytaKentta();
         
-        assertFalse(peliLogiikka.uusiPalikka(-1));
+        assertFalse(peliLogiikka.lisaaUusiPalikka(-1));
     }
     
     @Test
