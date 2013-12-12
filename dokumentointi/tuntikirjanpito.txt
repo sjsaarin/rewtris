@@ -14,4 +14,7 @@
 26.11.	3t	Testausta ja graafisen näkymän koodausta 
 27.11.	2t      Testausta ja bugien korjailua
 28.11.	5t	Ulkönäön hiomista, sekvenssi- ja luokkakaavioiden piirtelyä, dokumenttien päivittelyä
+2.12.	3t	Tulosten tallennuksen koodaus
+3.12.   2t      Koodausta, testailua
+4.12.	2t	Koodausta, testailua
 12.12.	2t	Dokumenttien päivittelyä
