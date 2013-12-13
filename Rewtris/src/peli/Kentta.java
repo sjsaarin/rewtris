@@ -54,6 +54,10 @@ public class Kentta {
     * Käytetään lähinnä graafisessa näkymässä jos halutaan piirtää palikoita vastaavat solut eri väreillä.
     */
     private int[][] palikat;
+    
+    /**
+     * asetetaan true jos halutaan että kenttä muistaa palikoiden tyypit
+     */
     private final boolean muistaapalikat;
     
     /**

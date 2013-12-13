@@ -18,3 +18,4 @@
 3.12.   2t      Koodausta, testailua
 4.12.	2t	Koodausta, testailua
 12.12.	2t	Dokumenttien päivittelyä
+13.12.	1t	viimeistelyä

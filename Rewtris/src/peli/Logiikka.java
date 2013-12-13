@@ -29,19 +29,59 @@ public class Logiikka {
     private final int kentanMarginaali;
     private PisteLaskuri pistelaskuri;
     private Timer ajastin;
+    
+    /**
+     * ajastimen päivitystiheys, määrittää sen kuinka usein palikkaa tipahtaa alaspäin
+     */
     private int ajastimenjakso;
+    
+    /**
+     * pelin tass
+     */
     private int taso;
+    
     private long aikaleima;
+    
+    /**
+     * kertoo onko peli käynnissä
+     */
     private boolean pelikaynnissa;
-    private int palikannumero;
+   
     private Tulokset tulokset;
+    
+    /**
+     * pelissä olevan palikan tyyppi
+     */
+    private int palikannumero;
+    
+    /**
+     * asetetaan true jos halutaan että kenttään tallennetaan palikoiden tyypit
+     */
     private boolean kenttamuistaapalikat;
     
-    //takaisinkelausta varten
+    /**
+     * takaisinkelausten määrä
+     */
     private int kelauksia;
+    
+    /**
+     * käytetään kelausten saamisen laskemiseen
+     */
     private int kelauslaskuri;
+    
+    /**
+     * kertoo onko takaisinkelaus mahdollinen
+     */
     private boolean voikelata;
+    
+    /**
+     * edellisen kierroksen palikan tyyppi
+     */
     private int muistettupalikka;
+    
+    /**
+     * edellisen kierroksen kentän tilanne
+     */
     private boolean[][] muistettukentta;
     
     public Logiikka(){
@@ -306,7 +346,7 @@ public class Logiikka {
      * 
      * @param nimi
      * 
-     * @return 
+     * @return 'true' jos tulosten tallennus onnistui, muuten 'false'
      */
     public boolean tallennaTulos(String nimi){
         Tulos tulos = new Tulos(pistelaskuri.getPisteet(), nimi);
@@ -559,7 +599,7 @@ public class Logiikka {
     }
     
     /**
-     * Metoid aloittaa uuden kierroksen (jos peli on kaynnissa). Kutsutaan lopetaKierros metodista jos em. metodi ei ole havainnut että peli loppunut.
+     * Metodi aloittaa uuden kierroksen (jos peli on kaynnissa). Kutsutaan lopetaKierros metodista jos em. metodi ei ole havainnut että peli loppunut.
      */
     private void uusiKierros(){
         if (pelikaynnissa){
